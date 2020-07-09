@@ -1,5 +1,6 @@
 package com.messaging.babble
 
+import android.content.Intent
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,7 +25,8 @@ class MainActivity : AppCompatActivity() {
             loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
                 fun performClick() {
-                    Toast.makeText(applicationContext, "Hello" ,Toast.LENGTH_LONG).show()
+                    intent = Intent(this@MainActivity, home::class.java)
+                    startActivity(intent)
                 }
             }, "valid");
 
