@@ -9,6 +9,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,6 +17,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
         if (chatView != null){
             val websettings = chatView!!.settings
+            loginView.settings.javaScriptEnabled = true
             chatView!!.webViewClient = WebViewClient()
             chatView!!.webChromeClient = WebChromeClient()
 
