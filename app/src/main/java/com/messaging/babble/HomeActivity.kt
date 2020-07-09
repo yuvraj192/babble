@@ -14,6 +14,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         if (homeView != null){
             val websettings = homeView!!.settings
+            homeView.settings.javaScriptEnabled = true
             homeView!!.webViewClient = WebViewClient()
             homeView!!.webChromeClient = WebChromeClient()
 
