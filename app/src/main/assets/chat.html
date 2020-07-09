@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:text-align="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -12,7 +13,7 @@
 </head>
 <body>
 <header class="text-gray-700 body-font border-b h-16 pb-3 shadow-lg">
-    <div class="container mx-auto flex p-1 flex-col items-center">
+    <div class="container absolute left-0 top-0 mx-auto flex p-1 flex-col items-center">
         <nav class="flex items-center text-base fixed left-0 top-0 mt-5 ml-5">
             <a onclick="chat.close()" class="mr-5 hover:text-gray-900 rounded-full text-sm"><i class="material-icons">arrow_back</i></a>
         </nav>
@@ -26,5 +27,14 @@
         </div>
     </div>
 </header>
+<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0">
+    <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+        <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2020 tailblocks —
+            <a href="https://twitter.com/knyttneve" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@knyttneve</a>
+        </p>
+        <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+    </span>
+    </div>
+</footer>
 </body>
 </html>
