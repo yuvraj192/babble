@@ -25,8 +25,7 @@ class MainActivity : AppCompatActivity() {
             loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
                 fun performClick() {
-                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
-                    startActivity(intent)
+                    goHome()
                 }
             }, "valid")
 
@@ -44,5 +43,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }}
+    }
+private fun goHome(){
+    val intent = Intent(this@MainActivity, HomeActivity::class.java)
+    startActivity(intent)
+}
+}
 
