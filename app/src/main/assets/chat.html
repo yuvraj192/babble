@@ -9,28 +9,182 @@
     <title>Chat</title>
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
-    <script src="jquery.js" ></script>
+    <script src="jquery.js"></script>
+
+    <style>
+        .chat-body {
+            font-family: "Helvetica Neue", Helvetica, sans-serif;
+            font-size: 20px;
+            font-weight: normal;
+            max-width: 450px;
+            margin: 50px auto;
+            display: -webkit-box;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            flex-direction: column;
+        }
+
+        p {
+            max-width: 255px;
+            word-wrap: break-word;
+            margin-bottom: 12px;
+            line-height: 24px;
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+
+        p:before,
+        p:after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            height: 20px;
+        }
+
+        .from-me {
+            color: white;
+            background: #0B93F6;
+            align-self: flex-end;
+        }
+
+        .from-me:before {
+            right: -7px;
+            border-right: 20px solid #0B93F6;
+            border-bottom-left-radius: 16px 14px;
+            -webkit-transform: translate(0, -2px);
+            transform: translate(0, -2px);
+        }
+
+        .from-me:after {
+            right: -56px;
+            width: 26px;
+            background: white;
+            border-bottom-left-radius: 10px;
+            -webkit-transform: translate(-30px, -2px);
+            transform: translate(-30px, -2px);
+        }
+
+        .from-them {
+            background: #E5E5EA;
+            color: black;
+        }
+
+        .from-them:before {
+            left: -7px;
+            border-left: 20px solid #E5E5EA;
+            border-bottom-right-radius: 16px 14px;
+            -webkit-transform: translate(0, -2px);
+            transform: translate(0, -2px);
+        }
+
+        .from-them:after {
+            left: 4px;
+            width: 26px;
+            background: white;
+            border-bottom-right-radius: 10px;
+            -webkit-transform: translate(-30px, -2px);
+            transform: translate(-30px, -2px);
+        }
+    </style>
+
 </head>
-<body class="bg-gray-100">
-<header class="text-gray-700 body-font border-b pb-3 shadow-lg bg-white fixed inset-x-0 top-0" style="height:78px;">
+
+<body id="chatCont">
+<header class="text-gray-700 body-font pb-3 head shadow-lg bg-white fixed inset-x-0 top-0 z-10" style="height:78px;">
     <div class="container absolute left-0 top-0 mx-auto flex p-1 flex-col items-center">
-        <a class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
-            <span class="ml-1 text-xs"><img src="2.png" class="rounded-full h-10 w-10 bg-green-200" alt=""> <br> <span style="margin-top:-20px !important;margin-left:auto;position:absolute;">John</span> </span>
+        <a
+                class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
+                <span class="ml-1 text-xs"><img src="2.png" class="rounded-full h-10 w-10 bg-green-200" alt=""> <br>
+                    <span style="margin-top:-20px !important;margin-left:auto;position:absolute;">John</span> </span>
         </a>
         <nav class="flex items-center text-base fixed left-0 top-0 mt-5 ml-5">
-            <a onclick="chat.close()" class="mr-5 text-blue-500 rounded-full text-sm"><i class="material-icons">chevron_left</i></a>
+            <a onclick="chat.close()" class="mr-5 text-blue-500 rounded-full text-sm"><i
+                    class="material-icons">chevron_left</i></a>
         </nav>
         <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5  ">
-            <button class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base mt-3 md:mt-0  "> <i class="material-icons">videocam</i>
+            <button
+                    class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base mt-3 md:mt-0  ">
+                <i class="material-icons">videocam</i>
             </button>
         </div>
     </div>
 </header>
-<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2">
-    <div class="px-2 py-2 flex items-center sm:flex-row flex-col">
-            <input type="text" class="rounded-full bg-gray-400 px-3 placeholder-black focus:outline-none py-3 w-full float-left mx-6" placeholder="Message...">
+
+<section class="text-gray-700 body-font">
+    <div class="container px-5 py-12 mx-auto overflow-x-hidden">
+        <div class="flex flex-wrap -m-4 chat-body">
+            <p class="from-me">Hey there! What's up</p>
+            <p class="from-them">Checking out iOS7 you know..</p>
+            <p class="from-me">Check out this bubble!</p>
+            <p class="from-them">It's pretty cool!</p>
+            <p class="from-me">Yeah it's pure CSS &amp; HTML</p>
+            <p class="from-them">Wow that's impressive. But what's even more impressive is that this bubble is
+                really high.</p>
+            <p class="from-me">Hey there! What's up</p>
+            <p class="from-them">Checking out iOS7 you know..</p>
+            <p class="from-me">Check out this bubble! ❤❤</p>
+            <p class="from-them">It's pretty cool!</p>
+            <p class="from-me">Yeah it's pure CSS &amp; HTML</p>
+            <p class="from-them">Wow that's impressive. But what's even more impressive is that this bubble is
+                really high.</p>
+            <p class="from-me">Hey there! What's up</p>
+            <p class="from-them">Checking out iOS7 you know..</p>
+            <p class="from-me">Check out this bubble!</p>
+            <p class="from-them">It's pretty cool! 😂💕🤞</p>
+            <p class="from-me">Yeah it's pure CSS &amp; HTML</p>
+            <p class="from-them">Wow that's impressive. But what's even more impressive is that this bubble is
+                really high.</p>
+
+        </div>
+    </div>
+</section>
+
+<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white">
+    <div class="flex rounded-full py-1 w-full float-left mb-2 pr-5" style="background: #f5f5f5;">
+        <input type="text"
+               class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full text-black"
+               placeholder="Message..." onkeydown="check()" onkeyup="check()" onchange="check()" style="background: #f5f5f5;">
+        <button
+                class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+            <i class="material-icons">mic_none</i>
+        </button>
+        <button
+                class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+            <i class="material-icons">wallpaper</i>
+        </button>
+        <button
+                class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+            <i class="material-icons">camera_alt</i>
+        </button>
+        <button style="display:none;"
+                class="inline-flex sndBtn items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  float-right">
+            <i class="material-icons">send</i>
+        </button>
     </div>
 </footer>
 </body>
+<script>
+window.onscroll = () =>{
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        $(".head").addClass("shadow-lg")
+    }else{
+        $(".head").removeClass("shadow--lg")
+    }
+}
+document.onload = function() {
+        document.body.scrollTop = document.body.scrollHeight;
+    }
 
+function check(){
+    if($(".msg").val() != "" || $(".msg").val() != " " ){
+        $(".oth").hide()
+        $(".sndBtn").show()
+    }else if($(".msg").val() == ""){
+        $(".oth").show()
+        $(".sndBtn").hide()
+    }
+}
+</script>
 </html>
