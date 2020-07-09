@@ -6,23 +6,21 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
     <script src="jquery.js" ></script>
 </head>
 <body>
 <header class="text-gray-700 body-font">
-    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <nav class="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
-            <a class="mr-5 hover:text-gray-900">First Link</a>
+    <div class="container mx-auto flex p-5 flex-col items-center">
+        <nav class="flex items-center text-base fixed left-0 top-0 mt-6 ml-5">
+            <a onclick="closeActivity()" class="mr-5 hover:text-gray-900 bg-gray-200 rounded-full text-sm"><i class="material-icons">dehaze</i></a>
         </nav>
         <a class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-            </svg>
+            <span class="ml-3 text-xl"></span>
         </a>
-        <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
-            <button class="inline-flex items-center bg-gray-200 border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded text-base mt-4 md:mt-0">Button
-
+        <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5">
+            <button class="inline-flex items-center bg-transparernt border-0 py-1 px-3 focus:outline-none hover:bg-gray-300 rounded-full text-base mt-4 md:mt-0"> <i class="material-icons">message</i>
             </button>
         </div>
     </div>
