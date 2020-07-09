@@ -11,26 +11,26 @@
     <link rel="stylesheet" href="tailwind.css">
     <script src="jquery.js" ></script>
 </head>
-<body>
-<header class="text-gray-700 body-font border-b h-16 pb-3 shadow-lg">
+<body class="bg-gray-100">
+<header class="text-gray-700 body-font border-b pb-3 shadow-lg bg-white fixed inset-x-0 top-0" style="height:78px;">
     <div class="container absolute left-0 top-0 mx-auto flex p-1 flex-col items-center">
-        <nav class="flex items-center text-base fixed left-0 top-0 mt-5 ml-5">
-            <a onclick="chat.close()" class="mr-5 hover:text-gray-900 rounded-full text-sm"><i class="material-icons">arrow_back</i></a>
-        </nav>
-        <a class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
-            <span class="ml-3 text-xl"><img src="" class="rounded-full h-10 w-10 bg-green-200" alt=""></span>
-            <span class="ml-3 text-md">Jhon Doe</span>
+        <a class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
+            <span class="ml-1 text-xs"><img src="2.png" class="rounded-full h-10 w-10 bg-green-200" alt=""> <br> <span style="margin-top:-20px !important;margin-left:auto;position:absolute;">John</span> </span>
         </a>
+        <nav class="flex items-center text-base fixed left-0 top-0 mt-5 ml-5">
+            <a onclick="chat.close()" class="mr-5 text-blue-500 rounded-full text-sm"><i class="material-icons">chevron_left</i></a>
+        </nav>
         <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5  ">
             <button class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base mt-3 md:mt-0  "> <i class="material-icons">videocam</i>
             </button>
         </div>
     </div>
 </header>
-<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0">
+<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2">
     <div class="px-2 py-2 flex items-center sm:flex-row flex-col">
-            <input type="text" class="rounded-full bg-gray-200 px-3 focus:outline-none py-3 w-full float-left mx-6" placeholder="Message...">
+            <input type="text" class="rounded-full bg-gray-400 px-3 placeholder-black focus:outline-none py-3 w-full float-left mx-6" placeholder="Message...">
     </div>
 </footer>
 </body>
+
 </html>

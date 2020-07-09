@@ -1,10 +1,18 @@
 package com.messaging.babble
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.view.Window
+import android.view.WindowManager
 import android.webkit.*
+import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,6 +32,19 @@ class HomeActivity : AppCompatActivity() {
                     openActivity()
                 }
             }, "chat")
+
+            homeView.addJavascriptInterface(object: Any(){
+                @JavascriptInterface
+                fun vibrate(){
+                    val vibrator = applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        vibrator.vibrate(30)
+                    }
+                }
+
+            }, "device")
 
             homeView.loadUrl("file:///android_asset/home.html")
             homeView!!.webViewClient = object : WebViewClient() {

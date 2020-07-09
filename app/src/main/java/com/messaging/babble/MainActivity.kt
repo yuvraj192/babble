@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
                 @JavascriptInterface
                 fun performClick() {
                     goHome()
+                    finish()
                 }
             }, "valid")
 
