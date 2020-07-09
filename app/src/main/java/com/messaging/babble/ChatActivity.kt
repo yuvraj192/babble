@@ -17,7 +17,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chat)
         if (chatView != null){
             val websettings = chatView!!.settings
-            loginView.settings.javaScriptEnabled = true
+            homeView.settings.javaScriptEnabled = true
             chatView!!.webViewClient = WebViewClient()
             chatView!!.webChromeClient = WebChromeClient()
 
