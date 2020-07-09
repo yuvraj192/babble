@@ -44,7 +44,5 @@ class HomeActivity : AppCompatActivity() {
     private fun openActivity(){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
         startActivity(intent)
-
-
     }
 }
