@@ -21,12 +21,12 @@ class MainActivity : AppCompatActivity() {
             loginView!!.webViewClient=  WebViewClient()
             loginView!!.webChromeClient=  WebChromeClient()
 
-            loginView.addJavascriptInterface(object : Any(){
+            loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun performClick (PhoneNo: String){
-                    Toast.makeText(applicationContext ," hello World", Toast.LENGTH_LONG).show()
+                fun performClick() {
+                    Toast.makeText(applicationContext, "Hello" ,Toast.LENGTH_LONG).show()
                 }
-            },"valid")
+            }, "valid");
 
 
 
