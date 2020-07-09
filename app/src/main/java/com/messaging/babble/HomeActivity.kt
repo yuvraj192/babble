@@ -9,11 +9,11 @@ import android.webkit.WebViewClient
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main.*
 
-class home : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        if(homeView!=null){
+        if(homeView != null){
             val webSettings = loginView!!.settings
             homeView.settings.javaScriptEnabled = true
             homeView!!.webViewClient=  WebViewClient()

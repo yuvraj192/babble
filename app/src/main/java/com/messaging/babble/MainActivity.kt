@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
                 fun performClick() {
-                    intent = Intent(this@MainActivity, home::class.java)
+                    val intent = Intent(this@MainActivity, HomeActivity::class.java)
                     startActivity(intent)
                 }
             }, "valid");
