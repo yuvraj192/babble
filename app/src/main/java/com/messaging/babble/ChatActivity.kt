@@ -21,6 +21,13 @@ class ChatActivity : AppCompatActivity() {
             chatView!!.webViewClient = WebViewClient()
             chatView!!.webChromeClient = WebChromeClient()
 
+            chatView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun close() {
+                    finish()
+                }
+            }, "chat")
+
             chatView.loadUrl("file:///android_asset/chat.html")
             chatView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
