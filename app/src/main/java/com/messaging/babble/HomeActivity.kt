@@ -22,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
             homeView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
+                    //newcode
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
