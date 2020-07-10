@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         socket.connect()
-        socket.emit("join", "yuvj")
+        socket.emit("join", "+91817839204")
 
 
         if (homeView != null){
