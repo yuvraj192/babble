@@ -61,6 +61,13 @@ class HomeActivity : AppCompatActivity() {
 
             homeView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
+                fun add() {
+                    addActivity()
+                }
+            }, "chat")
+
+            homeView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
                 fun logout(){
                     logAct()
                     socket.disconnect()
@@ -108,6 +115,12 @@ class HomeActivity : AppCompatActivity() {
         intent.putExtra("phoneNumber", phoneNumber)
         startActivity(intent)
     }
+
+    private fun addActivity(){
+        val intent = Intent(this@HomeActivity, addChat::class.java)
+        startActivity(intent)
+    }
+
     private fun logAct(){
         val intent = Intent(this@HomeActivity, MainActivity::class.java)
         startActivity(intent)
