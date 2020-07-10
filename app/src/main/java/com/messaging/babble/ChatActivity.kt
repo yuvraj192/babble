@@ -1,10 +1,12 @@
 package com.messaging.babble
 
+import android.app.PendingIntent.getActivity
+import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.view.Window
-import android.view.WindowManager
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -12,10 +14,12 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.nkzawa.emitter.Emitter
-import kotlinx.android.synthetic.main.activity_chat.*
-
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
+import kotlinx.android.synthetic.main.activity_chat.*
+import org.json.JSONException
+import org.json.JSONObject
+
 
 class ChatActivity : AppCompatActivity() {
     private val socket: Socket = IO.socket("http://192.168.31.183:4600/")
@@ -23,8 +27,6 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-
-        socket.connect()
 
         if (chatView != null){
             val websettings = chatView!!.settings
@@ -46,6 +48,19 @@ class ChatActivity : AppCompatActivity() {
                 }
             }, "msg")
 
+            chatView.addJavascriptInterface(object: Any(){
+                @JavascriptInterface
+                fun vibrate(){
+                    val vibrator = applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        vibrator.vibrate(30)
+                    }
+                }
+
+            }, "device")
+
 
             chatView.loadUrl("file:///android_asset/chat.html")
 
@@ -61,9 +76,17 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
 
+            socket.on("message", Emitter.Listener {
+                Toast.makeText(applicationContext, "New Mesg", Toast.LENGTH_SHORT).show()
+            })
+
         }
 
     }
-    private fun sendSock(){
+
+    override fun onDestroy() {
+        super.onDestroy()
+        socket.disconnect()
     }
+
 }

@@ -12,14 +12,22 @@ import android.os.Vibrator
 import android.view.Window
 import android.view.WindowManager
 import android.webkit.*
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class HomeActivity : AppCompatActivity() {
+    private val socket: Socket = IO.socket("http://192.168.31.183:4600/")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        socket.connect()
+        socket.emit("join", "divyanshg21")
+
         if (homeView != null){
             val websettings = homeView!!.settings
             homeView.settings.javaScriptEnabled = true

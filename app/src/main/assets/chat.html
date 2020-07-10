@@ -122,7 +122,7 @@
     <div class="flex rounded-full py-1 w-full float-left mb-2 pr-5" style="background: #f5f5f5;">
         <input type="text"
                class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full text-black"
-               placeholder="Message..." onkeydown="check()" onkeyup="check()" onchange="check()" style="background: #f5f5f5;">
+               placeholder="Message..." onkeydown="check()" onkeyup="check()"  onchange="check()" style="background: #f5f5f5;">
         <button
                 class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
             <i class="material-icons">mic_none</i>
@@ -135,15 +135,12 @@
                 class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
             <i class="material-icons">camera_alt</i>
         </button>
-        <button onclick="sendMessage()" style="display:none;"
-                class="inline-flex sndBtn items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  float-right">
-            <i class="material-icons">send</i>
-        </button>
     </div>
 </footer>
 </body>
 <script>
-
+$(".msg").focus()
+$(".msg").click()
 window.onscroll = () =>{
     if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
         $(".head").addClass("shadow-lg")
@@ -157,16 +154,26 @@ document.onload = function() {
 
 function check(){
     if($(".msg").val() != "" || $(".msg").val() != " " ){
-        $(".oth").hide()
-        $(".sndBtn").show()
-    }else if($(".msg").val() == ""){
-        $(".oth").show()
-        $(".sndBtn").hide()
+        $(".msg").removeClass("w-3/4").addClass("w-5/6")
     }
+}
+
+$(".msg").keypress(function(event) {
+      if (event.keyCode === 13) {
+           sendMessage()
+      }
+});
+
+function recieveMessage(msg){
+     var ID =  '_' + Math.random().toString(36).substr(2, 9);
+     var chat = `<p style="display:none;" id="${ID}" class="from-them">${msg}</p>`
+     $(".chat-body").append(chat)
+     $(`#${ID}`).show('fast')
 }
 
 async function sendMessage(){
     var cmsg = $(".msg").val()
+    if(cmsg == "" || cmsg == " ") return;
     var to = "yuvj"
     var timestamp = new Date().getTime()
 
@@ -178,6 +185,8 @@ async function sendMessage(){
     $(".chat-body").append(chat)
     $(`#${ID}`).show('fast')
     $(".msg").val("")
+    $(".msg").focus()
+    device.vibrate()
 }
 
 </script>
