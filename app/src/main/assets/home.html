@@ -292,6 +292,7 @@
         setModal.onclick = function () {
             setModal.style.display = "none";
             $(activeElm).css("z-index", "0")
+            taken = false;
         }
 
         // When the user clicks anywhere outside of the modal, close it
@@ -301,11 +302,12 @@
             }
         }
 
-        var longpress = 1200;
+        var longpress = 900;
         var inter;
         // holds the start time
         var start;
         var disableHold = false;
+        var taken = false;
 
        addListeners()
 
@@ -352,6 +354,7 @@
             $(activeElm).remove()
 
             addListeners()
+            taken = false;
         }
 
         function removePin(){
@@ -374,11 +377,14 @@
             $(activeElm).remove()
 
             addListeners()
+            taken = false;
         }
 
         function addListeners(){
             document.querySelectorAll('.chat-item').forEach(item => {
             item.addEventListener('touchstart', event => {
+            if(!taken){
+                taken = true
                 start = new Date().getTime();
                 inter = setInterval(function () {
                     if (new Date().getTime() >= (start + longpress)) {
@@ -398,6 +404,9 @@
                         activeElm = item
                     } else {}
                 }, 100);
+                }else{
+                  return
+                }
             })
             item.addEventListener("touchend", event => {
                 clearInterval(inter)
