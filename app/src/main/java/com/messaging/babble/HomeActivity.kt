@@ -59,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
 
             homeView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun logOut(){
+                fun logout(){
                     logAct()
                     socket.disconnect()
                     finish()
@@ -83,12 +83,11 @@ class HomeActivity : AppCompatActivity() {
             homeView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
-
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-
+                    homeView.loadUrl("javascript:updateNumber($phoneNumber)")
                 }
             }
 

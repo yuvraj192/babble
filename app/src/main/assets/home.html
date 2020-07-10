@@ -528,17 +528,16 @@
 <script>
         var phoneNumber;
          function logout(){
-            if(phoneNumber == "")return alert("There was a problem logging you out")
-
+            if(phoneNumber == "") return;
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    app.logOut();
+                    app.logout();
                 }else{
                     return
                 }
         };
-        xhttp.open("GET", "http://iotine.zapto.org:4600/logOut/"+phoneNumber, true);
+        xhttp.open("GET", "http://iotine.zapto.org:4600/logout/+"+phoneNumber, true);
         xhttp.send();
     }
         var activeElm;
@@ -626,6 +625,10 @@
                 $(".pin-img").css("width", "6rem")
                 disableHold = false;
             }
+        }
+
+        function updateNumber(pno){
+            phoneNumber = pno;
         }
     </script>
 </body>
