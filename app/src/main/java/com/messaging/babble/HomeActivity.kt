@@ -10,19 +10,19 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.Window
-import android.view.WindowManager
-import android.webkit.*
+import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
-import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_main.*
 
 class HomeActivity : AppCompatActivity() {
     private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
@@ -37,8 +37,11 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        val intent = intent
+        val phoneNumber: String? = intent.getStringExtra("phoneNumber");
+
         socket.connect()
-        socket.emit("join", "+91817839204")
+        socket.emit("join", phoneNumber)
 
 
         if (homeView != null){
@@ -56,8 +59,9 @@ class HomeActivity : AppCompatActivity() {
 
             homeView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun logout(){
+                fun logOut(){
                     logAct()
+                    socket.disconnect()
                     finish()
                 }
             }, "app")

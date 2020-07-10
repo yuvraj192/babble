@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
 
             loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun performClick() {
-                    goHome()
+                fun performClick(phoneNumber: String) {
+                    goHome(phoneNumber)
                     finish()
                 }
             }, "valid")
@@ -45,8 +45,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-private fun goHome(){
+private fun goHome(phoneNumber: String){
     val intent = Intent(this@MainActivity, HomeActivity::class.java)
+    intent.putExtra("phoneNumber", phoneNumber)
     startActivity(intent)
 }
 }
