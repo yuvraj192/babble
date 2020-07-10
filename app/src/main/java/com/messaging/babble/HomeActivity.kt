@@ -112,7 +112,7 @@ class HomeActivity : AppCompatActivity() {
         val pendingIntent = PendingIntent.getActivity(this,0,intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel = NotificationChannel(channelId,"test",NotificationManager.IMPORTANCE_HIGH)
+            notificationChannel = NotificationChannel(channelId,msg,NotificationManager.IMPORTANCE_HIGH)
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.GREEN
             notificationChannel.enableVibration(true)
@@ -122,12 +122,14 @@ class HomeActivity : AppCompatActivity() {
                 .setSmallIcon(R.mipmap.logo_round)
                 .setLargeIcon(BitmapFactory.decodeResource(this.resources,R.mipmap.logo))
                 .setContentIntent(pendingIntent)
+                .setContentText(msg)
         }else{
 
             builder = Notification.Builder(this)
                 .setSmallIcon(R.mipmap.logo_round)
                 .setLargeIcon(BitmapFactory.decodeResource(this.resources,R.mipmap.logo))
                 .setContentIntent(pendingIntent)
+                .setContentText(msg)
         }
         notificationManager.notify(1234,builder.build())
     }
