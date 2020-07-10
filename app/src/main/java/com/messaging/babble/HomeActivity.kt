@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         socket.connect()
-        socket.emit("join", "divyanshg21")
+        socket.emit("join", "yuvj")
 
 
         if (homeView != null){
@@ -123,6 +123,7 @@ class HomeActivity : AppCompatActivity() {
                 .setLargeIcon(BitmapFactory.decodeResource(this.resources,R.mipmap.logo))
                 .setContentIntent(pendingIntent)
                 .setContentText(msg)
+                .setContentTitle("Babble")
         }else{
 
             builder = Notification.Builder(this)
