@@ -234,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full border-t border-gray-300">
+                    <div onclick="deleteChat()" class="p-2 lg:w-1/3 md:w-1/2 w-full border-t border-gray-300">
                         <div class="h-full flex items-center border-gray-200 p-4 text-red-500 rounded-lg">
                             <i alt="team"
                                class="material-icons w-8 h-8 text-red-500 object-cover object-center flex-shrink-0 rounded-full mr-4">delete</i>
@@ -377,6 +377,12 @@
             $(activeElm).remove()
 
             addListeners()
+            taken = false;
+        }
+
+        function deleteChat(){
+            $(activeElm).hide('fast')
+            $(activeElm).remove()
             taken = false;
         }
 
