@@ -38,7 +38,7 @@ class HomeActivity : AppCompatActivity() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         socket.connect()
-        socket.emit("join", "yuvj")
+        socket.emit("join", "divyanshg21")
 
 
         if (homeView != null){
@@ -96,7 +96,7 @@ class HomeActivity : AppCompatActivity() {
 
         }
     private fun notifyMessage(msg: String, to: String, from: String ,time: String){
-        sendnoti("$from : $msg")
+        sendnoti(from + " : " +msg)
     }
     private fun openActivity(){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
