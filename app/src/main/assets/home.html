@@ -80,40 +80,6 @@
         .modal {
             transition: 0.2s cubic-bezier(0.62, 0.48, 0, 0.68) all !important;
         }
-
-        .tooltip {
-            position: relative;
-            display: inline-block;
-            /* If you want dots under the hoverable text */
-        }
-
-        /* Tooltip text */
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: black;
-            color: #fff;
-            text-align: center;
-            padding: 5px 0;
-            border-radius: 6px;
-
-            /* Position the tooltip text - see examples below! */
-            position: absolute;
-            z-index: 1;
-        }
-
-        .tooltip .tooltiptext {
-            width: 120px;
-            top: 100%;
-            left: 5%;
-            margin-left: -60px;
-            /* Use half of the width (120/2 = 60), to center the tooltip */
-        }
-
-        /* Show the tooltip text when you mouse over the tooltip container */
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-        }
     </style>
 </head>
 
@@ -129,9 +95,8 @@
         </a>
         <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5 mt-2 ">
             <button
-                    class="inline-flex tooltip items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base md:mt-0 text-blue-500 ">
-                <i class="material-icons">add</i>
-                <span class="tooltiptext shadow-lg">New Chat</span>
+                    class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base md:mt-0 text-blue-500 ">
+                <i class="material-icons">launch</i>
             </button>
         </div>
     </div>
