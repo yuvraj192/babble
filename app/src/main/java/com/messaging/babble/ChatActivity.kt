@@ -22,7 +22,7 @@ import org.json.JSONObject
 
 
 class ChatActivity : AppCompatActivity() {
-    private val socket: Socket = IO.socket("http://192.168.31.183:4600/")
+    private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
