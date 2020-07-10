@@ -74,4 +74,9 @@ class HomeActivity : AppCompatActivity() {
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
         startActivity(intent)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        socket.disconnect()
+    }
 }

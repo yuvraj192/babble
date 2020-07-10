@@ -28,6 +28,7 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+
         if (chatView != null){
             val websettings = chatView!!.settings
             chatView.settings.javaScriptEnabled = true
@@ -44,7 +45,7 @@ class ChatActivity : AppCompatActivity() {
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
                 fun send(data: String, to: String, time: String) {
-                    socket.emit("message", data)
+                    socket.emit("message", data, to, time)
                 }
             }, "msg")
 
@@ -76,17 +77,18 @@ class ChatActivity : AppCompatActivity() {
                 }
             }
 
-            socket.on("message", Emitter.Listener {
-                Toast.makeText(applicationContext, "New Mesg", Toast.LENGTH_SHORT).show()
+            socket.on("message", Emitter.Listener { args ->
+                addMessage(args[0].toString(), args[1].toString(), args[2].toString())
             })
 
         }
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        socket.disconnect()
+    private fun addMessage(msg: String, by: String, time: String){
+        chatView.post(Runnable {
+            chatView.loadUrl("javascript:recieveMessage('$msg', '$time')")
+        })
     }
 
 }

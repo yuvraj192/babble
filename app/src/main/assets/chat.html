@@ -164,7 +164,7 @@ $(".msg").keypress(function(event) {
       }
 });
 
-function recieveMessage(msg){
+function recieveMessage(msg, time){
      var ID =  '_' + Math.random().toString(36).substr(2, 9);
      var chat = `<p style="display:none;" id="${ID}" class="from-them">${msg}</p>`
      $(".chat-body").append(chat)
