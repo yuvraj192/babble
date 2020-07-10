@@ -23,18 +23,18 @@ class addChat : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chat)
 
-        if(conView!= null){
+        if (conView != null) {
             val webSettings = conView!!.settings
             conView.settings.javaScriptEnabled = true
-            conView!!.webViewClient=  WebViewClient()
-            conView!!.webChromeClient=  WebChromeClient()
+            conView!!.webViewClient = WebViewClient()
+            conView!!.webChromeClient = WebChromeClient()
 
 
 
             conView!!.loadUrl("file:///android_asset/addChat.html")
-            conView!!.webViewClient = object : WebViewClient(){
-                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?){
-                    super.onPageStarted(view,url,favicon)
+            conView!!.webViewClient = object : WebViewClient() {
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
 
                 }
 
@@ -44,51 +44,51 @@ class addChat : AppCompatActivity() {
             }
         }
 
-        
-        
-        
-        
-        
+
+
+
+
+
         arrayList = ArrayList()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 1)
         } else {
             getcontact()
         }
+    }
 
-
-    private fun getcontact() {
-        val cursor = contentResolver.query(
-            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-            null,
-            null,
-            null,
-            null
-        )
-        while (cursor!!.moveToNext()) {
-            val name =
-                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
-            val mobile =
-                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-            arrayList!!.add(
-                """
+        private fun getcontact() {
+            val cursor = contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                null,
+                null,
+                null
+            )
+            while (cursor!!.moveToNext()) {
+                val name =
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                val mobile =
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                arrayList!!.add(
+                    """
     $name
     $mobile
     """.trimIndent()
-            )
-            tv_phonebook!!.text = arrayList.toString()
+                )
+                tv_phonebook!!.text = arrayList.toString()
+            }
         }
-    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getcontact()
+        override fun onRequestPermissionsResult(
+            requestCode: Int,
+            permissions: Array<String>,
+            grantResults: IntArray
+        ) {
+            if (requestCode == 1) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getcontact()
+                }
             }
         }
     }
-}
