@@ -31,6 +31,8 @@ class HomeActivity : AppCompatActivity() {
     lateinit var builder : Notification.Builder
     private val channelId = "com.messaging.notiex"
 
+    var phoneNumber: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val intent = intent
-        val phoneNumber: String? = intent.getStringExtra("phoneNumber");
+        phoneNumber = intent.getStringExtra("phoneNumber")
 
         socket.connect()
         socket.emit("join", phoneNumber)
@@ -103,6 +105,7 @@ class HomeActivity : AppCompatActivity() {
     }
     private fun openActivity(){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
+        intent.putExtra("phoneNumber", phoneNumber)
         startActivity(intent)
     }
     private fun logAct(){

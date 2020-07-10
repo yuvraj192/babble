@@ -23,11 +23,14 @@ import org.json.JSONObject
 
 class ChatActivity : AppCompatActivity() {
     private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
+    var phoneNumber: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        val intent = intent
+        phoneNumber = intent.getStringExtra("phoneNumber")
 
         if (chatView != null){
             val websettings = chatView!!.settings
@@ -73,7 +76,7 @@ class ChatActivity : AppCompatActivity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-
+                    chatView.loadUrl("javascript:updateNumber($phoneNumber)")
                 }
             }
 

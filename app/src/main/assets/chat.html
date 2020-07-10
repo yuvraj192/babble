@@ -69,6 +69,7 @@
         .from-them {
             background: #E5E5EA;
             color: black;
+            align-self: flex-start;
         }
 
         .from-them:before {
@@ -114,7 +115,7 @@
 
 <section class="text-gray-700 body-font">
     <div class="container px-5 py-12 mx-auto overflow-x-hidden">
-        <div class="flex flex-wrap -m-4 chat-body"></div>
+        <div class="flex flex-wrap -m-4 chat-body" id="chat_body"></div>
     </div>
 </section>
 
@@ -141,6 +142,7 @@
 <script>
 $(".msg").focus()
 $(".msg").click()
+var phoneNumber;
 window.onscroll = () =>{
     if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
         $(".head").addClass("shadow-lg")
@@ -169,13 +171,16 @@ function recieveMessage(msg, time){
      var chat = `<p style="display:none;" id="${ID}" class="from-them">${msg}</p>`
      $(".chat-body").append(chat)
      $(`#${ID}`).show('fast')
+      $('html, body').animate({
+        scrollTop: $('#chat_body').prop("scrollHeight")
+    }, 1000);
 }
 
 async function sendMessage(){
     var cmsg = $(".msg").val()
     if(cmsg == "" || cmsg == " ") return;
     var to = "yuvj"
-    var from = "divyanshg21"
+    var from = `+${phoneNumber}`
     var timestamp = new Date().getTime()
 
     var ID =  '_' + Math.random().toString(36).substr(2, 9);
@@ -187,8 +192,13 @@ async function sendMessage(){
     $(`#${ID}`).show('fast')
     $(".msg").val("")
     $(".msg").focus()
+    $('html, body').animate({
+        scrollTop: $('#chat_body').prop("scrollHeight")
+    }, 100);
     device.vibrate()
 }
-
+function updateNumber(pno){
+    phoneNumber = pno;
+}
 </script>
 </html>
