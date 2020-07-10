@@ -13,7 +13,8 @@
         android:label="Babble"
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".ChatActivity"></activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">

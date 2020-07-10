@@ -9,14 +9,23 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.github.nkzawa.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_chat.*
 
+import com.github.nkzawa.socketio.client.IO
+import com.github.nkzawa.socketio.client.Socket
 
 class ChatActivity : AppCompatActivity() {
+    private val socket: Socket = IO.socket("http://192.168.31.183:4600/")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+
+        socket.connect()
+
         if (chatView != null){
             val websettings = chatView!!.settings
             chatView.settings.javaScriptEnabled = true
@@ -30,7 +39,16 @@ class ChatActivity : AppCompatActivity() {
                 }
             }, "chat")
 
+            chatView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun send(data: String, to: String, time: String) {
+                    socket.emit("message", data)
+                }
+            }, "msg")
+
+
             chatView.loadUrl("file:///android_asset/chat.html")
+
             chatView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
@@ -42,7 +60,10 @@ class ChatActivity : AppCompatActivity() {
 
                 }
             }
+
         }
 
     }
+    private fun sendSock(){
     }
+}
