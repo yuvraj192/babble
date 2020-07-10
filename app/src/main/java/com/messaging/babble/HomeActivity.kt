@@ -89,14 +89,14 @@ class HomeActivity : AppCompatActivity() {
             }
 
             socket.on("message", Emitter.Listener { args ->
-                notifyMessage(args[0].toString(), args[1].toString(), args[2].toString())
+                notifyMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString())
             })
 
         }
 
         }
-    private fun notifyMessage(msg: String, by: String, time: String){
-        sendnoti(msg)
+    private fun notifyMessage(msg: String, to: String, from: String ,time: String){
+        sendnoti("$from : $msg")
     }
     private fun openActivity(){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)

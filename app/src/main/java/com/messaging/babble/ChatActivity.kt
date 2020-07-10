@@ -44,8 +44,8 @@ class ChatActivity : AppCompatActivity() {
 
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun send(data: String, to: String, time: String) {
-                    socket.emit("message", data, to, time)
+                fun send(data: String, to: String, from: String, time: String) {
+                    socket.emit("message", data, to, from, time)
                 }
             }, "msg")
 
@@ -78,14 +78,14 @@ class ChatActivity : AppCompatActivity() {
             }
 
             socket.on("message", Emitter.Listener { args ->
-                addMessage(args[0].toString(), args[1].toString(), args[2].toString())
+                addMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString())
             })
 
         }
 
     }
 
-    private fun addMessage(msg: String, by: String, time: String){
+    private fun addMessage(msg: String, by: String, from: String, time: String){
         chatView.post(Runnable {
             chatView.loadUrl("javascript:recieveMessage('$msg', '$time')")
         })

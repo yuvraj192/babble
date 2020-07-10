@@ -174,12 +174,13 @@ function recieveMessage(msg, time){
 async function sendMessage(){
     var cmsg = $(".msg").val()
     if(cmsg == "" || cmsg == " ") return;
-    var to = "yuvj"
+    var to = "divyanshg21"
+    var from = "yuvj"
     var timestamp = new Date().getTime()
 
     var ID =  '_' + Math.random().toString(36).substr(2, 9);
 
-    await msg.send(cmsg, to, timestamp)
+    await msg.send(cmsg, to, from,timestamp)
     var chat = `<p style="display:none;" id="${ID}" class="from-me">${cmsg}</p>`
 
     $(".chat-body").append(chat)
