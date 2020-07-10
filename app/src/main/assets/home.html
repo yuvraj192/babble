@@ -282,7 +282,7 @@
 
         // When the user clicks on the button, open the modal
         btn.onclick = function () {
-            modal.style.display = "block";
+            $("#myModal").show('fast')
         }
 
         // When the user clicks on <span> (x), close the modal
@@ -352,9 +352,7 @@
             $(`.${ID}`).show('fast')
             $(activeElm).hide('slow')
             $(activeElm).remove()
-
             addListeners()
-            taken = false;
         }
 
         function removePin(){
@@ -377,7 +375,6 @@
             $(activeElm).remove()
 
             addListeners()
-            taken = false;
         }
 
         function deleteChat(){
@@ -387,6 +384,7 @@
         }
 
         function addListeners(){
+        taken = false;
             document.querySelectorAll('.chat-item').forEach(item => {
             item.addEventListener('touchstart', event => {
             if(!taken){
