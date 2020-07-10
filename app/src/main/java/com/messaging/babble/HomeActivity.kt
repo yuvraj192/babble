@@ -1,5 +1,8 @@
 package com.messaging.babble
 
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,6 +15,7 @@ import android.os.Vibrator
 import android.view.Window
 import android.view.WindowManager
 import android.webkit.*
+import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import kotlinx.android.synthetic.main.activity_chat.*
@@ -21,12 +25,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class HomeActivity : AppCompatActivity() {
     private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         socket.connect()
-        socket.emit("join", "yuvj")
+        socket.emit("join", "divyanshg21")
+
 
         if (homeView != null){
             val websettings = homeView!!.settings
@@ -75,9 +81,16 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
 
+            socket.on("message", Emitter.Listener { args ->
+                notifyMessage(args[0].toString(), args[1].toString(), args[2].toString())
+            })
+
         }
 
         }
+    private fun notifyMessage(msg: String, by: String, time: String){
+
+    }
     private fun openActivity(){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
         startActivity(intent)
