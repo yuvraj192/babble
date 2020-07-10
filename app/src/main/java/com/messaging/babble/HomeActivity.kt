@@ -26,7 +26,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         socket.connect()
-        socket.emit("join", "divyanshg21")
+        socket.emit("join", "yuvj")
 
         if (homeView != null){
             val websettings = homeView!!.settings
@@ -41,12 +41,20 @@ class HomeActivity : AppCompatActivity() {
                 }
             }, "chat")
 
+            homeView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun logout(){
+                    logAct()
+                    finish()
+                }
+            }, "app")
+
             homeView.addJavascriptInterface(object: Any(){
                 @JavascriptInterface
                 fun vibrate(){
                     val vibrator = applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                     if (Build.VERSION.SDK_INT >= 26) {
-                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+                        vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
                     } else {
                         vibrator.vibrate(30)
                     }
@@ -73,6 +81,11 @@ class HomeActivity : AppCompatActivity() {
     private fun openActivity(){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
         startActivity(intent)
+    }
+    private fun logAct(){
+        val intent = Intent(this@HomeActivity, MainActivity::class.java)
+        startActivity(intent)
+
     }
 
     override fun onDestroy() {
