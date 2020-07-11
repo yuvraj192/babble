@@ -47,8 +47,8 @@ class addChat : AppCompatActivity() {
 
             conView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun load(num: String) {
-                    openActivity(num)
+                fun load(num: String, name: String) {
+                    openActivity(num, name)
                     finish()
                 }
             }, "chat")
@@ -116,10 +116,11 @@ class addChat : AppCompatActivity() {
             }
         }
 
-    private fun openActivity(num: String){
+    private fun openActivity(num: String, name: String){
         val intent = Intent(this@addChat, ChatActivity::class.java)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("toNum", num)
+        intent.putExtra("toName", name)
         startActivity(intent)
     }
 

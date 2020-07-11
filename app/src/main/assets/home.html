@@ -241,7 +241,7 @@
                     return
                 }
             };
-            xhttp.open("GET", "http://iotine.zapto.org:4600/logout/+" + phoneNumber, true);
+            xhttp.open("GET", "http://iotine.zapto.org:4600/logout/" + phoneNumber, true);
             xhttp.send();
         }
         var activeElm;
@@ -249,7 +249,7 @@
         function openChat(item) {
             var num = item.id.split("_")[0]
             taken = false;
-            chat.load(num)
+            chat.load(num, $(`${num}_name`).html())
         }
 
         // Get the modal

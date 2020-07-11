@@ -57,8 +57,8 @@ class HomeActivity : AppCompatActivity() {
 
             homeView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun load(num: String) {
-                    openActivity(num)
+                fun load(num: String, name: String) {
+                    openActivity(num, name)
                 }
             }, "chat")
 
@@ -120,10 +120,11 @@ class HomeActivity : AppCompatActivity() {
     private fun notifyMessage(msg: String, to: String, from: String ,time: String){
         sendnoti(from + " : " +msg)
     }
-    private fun openActivity(num: String){
+    private fun openActivity(num: String, name: String){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
         intent.putExtra("phoneNumber", phoneNumber)
         intent.putExtra("toNum", num)
+        intent.putExtra("toName", name)
         startActivity(intent)
     }
 
