@@ -60,7 +60,7 @@ class ChatActivity : AppCompatActivity() {
                 @JavascriptInterface
                 fun delete(to: String, ucid: String, _id: String) {
                     socket.emit("deleteMsg", to, ucid, _id)
-                    Toast.makeText(applicationContext, _id, Toast.LENGTH_LONG).show()
+
                 }
             }, "msgg")
 
@@ -97,6 +97,8 @@ class ChatActivity : AppCompatActivity() {
             })
 
             socket.on("deleteMsg", Emitter.Listener { args ->
+
+                Toast.makeText(applicationContext, args[1].toString(), Toast.LENGTH_LONG).show()
                 deletemsg(args[0].toString(), args[1].toString())
             })
 
