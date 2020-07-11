@@ -60,6 +60,7 @@ class ChatActivity : AppCompatActivity() {
                 @JavascriptInterface
                 fun delete(to: String, ucid: String, _id: String) {
                     socket.emit("deleteMsg", to, ucid, _id)
+                    Toast.makeText(applicationContext, _id, Toast.LENGTH_LONG).show()
                 }
             }, "msgg")
 

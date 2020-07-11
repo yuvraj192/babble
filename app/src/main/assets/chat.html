@@ -303,7 +303,7 @@ function unsendMessage(){
                 if (this.readyState == 4 && this.status == 200) {
                     $(activeElm).hide('fast')
                     $(activeElm).remove()
-                    msgg.delete(`${phoneNumber}`, `${ucid}`,`${activeElm.id}`)
+                    msgg.delete(`${phoneNumber}`, `${ucid}`, `${activeElm.id}`)
                     taken = false;
                 } else {
                     taken = false;
@@ -356,7 +356,6 @@ function getChats(ucid){
                         }else if(message.to == phoneNumber) {
                             templ = `<p id="${message.mid}" class="from-them">${message.data}</p>`
                         }
-
                         $(".chat-body").append(templ)
                         $('html, body').animate({
                             scrollTop: $('#chat_body').prop("scrollHeight")
