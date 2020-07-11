@@ -2,6 +2,7 @@ package com.messaging.babble
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
@@ -21,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class addChat : AppCompatActivity() {
-    var tv_phonebook: TextView? = null
     var arrayList: ArrayList<String>? = null
 
     var phoneNumber: String? = null
@@ -44,6 +44,14 @@ class addChat : AppCompatActivity() {
                     finish()
                 }
             }, "contacts")
+
+            conView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun load() {
+                    openActivity()
+                    finish()
+                }
+            }, "chat")
 
             conView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
@@ -107,6 +115,12 @@ class addChat : AppCompatActivity() {
                   conView.loadUrl("javascript:addContactToList('$name', '$mobile')")
             }
         }
+
+    private fun openActivity(){
+        val intent = Intent(this@addChat, ChatActivity::class.java)
+        intent.putExtra("phoneNumber", phoneNumber)
+        startActivity(intent)
+    }
 
         override fun onRequestPermissionsResult(
             requestCode: Int,

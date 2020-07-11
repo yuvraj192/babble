@@ -98,7 +98,7 @@
         <a
                 class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
                 <span class="ml-1 text-xs"><img src="2.png" class="rounded-full h-10 w-10 bg-green-200" alt=""> <br>
-                    <span style="margin-top:-20px !important;margin-left:auto;position:absolute;">John</span> </span>
+                    <span id="contactName" style="margin-top:-20px !important;position:absolute;">John</span> </span>
         </a>
         <nav class="flex items-center text-base fixed left-0 top-0 mt-5 ml-5">
             <a onclick="chat.close()" class="mr-5 text-blue-500 rounded-full text-sm"><i
@@ -143,6 +143,7 @@
 $(".msg").focus()
 $(".msg").click()
 var phoneNumber;
+var tonum;
 window.onscroll = () =>{
     if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
         $(".head").addClass("shadow-lg")
@@ -179,13 +180,13 @@ function recieveMessage(msg, time){
 async function sendMessage(){
     var cmsg = $(".msg").val()
     if(cmsg == "" || cmsg == " ") return;
-    var to = "+918178392040"
-    var from = `+${phoneNumber}`
-    var timestamp = new Date().getTime()
+    var to = `${tonum}`
+    var from = `${phoneNumber}`
+    var timestamp = Date.now()
 
     var ID =  '_' + Math.random().toString(36).substr(2, 9);
 
-    await msg.send(cmsg, to, from,timestamp)
+    await msg.send(cmsg, to, from, `${timestamp}`)
     var chat = `<p style="display:none;" id="${ID}" class="from-me">${cmsg}</p>`
 
     $(".chat-body").append(chat)
@@ -197,8 +198,10 @@ async function sendMessage(){
     }, 100);
     device.vibrate()
 }
-function updateNumber(pno){
+function updateNumber(pno, toNum){
     phoneNumber = pno;
+    tonum = toNum;
+    $("#contactName").html(toNum)
 }
 </script>
 </html>

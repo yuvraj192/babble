@@ -111,28 +111,7 @@
 <section class="text-gray-700 body-font mt-4 bg-white">
     <div class="container px-5 py-2 mx-auto">
         <div class="flex flex-wrap -m-2 chats-cont">
-            <div class="lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg">
-                <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                    <img alt="team"
-                         class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                         src="1.png">
-                    <div class="flex-grow border-b pb-2">
-                        <h2 class="text-gray-900 title-font font-bold">Holden Caulfield</h2>
-                        <p class="text-gray-500">UI Designer</p>
-                    </div>
-                </div>
-            </div>
-            <div class="lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg">
-                <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                    <img alt="team"
-                         class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                         src="2.png">
-                    <div class="flex-grow border-b pb-2">
-                        <h2 class="text-gray-900 title-font font-bold">Holden</h2>
-                        <p class="text-gray-500">UI Designer</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </section>
@@ -174,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="logout()"  class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                    <div onclick="logout()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
                         <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                             <i alt="team"
                                class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">exit_to_app</i>
@@ -251,24 +230,26 @@
 
 <script>
         var phoneNumber;
-         function logout(){
-            if(phoneNumber == "") return;
+
+        function logout() {
+            if (phoneNumber == "") return;
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     app.logout();
-                }else{
+                } else {
                     return
                 }
-        };
-        xhttp.open("GET", "http://iotine.zapto.org:4600/logout/+"+phoneNumber, true);
-        xhttp.send();
-    }
+            };
+            xhttp.open("GET", "http://iotine.zapto.org:4600/logout/+" + phoneNumber, true);
+            xhttp.send();
+        }
         var activeElm;
 
-        function openChat() {
+        function openChat(item) {
+            var num = item.id.split("_")[0]
             taken = false;
-            chat.load()
+            chat.load(num)
         }
 
         // Get the modal
@@ -310,7 +291,7 @@
         var disableHold = false;
         var taken = false;
 
-       addListeners()
+        addListeners()
 
         window.onscroll = function () {
             disableHold = true
@@ -336,12 +317,13 @@
             }
         }
 
-        function updateNumber(pno){
+        function updateNumber(pno) {
             phoneNumber = pno;
+            getChatList()
         }
 
-        function addPin(){
-            var ID =  '_' + Math.random().toString(36).substr(2, 9);
+        function addPin() {
+            var ID = '_' + Math.random().toString(36).substr(2, 9);
             var templ = `<div style="display:none;" class="${ID} w-1/3 p-4 chat-item pin-chat">
                 <a class="block relative h-24 w-24 rounded-full overflow-hidden pin-img">
                     <img alt="ecommerce" class="object-cover object-center w-full h-full block bg-green-200"
@@ -357,8 +339,8 @@
             addListeners()
         }
 
-        function removePin(){
-            var ID =  '_' + Math.random().toString(36).substr(2, 9);
+        function removePin() {
+            var ID = '_' + Math.random().toString(36).substr(2, 9);
             var templ = `<div class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
                 <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                     <img alt="team"
@@ -379,47 +361,86 @@
             addListeners()
         }
 
-        function deleteChat(){
+        function deleteChat() {
             $(activeElm).hide('slow')
             $(activeElm).remove()
             taken = false;
         }
 
-        function addListeners(){
-        taken = false
+        function addListeners() {
+            taken = false
             document.querySelectorAll('.chat-item').forEach(item => {
-            item.addEventListener('touchstart', event => {
-            if(!taken){
-                taken = true
-                start = new Date().getTime();
-                inter = setInterval(function () {
-                    if (new Date().getTime() >= (start + longpress)) {
-                        start = 0
-                        clearInterval(inter)
-                        $(item).css("z-index", "101")
-                        $("#chat-settings").show()
+                item.addEventListener('touchstart', event => {
+                    if (!taken) {
+                        taken = true
+                        start = new Date().getTime();
+                        inter = setInterval(function () {
+                            if (new Date().getTime() >= (start + longpress)) {
+                                start = 0
+                                clearInterval(inter)
+                                $(item).css("z-index", "101")
+                                $("#chat-settings").show()
 
-                        if($(item).hasClass("pin-chat")){
-                            $(".mpin").hide()
-                            $(".munpin").show()
-                        }else{
-                            $(".mpin").show()
-                            $(".munpin").hide()
-                        }
-                        device.vibrate()
-                        activeElm = item
-                    } else {}
-                }, 100);
-                }else{
-                  return
+                                if ($(item).hasClass("pin-chat")) {
+                                    $(".mpin").hide()
+                                    $(".munpin").show()
+                                } else {
+                                    $(".mpin").show()
+                                    $(".munpin").hide()
+                                }
+                                device.vibrate()
+                                activeElm = item
+                            } else {}
+                        }, 100);
+                    } else {
+                        return
+                    }
+                })
+                item.addEventListener("touchend", event => {
+                    clearInterval(inter)
+                    start = 0
+                })
+                item.addEventListener("click", function() { openChat(item) })
+            })
+        }
+
+        function getChatList() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var messages = JSON.parse(this.responseText);
+
+                    messages.forEach(message => {
+                    contacts.getName(message.to)
+                        var ID = '_' + Math.random().toString(36).substr(2, 9);
+                        var templ = `<div id="${message.to}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+                                    <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                                        <img alt="team"
+                                             class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                        src="1.png">
+                                        <div class="flex-grow border-b pb-2">
+                                            <h2 class="text-gray-900 title-font font-bold ${message.to}_name">${message.to}</h2>
+                                            <p class="text-gray-500">UI Designer</p>
+                                        </div>
+                                    </div>
+                                 </div>`
+
+                    $(".chats-cont").append(templ)
+                    $(`.${ID}`).show('fast')
+                    taken = false;
+                    addListeners()
+                    })
+
+                } else {
+                    return
                 }
-            })
-            item.addEventListener("touchend", event => {
-                clearInterval(inter)
-                start = 0
-            })
-            item.addEventListener("click", openChat)
-        })
+            };
+            xhttp.open("GET", "http://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
+            xhttp.send();
+        }
+
+        function updateName(name, num){
+            $(`.${num}_name`).html(name)
         }
     </script>
 </body>

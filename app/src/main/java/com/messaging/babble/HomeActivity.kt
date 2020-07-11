@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.ContactsContract
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -22,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
+import kotlinx.android.synthetic.main.activity_add_chat.*
+import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -54,8 +57,8 @@ class HomeActivity : AppCompatActivity() {
 
             homeView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun load() {
-                    openActivity()
+                fun load(num: String) {
+                    openActivity(num)
                 }
             }, "chat")
 
@@ -74,6 +77,13 @@ class HomeActivity : AppCompatActivity() {
                     finish()
                 }
             }, "app")
+
+            homeView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun getName(num: String) {
+                    getContactName(num)
+                }
+            }, "contacts")
 
             homeView.addJavascriptInterface(object: Any(){
                 @JavascriptInterface
@@ -110,10 +120,33 @@ class HomeActivity : AppCompatActivity() {
     private fun notifyMessage(msg: String, to: String, from: String ,time: String){
         sendnoti(from + " : " +msg)
     }
-    private fun openActivity(){
+    private fun openActivity(num: String){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
         intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("toNum", num)
         startActivity(intent)
+    }
+
+    private fun getContactName(num: String) {
+        val cursor = contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+        )
+        while (cursor!!.moveToNext()) {
+            val name =
+                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+            val mobile =
+                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+
+            if(num == mobile){
+                homeView.post(Runnable {
+                    homeView.loadUrl("javascript:updateName('$name', '$num')")
+                })
+            }
+        }
     }
 
     private fun addActivity(){
