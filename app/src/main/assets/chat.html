@@ -380,9 +380,8 @@ function updateNumber(pno, toNum, name){
 }
 
 function deleteMessage(from, _id){
-    if(from == phoneNumber) return
-    $(`#${_id}`).hide('fast')
-    $(`#${_id}`).remove()
+    $(`#${_id.id}`).hide('fast')
+    $(`#${_id.id}`).remove()
 }
 
 function addListeners() {

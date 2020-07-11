@@ -97,8 +97,6 @@ class ChatActivity : AppCompatActivity() {
             })
 
             socket.on("deleteMsg", Emitter.Listener { args ->
-
-                Toast.makeText(applicationContext, args[1].toString(), Toast.LENGTH_LONG).show()
                 deletemsg(args[0].toString(), args[1].toString())
             })
 
@@ -108,7 +106,8 @@ class ChatActivity : AppCompatActivity() {
 
     private fun deletemsg(to: String, id: String){
         chatView.post(Runnable {
-            chatView.loadUrl("javascript:deleteMessage($to ,$id)")
+            var _id: String = id.toString()
+            chatView.loadUrl("javascript:deleteMessage($to ,$_id)")
         })
     }
 
