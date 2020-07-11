@@ -303,7 +303,7 @@ function unsendMessage(){
                 if (this.readyState == 4 && this.status == 200) {
                     $(`#${activeElm.id}`).hide('fast')
                     $(activeElm).remove()
-                    msgg.delete(`${activeElm.id}`)
+                    msgg.delete(`${phoneNumber}`, `${ucid}`,`${activeElm.id}`)
                     taken = false;
                 } else {
                     taken = false;
