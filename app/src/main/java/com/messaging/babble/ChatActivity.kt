@@ -34,6 +34,8 @@ class ChatActivity : AppCompatActivity() {
         phoneNumber = intent.getStringExtra("phoneNumber")
         toNum = intent.getStringExtra("toNum")
 
+        Toast.makeText(applicationContext, toNum, Toast.LENGTH_LONG).show()
+
         if (chatView != null){
             val websettings = chatView!!.settings
             chatView.settings.javaScriptEnabled = true
