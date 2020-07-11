@@ -94,7 +94,7 @@
             <span class="ml-2 text-xl -mt-2">Babble</span>
         </a>
         <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5 mt-2 ">
-            <button onclick="chat.add()"
+            <button onclick="newChat.add()"
                     class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base md:mt-0 text-blue-500 ">
                 <i class="material-icons">launch</i>
             </button>
@@ -126,9 +126,9 @@
                 <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                     <img alt="team"
                          class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                         src="1.png">
+                         src="2.png">
                     <div class="flex-grow border-b pb-2">
-                        <h2 class="text-gray-900 title-font font-bold">Holden Caulfield</h2>
+                        <h2 class="text-gray-900 title-font font-bold">Holden</h2>
                         <p class="text-gray-500">UI Designer</p>
                     </div>
                 </div>
@@ -267,6 +267,7 @@
         var activeElm;
 
         function openChat() {
+            taken = false;
             chat.load()
         }
 
@@ -352,6 +353,7 @@
             $(`.${ID}`).show('fast')
             $(activeElm).hide('slow')
             $(activeElm).remove()
+            taken = false
             addListeners()
         }
 
@@ -373,7 +375,7 @@
             $(`.${ID}`).show('fast')
             $(activeElm).hide('slow')
             $(activeElm).remove()
-
+            taken = false;
             addListeners()
         }
 
@@ -384,7 +386,7 @@
         }
 
         function addListeners(){
-        taken = false;
+        taken = false
             document.querySelectorAll('.chat-item').forEach(item => {
             item.addEventListener('touchstart', event => {
             if(!taken){
@@ -414,7 +416,7 @@
             })
             item.addEventListener("touchend", event => {
                 clearInterval(inter)
-                start = x0
+                start = 0
             })
             item.addEventListener("click", openChat)
         })

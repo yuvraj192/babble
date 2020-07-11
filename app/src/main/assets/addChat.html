@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -10,38 +11,113 @@
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
     <script src="jquery.js"></script>
+    <style>
+.loader {
+  border-top-color: #3498db;
+  -webkit-animation: spinner 1.5s linear infinite;
+  animation: spinner 1.5s linear infinite;
+}
+
+@-webkit-keyframes spinner {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 </head>
+
 <body>
+<header class="text-gray-700 body-font bg-white fixed inset-x-0 top-0 z-10" style="height:56px;">
+    <div class="container mx-auto flex p-5 flex-col items-center">
+        <nav class="flex items-center text-base fixed left-0 top-0 ml-6 mt-5">
+            <a id="settings" class="mr-5 rounded-full text-sm text-blue-500" onclick="contacts.close()"> <i class="material-icons">chevron_left</i> </a>
+        </nav>
+        <a
+                class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+            <span class="ml-2 text-xl -mt-2">New Chat</span>
+        </a>
+        <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5 mt-4 ">
+            <div class="loader ease-linear rounded-full border-4 border-t-4 h-6 w-6"></div>
+            <button style="display:none;" onclick="refresh()"
+                    class="inline-flex items-center bg-transparent border-0 px-3 focus:outline-none  rounded-full text-base text-blue-500 refresher">
+                <i class="material-icons">autorenew</i>
+            </button>
+        </div>
+    </div>
+</header>
 <section class="text-gray-700 body-font">
     <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap -m-2 conCont">
-            <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-                    <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src="https://dummyimage.com/80x80">
-                    <div class="flex-grow">
-                        <h2 class="text-gray-900 title-font font-medium">Holden Caulfield</h2>
-                        <p class="text-gray-500">UI Designer</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 </section>
+
+<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-gray-200">
+    <div class="rounded-full py-1 w-full float-left mb-2 items-center text-center pr-5 pl-10">
+        <span class="w-full mx-auto my-5 text-center text-sm text-gray-600">Contacts on Babble are listed here</span>
+        <br>
+        <span style="display:none;" class="nonUser text-center text-xs text-gray-600"> <span class="nunUserCount"></span> contacts are not using Babble</span>
+    </div>
+</footer>
 </body>
 <script>
+var prev;
+var phoneNumber;
+var nonUser = 0;
+    async function addContactToList(name, mobile) {
 
-function addContactToList(name, mobile){
-    var templ = `<div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-    <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-        <div class="flex-grow">
-            <h2 class="text-gray-900 title-font font-medium">${name}</h2>
-            <p class="text-gray-500">${mobile}</p>
-        </div>
-    </div>
-</div>`
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              if(mobile == prev) return;
+              if(mobile == phoneNumber) return
+                prev = mobile
+                var templ = `<div style="display:none" id="${mobile}_newChat" class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                                    <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                                    <img alt="team"
+                                        class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                        src="1.png">
+                                        <div class="flex-grow border-b pb-2">
+                                            <h2 class="text-gray-900 title-font font-medium">${name}</h2>
+                                            <p class="text-gray-500">${mobile}</p>
+                                        </div>
+                                    </div>
+                                </div>`
 
-$(".conCont").append(templ)
+                $(".conCont").append(templ)
+                $(`#${mobile}_newChat`).show("fast")
+                $(".loader").hide("fast")
+                $(".refresher").show("fast")
+            } else {
+                nonUser += 1
+                $(".nonUser").show("fast")
+                $(".nunUserCount").html(nonUser)
+                return
+            }
+        };
+        xhttp.open("GET", `http://iotine.zapto.org:4600/isRegistered/${mobile}`, true);
+        await xhttp.send();
+    }
 
-}
+    function updateNumber(pno){
+            phoneNumber = pno;
+        }
+
+     function refresh(){
+     nonUser = 0
+     prev = '';
+        device.vibrate()
+        $(".conCont").html("")
+        $(".refresher").hide();
+        $(".loader").show("fast")
+        $(".nunUserCount").html("0")
+        cons.reload()
+     }
 </script>
+
 </html>

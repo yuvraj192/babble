@@ -1,16 +1,20 @@
 package com.messaging.babble
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.ContactsContract
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_add_chat.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,9 +23,14 @@ import java.util.*
 class addChat : AppCompatActivity() {
     var tv_phonebook: TextView? = null
     var arrayList: ArrayList<String>? = null
+
+    var phoneNumber: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_chat)
+
+        val intent = intent
+        phoneNumber = intent.getStringExtra("phoneNumber")
 
         if (conView != null) {
             val webSettings = conView!!.settings
@@ -29,7 +38,35 @@ class addChat : AppCompatActivity() {
             conView!!.webViewClient = WebViewClient()
             conView!!.webChromeClient = WebChromeClient()
 
+            conView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun close(){
+                    finish()
+                }
+            }, "contacts")
 
+            conView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun reload(){
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+                }
+            }, "cons")
+
+            conView.addJavascriptInterface(object: Any(){
+                @JavascriptInterface
+                fun vibrate(){
+                    val vibrator = applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(40, VibrationEffect.DEFAULT_AMPLITUDE))
+                    } else {
+                        vibrator.vibrate(30)
+                    }
+                }
+
+            }, "device")
 
             conView!!.loadUrl("file:///android_asset/addChat.html")
             conView!!.webViewClient = object : WebViewClient() {
@@ -40,21 +77,17 @@ class addChat : AppCompatActivity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
+                    conView.loadUrl("javascript:updateNumber($phoneNumber)")
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                        requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 1)
+                    } else {
+                        getcontact()
+                    }
                 }
             }
         }
-
-
-
-
-
-
         arrayList = ArrayList()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), 1)
-        } else {
-            getcontact()
-        }
+
     }
 
         private fun getcontact() {
@@ -70,13 +103,8 @@ class addChat : AppCompatActivity() {
                     cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
                 val mobile =
                     cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-                arrayList!!.add(
-                    """
-    $name
-    $mobile
-    """.trimIndent()
-                )
-                tv_phonebook!!.text = arrayList.toString()
+
+                  conView.loadUrl("javascript:addContactToList('$name', '$mobile')")
             }
         }
 

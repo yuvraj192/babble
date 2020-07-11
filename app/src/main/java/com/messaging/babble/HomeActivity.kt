@@ -64,7 +64,7 @@ class HomeActivity : AppCompatActivity() {
                 fun add() {
                     addActivity()
                 }
-            }, "chat")
+            }, "newChat")
 
             homeView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
@@ -118,6 +118,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun addActivity(){
         val intent = Intent(this@HomeActivity, addChat::class.java)
+        intent.putExtra("phoneNumber", phoneNumber)
         startActivity(intent)
     }
 
