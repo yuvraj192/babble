@@ -265,11 +265,10 @@ $(".msg").keypress(function(event) {
       }
 });
 
-function recieveMessage(msg, time){
-     var ID =  '_' + Math.random().toString(36).substr(2, 9);
-     var chat = `<p style="display:none;" id="${ID}" class="from-them">${msg}</p>`
+function recieveMessage(msg, time, mid){
+     var chat = `<p style="display:none;" id="${mid}" class="from-them">${msg}</p>`
      $(".chat-body").append(chat)
-     $(`#${ID}`).show('fast')
+     $(`#${mid}`).show('fast')
       $('html, body').animate({
         scrollTop: $('#chat_body').prop("scrollHeight")
     }, 1000);
@@ -284,7 +283,7 @@ async function sendMessage(){
 
     var ID =  '_' + Math.random().toString(36).substr(2, 9);
 
-    await msg.send(cmsg, to, from, `${timestamp}`)
+    await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
     var chat = `<p style="display:none;" id="${ID}" class="from-me">${cmsg}</p>`
 
     $(".chat-body").append(chat)
@@ -295,13 +294,14 @@ async function sendMessage(){
         scrollTop: $('#chat_body').prop("scrollHeight")
     }, 100);
     device.vibrate()
+    addListeners()
 }
 
 function unsendMessage(){
     var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    $(`#${activeElm.id}`).hide('fast')
+                    $(activeElm).hide('fast')
                     $(activeElm).remove()
                     msgg.delete(`${phoneNumber}`, `${ucid}`,`${activeElm.id}`)
                     taken = false;
@@ -352,9 +352,9 @@ function getChats(ucid){
 
                     messages.forEach(message => {
                         if(message.from == phoneNumber){
-                            templ = `<p id="${message._id}" class="from-me chat-bubble">${message.data}</p>`
+                            templ = `<p id="${message.mid}" class="from-me chat-bubble">${message.data}</p>`
                         }else if(message.to == phoneNumber) {
-                            templ = `<p id="${message._id}" class="from-them">${message.data}</p>`
+                            templ = `<p id="${message.mid}" class="from-them">${message.data}</p>`
                         }
 
                         $(".chat-body").append(templ)

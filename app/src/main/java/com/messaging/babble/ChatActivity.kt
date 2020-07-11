@@ -51,8 +51,8 @@ class ChatActivity : AppCompatActivity() {
 
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun send(data: String, to: String, from: String, time: String) {
-                    socket.emit("message", data, to, from, time)
+                fun send(data: String, to: String, from: String, time: String, mid: String) {
+                    socket.emit("message", data, to, from, time, mid)
                 }
             }, "msg")
 
@@ -92,7 +92,7 @@ class ChatActivity : AppCompatActivity() {
             }
 
             socket.on("message", Emitter.Listener { args ->
-                addMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString())
+                addMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString(), args[4].toString())
             })
 
             socket.on("deleteMsg", Emitter.Listener { args ->
@@ -109,9 +109,9 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
-    private fun addMessage(msg: String, by: String, from: String, time: String){
+    private fun addMessage(msg: String, by: String, from: String, time: String, mid: String){
         chatView.post(Runnable {
-            chatView.loadUrl("javascript:recieveMessage('$msg', '$time')")
+            chatView.loadUrl("javascript:recieveMessage('$msg', '$time', '$mid')")
         })
     }
 
