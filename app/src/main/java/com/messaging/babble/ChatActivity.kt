@@ -56,6 +56,13 @@ class ChatActivity : AppCompatActivity() {
                 }
             }, "msg")
 
+            chatView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun delete(to: String, ucid: String, _id: String) {
+                    socket.emit("deleteMsg", to, ucid, _id)
+                }
+            }, "msgg")
+
             chatView.addJavascriptInterface(object: Any(){
                 @JavascriptInterface
                 fun vibrate(){
@@ -86,6 +93,12 @@ class ChatActivity : AppCompatActivity() {
 
             socket.on("message", Emitter.Listener { args ->
                 addMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString())
+            })
+
+            socket.on("deleteMsg", Emitter.Listener { args ->
+                chatView.post(Runnable {
+                    chatView.loadUrl("javascript:deleteMessage('$args[0].toString()' ,'$args[1].toString()')")
+                })
             })
 
         }

@@ -302,7 +302,11 @@ function unsendMessage(){
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     $(`#${activeElm.id}`).hide('fast')
+                    $(activeElm).remove()
+                    msgg.delete(`${activeElm.id}`)
+                    taken = false;
                 } else {
+                    taken = false;
                     return
                 }
             };
@@ -374,6 +378,12 @@ function updateNumber(pno, toNum, name){
     $("#contactName").html(name)
     ucid = parseInt(pno)+parseInt(toNum)
     getChats( ucid )
+}
+
+function deleteMessage(from, _id){
+    if(from == phoneNumber) return
+    $(`#${_id}`).hide('fast')
+    $(`#${_id}`).remove()
 }
 
 function addListeners() {
