@@ -98,6 +98,16 @@ class HomeActivity : AppCompatActivity() {
 
             }, "device")
 
+            homeView.addJavascriptInterface(object: Any(){
+                @JavascriptInterface
+                fun load(){
+                    val intent = Intent(this@HomeActivity, ProfilePage::class.java)
+                    intent.putExtra("phoneNumber", phoneNumber)
+                    startActivity(intent)
+                }
+
+            }, "profile")
+
             homeView.loadUrl("file:///android_asset/home.html")
             homeView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
