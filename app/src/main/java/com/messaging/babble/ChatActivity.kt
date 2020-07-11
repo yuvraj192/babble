@@ -96,13 +96,17 @@ class ChatActivity : AppCompatActivity() {
             })
 
             socket.on("deleteMsg", Emitter.Listener { args ->
-                chatView.post(Runnable {
-                    chatView.loadUrl("javascript:deleteMessage('$args[0].toString()' ,'$args[1].toString()')")
-                })
+                deletemsg(args[0].toString(), args[1].toString())
             })
 
         }
 
+    }
+
+    private fun deletemsg(to: String, id: String){
+        chatView.post(Runnable {
+            chatView.loadUrl("javascript:deleteMessage($to ,$id)")
+        })
     }
 
     private fun addMessage(msg: String, by: String, from: String, time: String){
