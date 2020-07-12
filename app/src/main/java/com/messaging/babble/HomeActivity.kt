@@ -118,7 +118,23 @@ class HomeActivity : AppCompatActivity() {
 
         }
     private fun notifyMessage(msg: String, to: String, from: String ,time: String){
-        sendnoti(from + " : " +msg)
+        val cursor = contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null,
+            null,
+            null,
+            null
+        )
+        while (cursor!!.moveToNext()) {
+            val name =
+                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+            val mobile =
+                cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+
+            if(from == mobile){
+                sendnoti(name + " : " +msg)
+            }
+        }
     }
     private fun openActivity(num: String, name: String){
         val intent = Intent(this@HomeActivity, ChatActivity::class.java)
