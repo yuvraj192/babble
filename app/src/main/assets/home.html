@@ -80,6 +80,29 @@
         .modal {
             transition: 0.2s cubic-bezier(0.62, 0.48, 0, 0.68) all !important;
         }
+
+        .tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
     </style>
 </head>
 
@@ -104,7 +127,13 @@
 <section class="text-gray-700 body-font mt-20 bg-white inset-x-0 pinSec" style="top:-24px !important;z-index-99;">
     <div class="container px-5 mx-auto">
         <div class="flex flex-wrap -m-4 overflow-y-auto pinsCont">
-
+            <div id="test" class="w-1/3 p-4 chat-item pin-chat">
+                <a class="tooltip block relative h-24 w-24 rounded-full overflow-hidden pin-img">
+                    <span class="tooltiptext">test</span>
+                    <img alt="ecommerce" class="avt-img object-cover object-center w-full h-full block bg-green-200"
+                         src="2.png">
+                </a>
+            </div>
         </div>
     </div>
 </section>
@@ -324,9 +353,9 @@
 
         function addPin() {
             var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var templ = `<div style="display:none;" class="${ID} w-1/3 p-4 chat-item pin-chat">
+            var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat">
                 <a class="block relative h-24 w-24 rounded-full overflow-hidden pin-img">
-                    <img alt="ecommerce" class="object-cover object-center w-full h-full block bg-green-200"
+                    <img alt="ecommerce" class="avt-img object-cover object-center w-full h-full block bg-green-200"
                          src="1.png">
                 </a>
             </div>`
@@ -341,19 +370,20 @@
 
         function removePin() {
             var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var templ = `<div class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+            var templ = `<div id="${activeElm.id}" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
                 <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                     <img alt="team"
                          class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                          src="1.png">
                     <div class="flex-grow border-b pb-2">
-                        <h2 class="text-gray-900 title-font font-bold">Holden Caulfield</h2>
+                        <h2 class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name"></h2>
                         <p class="text-gray-500">UI Designer</p>
                     </div>
                 </div>
             </div>`
 
-            $(".chats-cont").append(templ)
+            $(".chats-cont").prepend(templ)
+            contacts.getName(activeElm.id.split('_')[0])
             $(`.${ID}`).show('fast')
             $(activeElm).hide('slow')
             $(activeElm).remove()
@@ -432,7 +462,17 @@
                     addListeners()
                     })
 
-                } else {
+                } else if (this.status == 404) {
+                 $(".chats-cont").html("")
+                var templ = `<div id="add_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+                                    <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                                        <div class="flex-grow border-b pb-2">
+                                            <h2 class="text-gray-900 title-font font-bold add_name">Start a new chat</h2>
+                                        </div>
+                                    </div>
+                                 </div>`
+
+                    $(".chats-cont").append(templ)
                     return
                 }
             };
@@ -441,6 +481,9 @@
         }
 
         function updateChatList(message, name, msg){
+        if($(`#${message}_message`).hasClass('pin-chat')){
+
+        }else{
             if($('.chats-cont').first().attr('id') != `${message}_message`){
                 $(`#${message}_message`).hide('fast')
                 $(`#${message}_message`).remove()
@@ -462,6 +505,7 @@
                     $(`.${ID}`).show('fast')
                     taken = false;
                     addListeners()
+             }
         }
 
         function updateName(name, num){
