@@ -404,22 +404,23 @@
             })
         }
 
-        function getChatList() {
+        async function getChatList() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
+                    $(".chats-cont").html("")
                     var messages = JSON.parse(this.responseText);
 
                     messages.forEach(message => {
-                    contacts.getName(message.to)
+                    contacts.getName(message)
                         var ID = '_' + Math.random().toString(36).substr(2, 9);
-                        var templ = `<div id="${message.to}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+                        var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
                                     <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                                         <img alt="team"
                                              class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                                         src="1.png">
                                         <div class="flex-grow border-b pb-2">
-                                            <h2 class="text-gray-900 title-font font-bold ${message.to}_name">${message.to}</h2>
+                                            <h2 class="text-gray-900 title-font font-bold ${message}_name">${message}</h2>
                                             <p class="text-gray-500">UI Designer</p>
                                         </div>
                                     </div>
@@ -436,7 +437,7 @@
                 }
             };
             xhttp.open("GET", "http://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
-            xhttp.send();
+            await xhttp.send();
         }
 
         function updateName(name, num){

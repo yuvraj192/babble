@@ -59,6 +59,7 @@ class HomeActivity : AppCompatActivity() {
                 @JavascriptInterface
                 fun load(num: String, name: String) {
                     openActivity(num, name)
+                    homeView.loadUrl("javascript:getChatList()")
                 }
             }, "chat")
 
@@ -143,6 +144,9 @@ class HomeActivity : AppCompatActivity() {
 
             if(from == mobile){
                 sendnoti(name + " : " +msg)
+                homeView.post(Runnable {
+                    homeView.loadUrl("javascript:getChatList()")
+                })
             }
         }
     }
