@@ -440,6 +440,30 @@
             await xhttp.send();
         }
 
+        function updateChatList(message, name, msg){
+            if($('.chats-cont').first().attr('id') != `${message}_message`){
+                $(`#${message}_message`).hide('fast')
+                $(`#${message}_message`).remove()
+            }
+
+            var ID = '_' + Math.random().toString(36).substr(2, 9);
+            var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+                                    <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                                        <img alt="team"
+                                             class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                        src="1.png">
+                                        <div class="flex-grow border-b pb-2">
+                                            <h2 class="text-gray-900 title-font font-bold ${message}_name">${name}</h2>
+                                            <p class="text-black font-bold">${msg}</p>
+                                        </div>
+                                    </div>
+                                 </div>`
+                    $(".chats-cont").prepend(templ)
+                    $(`.${ID}`).show('fast')
+                    taken = false;
+                    addListeners()
+        }
+
         function updateName(name, num){
             $(`.${num}_name`).html(name)
         }
