@@ -9,7 +9,6 @@
     <title>Chat</title>
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
-    <script src="jquery.js"></script>
 
     <style>
     body {
@@ -229,6 +228,8 @@
     </div>
 </footer>
 </body>
+
+<script src="jquery.js"></script>
 <script>
 $(".msg").focus()
 $(".msg").click()
@@ -375,7 +376,7 @@ function updateNumber(pno, toNum, name){
     phoneNumber = pno;
     tonum = toNum;
     $("#contactName").html(name)
-    ucid = parseInt(pno)+parseInt(toNum)
+    ucid = [tonum, pno].sort().join('')
     getChats( ucid )
 }
 
