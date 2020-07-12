@@ -198,7 +198,7 @@ class HomeActivity : AppCompatActivity() {
             notificationChannel = NotificationChannel(channelId,msg,NotificationManager.IMPORTANCE_HIGH)
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.GREEN
-            notificationChannel.enableVibration(true)
+            notificationChannel.enableVibration(false)
             notificationManager.createNotificationChannel(notificationChannel)
 
             builder = Notification.Builder(this,channelId)
