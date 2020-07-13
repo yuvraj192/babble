@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
-    private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
+    private val socket: Socket = IO.socket("http://ec2-13-235-0-200.ap-south-1.compute.amazonaws.com:4600/")
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
     lateinit var builder : Notification.Builder

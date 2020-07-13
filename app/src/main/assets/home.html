@@ -265,15 +265,19 @@
                     return
                 }
             };
-            xhttp.open("GET", "http://iotine.zapto.org:4600/logout/" + phoneNumber, true);
+            xhttp.open("GET", "http://ec2-13-235-0-200.ap-south-1.compute.amazonaws.com:4600/logout/" + phoneNumber, true);
             xhttp.send();
         }
         var activeElm;
+        var times = 0;
 
         function openChat(item) {
+            if(times > 0) return
+            times = 1
             var num = item.id.split("_")[0]
             taken = false;
-            chat.load(num, $(`${num}_name`).html())
+            chat.load(num, $(`.${num}_name`).html())
+            window.location.reload()
         }
 
         // Get the modal
@@ -472,7 +476,7 @@
                     return
                 }
             };
-            xhttp.open("GET", "http://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
+            xhttp.open("GET", "http://ec2-13-235-0-200.ap-south-1.compute.amazonaws.com:4600/chatListOF/" + phoneNumber, true);
             await xhttp.send();
         }
 
