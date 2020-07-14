@@ -22,7 +22,7 @@ import org.json.JSONObject
 
 
 class ChatActivity : AppCompatActivity() {
-    private val socket: Socket = IO.socket("http://ec2-13-235-0-200.ap-south-1.compute.amazonaws.com:4600/")
+    private val socket: Socket = IO.socket("http://ec2-13-235-135-138.ap-south-1.compute.amazonaws.com:4600/")
     var phoneNumber: String? = null
     var toNum: String? = null
     var toName: String? = null
