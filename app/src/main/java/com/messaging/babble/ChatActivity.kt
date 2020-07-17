@@ -1,8 +1,11 @@
 package com.messaging.babble
 
+import android.Manifest
+import android.app.Activity
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -18,10 +21,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
-import com.messaging.photopicker.GalleryOpen
+import com.messaging.babble.GalleryOpen
 import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.activity_gallery_open.*
 import org.json.JSONException
 import org.json.JSONObject
+import java.security.Permissions
 
 
 class ChatActivity : AppCompatActivity() {
@@ -55,7 +60,22 @@ class ChatActivity : AppCompatActivity() {
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
                 fun Gallery() {
-                    openGal()
+                    /*Toast.makeText(applicationContext, "HERE", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this@ChatActivity, GalleryOpen::class.java)
+                    startActivity(intent)*/
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                            val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
+                            requestPermissions(permissions, GalleryOpen.PERMISSION_CODE);
+
+                        } else {
+                            pickImageFromGallery();
+                        }
+
+                    }
+                    else{
+                        pickImageFromGallery()
+                    }
                 }
             }, "photo")
 
@@ -114,6 +134,44 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, IMAGE_PICK_CODE)
+
+    }
+
+    companion object {
+        private val IMAGE_PICK_CODE = 1000;
+        private val PERMISSION_CODE = 1001;
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    pickImageFromGallery()
+                }
+                else{
+                    Toast.makeText(this, "Permission Denied ", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+            //image_view.setImageURI(data?.data)
+            var imurl = data?.data
+            Toast.makeText(applicationContext, imurl.toString(), Toast.LENGTH_SHORT).show()
+            chatView.post(Runnable {
+                chatView.loadUrl("javascript:prevImage('$imurl')")
+            })
+        }
+    }
+
     private fun deletemsg(to: String, id: String){
         chatView.post(Runnable {
             var _id: String = id.toString()
@@ -126,10 +184,6 @@ class ChatActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "", Toast.LENGTH_LONG)
             chatView.loadUrl("javascript:recieveMessage('$msg', '$time', '$mid')")
         })
-    }
-    private fun openGal(){
-        val intent = Intent(this@ChatActivity, GalleryOpen::class.java)
-        startActivity(intent)
     }
 
 }

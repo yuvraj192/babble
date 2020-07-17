@@ -1,4 +1,4 @@
-package com.messaging.photopicker
+package com.messaging.babble
 
 import android.Manifest
 import android.app.Activity
@@ -46,7 +46,7 @@ class GalleryOpen : AppCompatActivity() {
 
     companion object {
         private val IMAGE_PICK_CODE = 1000;
-        private val PERMISSION_CODE = 1001;
+        val PERMISSION_CODE = 1001;
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

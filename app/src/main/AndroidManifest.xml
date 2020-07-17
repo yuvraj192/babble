@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".imagepick"></activity>
+        <activity android:name=".GalleryOpen"></activity>
         <activity android:name=".ProfilePage" />
         <activity android:name=".addChat" />
         <activity android:name=".StartActivity" />
