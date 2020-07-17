@@ -242,7 +242,7 @@
     </div>
 </div>
 
-<div class="modal px-3 animate__animated animate__fadeIn" id="large-image">
+<div class="modal px-3 animate__animated animate__fadeIn animate__faster" id="large-image">
     <div class="modal-content cont-lrg-img p-5 ml-1 rounded-lg animate__animated animate__pulse" style="bottom:20px !important; max-width:92% !important;">
         <img src="" class="large_image rounded-lg" alt="">
     </div>
@@ -475,13 +475,12 @@ async function prevImage(url){
     var chat;
     //await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
     if(mediaType[4] == "video"){
-        chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <video width="320" height="240" src="${url}">Something went wrong</video> </p>`
+        chat = `<p id="${ID}" class="from-me no-color animate__animated animate_jello"> <video width="320" height="240" src="${url}">Something went wrong</video> </p>`
     }else if(mediaType[4] == "images" || mediaType[4] == "image"){
-        chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img" src="${url}" /> </p>`
+        chat = `<p  id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="${url}" /> </p>`
     }
 
     $(".chat-body").append(chat)
-    $(`#${ID}`).show()
     $('html, body').animate({
         scrollTop: $('#chat_body').prop("scrollHeight")
     }, 100);
@@ -494,5 +493,21 @@ function showImg(src){
     $("#large-image").show();
     $(".large_image").attr("src", src)
 }
+</script>
+<script>
+
+    function checkPageFocus() {
+       let body = document.querySelector('body');
+
+        if (document.hasFocus()) {
+            user.setActivity(0)
+        }
+        else {
+            user.setActivity(1)
+        }
+    }
+
+setInterval(checkPageFocus, 300);
+
 </script>
 </html>

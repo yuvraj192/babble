@@ -18,8 +18,11 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.RemoteViews
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
@@ -32,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
     lateinit var builder : Notification.Builder
-    private val channelId = "com.messaging.notiex"
+    private val CHANNEL_ID = "com.messaging.babble"
 
     var phoneNumber: String? = null
 
@@ -108,6 +111,18 @@ class HomeActivity : AppCompatActivity() {
 
             }, "profile")
 
+            homeView.addJavascriptInterface(object: Any(){
+                @JavascriptInterface
+                fun setActivity(act: Int){
+                    if(act == 1){
+                        socket.emit("act", "Online", phoneNumber)
+                    }else if(act == 0){
+                        socket.emit("act", "Offline", phoneNumber)
+                    }
+                }
+
+            }, "user")
+
             homeView.loadUrl("file:///android_asset/home.html")
             homeView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -142,7 +157,7 @@ class HomeActivity : AppCompatActivity() {
                 cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
 
             if(from == mobile){
-                sendnoti(name + " : " +msg)
+                sendNoti(from, name, msg)
                 homeView.post(Runnable {
                     homeView.loadUrl("javascript:updateChatList('$from', '$name', '$msg')")
                 })
@@ -191,31 +206,43 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    private fun sendnoti(msg: String){
-        val pendingIntent = PendingIntent.getActivity(this,0,intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
+    private fun createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationChannel = NotificationChannel(channelId,msg,NotificationManager.IMPORTANCE_HIGH)
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.GREEN
-            notificationChannel.enableVibration(false)
-            notificationManager.createNotificationChannel(notificationChannel)
-
-            builder = Notification.Builder(this,channelId)
-                .setSmallIcon(R.mipmap.logo_round)
-                .setLargeIcon(BitmapFactory.decodeResource(this.resources,R.mipmap.logo))
-                .setContentIntent(pendingIntent)
-                .setContentText(msg)
-                .setContentTitle("Babble")
-        }else{
-
-            builder = Notification.Builder(this)
-                .setSmallIcon(R.mipmap.logo_round)
-                .setLargeIcon(BitmapFactory.decodeResource(this.resources,R.mipmap.logo))
-                .setContentIntent(pendingIntent)
-                .setContentText(msg)
+            val name = "App Notification"
+            val descriptionText = "This is your notification description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
-        notificationManager.notify(1234,builder.build())
+    }
+
+    private fun sendNoti(num: String, name: String, msg: String){
+        createNotificationChannel()
+        val notificationLayout = RemoteViews(packageName, R.layout.custom_notif)
+
+        val intent = Intent(this, ChatActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        intent.putExtra("phoneNumber", phoneNumber)
+        intent.putExtra("toNum", num)
+        intent.putExtra("toName", name)
+
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(name)
+            .setContentText(msg)
+            .setSmallIcon(R.mipmap.logo)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            //.setCustomContentView(notificationLayout)
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        with(NotificationManagerCompat.from(this)){
+            notify(0, builder.build())
+        }
     }
 
     override fun onDestroy() {

@@ -122,7 +122,9 @@
   text-align:center;
   align-items:center;
 }
-
+.custom__delay{
+  --animate-delay: 0.1s !important;
+}
     </style>
 </head>
 
@@ -383,13 +385,14 @@
             $(`.${ID}`).show('fast')
             $(activeElm).hide('slow')
             $(activeElm).remove()
+            device.vibrate()
             taken = false
             addListeners()
         }
 
         function removePin() {
             var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var templ = `<div id="${activeElm.id}" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+            var templ = `<div id="${activeElm.id}" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__zoomInDown custom__delay" style="display:none;">
                 <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                     <div class="relative">
                         <img alt="team"
@@ -405,8 +408,8 @@
             </div>`
 
             $(".chats-cont").prepend(templ)
-            contacts.getName(activeElm.id.split('_')[0])
             $(`.${ID}`).show('fast')
+            contacts.getName(activeElm.id.split('_')[0])
             $(activeElm).hide('slow')
             $(activeElm).remove()
             taken = false;
@@ -466,25 +469,25 @@
                     messages.forEach(message => {
                     contacts.getName(message)
                         var ID = '_' + Math.random().toString(36).substr(2, 9);
-                        var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg " style="display:none;">
+                        var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__bounceInUp animate__faster">
                                     <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                                     <div class="relative">
                                         <img alt="team"
                                              class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                                         src="1.png">
-                                        <div class='status-circle text-sm animate__animated animate__tada'>🥰</div>
+                                        <div class='status-circle text-sm animate__animated animate__tada'>☠</div>
                                         </div>
                                         <div class="flex-grow border-b pb-2">
                                             <h2 class="text-gray-900 title-font font-bold ${message}_name">${message}</h2>
-                                            <p class="text-gray-500">UI Designer</p>
+                                            <p class="text-gray-500 ${message}_LS"></p>
                                         </div>
                                     </div>
                                  </div>`
 
                     $(".chats-cont").append(templ)
-                    $(`.${ID}`).show('fast')
                     taken = false;
                     addListeners()
+                    getLastSeen(message)
                     })
 
                 } else if (this.status == 404) {
@@ -541,7 +544,36 @@
         function updateName(name, num){
             $(`.${num}_name`).html(name)
         }
+
+        async function getLastSeen(of){
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var LS = JSON.parse(this.responseText);
+                    $(`.${of}_LS`).html(`Last seen ${LS.lastOnline}`)
+                 }
+            }
+            xhttp.open("GET", "http://iotine.zapto.org:4600/lastSeenOf/" + of, true);
+            await xhttp.send();
+        }
     </script>
+
+<script>
+
+    function checkPageFocus() {
+       let body = document.querySelector('body');
+
+        if (document.hasFocus()) {
+            user.setActivity(0)
+        }
+        else {
+            user.setActivity(1)
+        }
+    }
+
+setInterval(checkPageFocus, 300);
+
+</script>
 </body>
 
 </html>

@@ -26,6 +26,7 @@ class ProfilePage : AppCompatActivity() {
                 }
             }, "profile")
 
+
             profileView!!.loadUrl("file:///android_asset/profile.html")
             profileView!!.webViewClient = object : WebViewClient(){
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?){
