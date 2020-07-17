@@ -311,7 +311,7 @@ function unsendMessage(){
     var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                    $(activeElm).hide('fast')
+                    $(activeElm).hide('slow')
                     $(activeElm).remove()
                     msgg.delete(`${tonum}`, `${ucid}`, `${activeElm.id}`)
                     taken = false;
