@@ -162,7 +162,7 @@
 <div id="myModal" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content px-5" onclick="return;"
+    <div class="modal-content px-5 animate__animated animate__slideInUp animate__faster" onclick="return;"
          style="margin:0;border-top-left-radius: 30px;border-top-right-radius: 30px;">
         <div class="py-5 mx-auto flex flex-wrap flex-col md:flex-row items-center">
             <a
@@ -214,7 +214,7 @@
 </div>
 
 <div class="modal px-3" id="chat-settings">
-    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__slideInUp" style="bottom:20px !important; max-width:92% !important;">
+    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__slideInUp animate__faster" style="bottom:20px !important; max-width:92% !important;">
         <section class="text-gray-700 body-font overflow-auto">
             <div class="container mx-auto">
                 <div class="flex flex-wrap -m-2">
@@ -466,7 +466,7 @@
                     messages.forEach(message => {
                     contacts.getName(message)
                         var ID = '_' + Math.random().toString(36).substr(2, 9);
-                        var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+                        var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg " style="display:none;">
                                     <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                                     <div class="relative">
                                         <img alt="team"
