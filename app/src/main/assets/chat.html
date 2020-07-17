@@ -460,14 +460,19 @@ function openGallery(){
     photo.Gallery()
  }
 async function prevImage(url){
+    var mediaType = url.split("/")
     var to = `${tonum}`
     var from = `${phoneNumber}`
     var timestamp = Date.now()
 
     var ID =  '_' + Math.random().toString(36).substr(2, 9);
-
+    var chat;
     //await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
-    var chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img" src="${url}" /> </p>`
+    if(mediaType[4] == "video"){
+        chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <video width="320" height="240" src="${url}">Something went wrong</video> </p>`
+    }else if(mediaType[4] == "images" || mediaType[4] == "image"){
+        chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img" src="${url}" /> </p>`
+    }
 
     $(".chat-body").append(chat)
     $(`#${ID}`).show()

@@ -129,7 +129,7 @@ class ChatActivity : AppCompatActivity() {
 
     private fun pickImageFromGallery() {
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
+        intent.setType("image/* video/*")
         startActivityForResult(intent, IMAGE_PICK_CODE)
 
     }
