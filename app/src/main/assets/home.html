@@ -122,6 +122,19 @@
   text-align:center;
   align-items:center;
 }
+.pinstatus-circle{
+    width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 2px solid white;
+  bottom: 0;
+  right: 5px;
+  padding:0px;
+  background-color:#f0f0f0;
+  position: absolute;
+  text-align:center;
+  align-items:center;
+}
 .custom__delay{
   --animate-delay: 0.1s !important;
 }
@@ -164,7 +177,7 @@
 <div id="myModal" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content px-5 animate__animated animate__slideInUp animate__faster" onclick="return;"
+    <div class="modal-content px-5 animate__animated animate__slideInUp custom__delay" onclick="return;"
          style="margin:0;border-top-left-radius: 30px;border-top-right-radius: 30px;">
         <div class="py-5 mx-auto flex flex-wrap flex-col md:flex-row items-center">
             <a
@@ -374,10 +387,13 @@
         function addPin() {
             var ID = '_' + Math.random().toString(36).substr(2, 9);
             var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat animate__animated animate__rubberBand">
-                <a class="tooltip block relative h-24 w-24 rounded-full overflow-hidden pin-img">
+                <a class="tooltip block relative h-24 w-24 overflow-hidden pin-img">
                     <span style="display:none;" class="tooltiptext truncate ${activeElm.id.split('_')[0]}_pintip"></span>
-                    <img alt="ecommerce" class="avt-img object-cover object-center w-full h-full block bg-green-200"
-                         src="1.png">
+                    <div class="relative">
+                        <img alt="ecommerce" class="avt-img object-cover object-center w-full rounded-full h-full block bg-green-200"
+                            src="1.png">
+                        <div class='pinstatus-circle text-sm animate__animated animate__tada'>🥰</div>
+                    </div>
                 </a>
             </div>`
 
