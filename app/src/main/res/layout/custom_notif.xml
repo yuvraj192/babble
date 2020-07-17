@@ -21,9 +21,11 @@
             android:text="Notification title here"
             android:textSize="18dp"
             android:textColor="#000"
+            style="@style/TextAppearance.Compat.Notification.Title"
             />
 
     <TextView
+        android:id="@+id/msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Subtitle here"

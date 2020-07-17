@@ -233,13 +233,15 @@ class HomeActivity : AppCompatActivity() {
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
         var builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(name)
-            .setContentText(msg)
             .setSmallIcon(R.mipmap.logo)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            //.setCustomContentView(notificationLayout)
+            .setCustomContentView(notificationLayout)
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        notificationLayout.setTextViewText(R.id.title, name)
+        notificationLayout.setTextViewText(R.id.msg, msg)
+
         with(NotificationManagerCompat.from(this)){
             notify(0, builder.build())
         }
