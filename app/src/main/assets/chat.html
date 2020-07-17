@@ -172,7 +172,18 @@
             transition: 0.2s cubic-bezier(0.62, 0.48, 0, 0.68) all !important;
         }
         .msg-img{
-            width:100px;height:200px;
+            width:200px;
+            height:200px;
+        }
+        .cont-lrg-img{
+            background-color:transparent !important;
+            top:10px !important;
+            max-height:80%;
+            max-width:100%;
+            margin-top:10%;
+            margin-bottom:10%;
+            bottom:10px;
+            overflow-y:auto;
         }
     </style>
 
@@ -224,6 +235,12 @@
                 </div>
             </div>
         </section>
+    </div>
+</div>
+
+<div class="modal px-3" id="large-image">
+    <div class="modal-content cont-lrg-img p-5 ml-1 rounded-lg" style="bottom:20px !important; max-width:92% !important;">
+        <img src="" class="large_image rounded-lg" alt="">
     </div>
 </div>
 
@@ -339,6 +356,7 @@ function unsendMessage(){
 }
 
 var setModal = document.querySelector("#chat-settings")
+var imgModal = document.querySelector("#large-image")
 
         // Get the button that opens the modal
         var btn = document.getElementById("settings");
@@ -354,6 +372,10 @@ var setModal = document.querySelector("#chat-settings")
             setModal.style.display = "none";
             $(activeElm).css("z-index", "0")
             taken = false;
+        }
+
+        imgModal.onclick = function () {
+            imgModal.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
@@ -445,7 +467,7 @@ async function prevImage(url){
     var ID =  '_' + Math.random().toString(36).substr(2, 9);
 
     //await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
-    var chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <img class="rounded-lg msg-img" src="${url}" /> </p>`
+    var chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img" src="${url}" /> </p>`
 
     $(".chat-body").append(chat)
     $(`#${ID}`).show()
@@ -455,6 +477,11 @@ async function prevImage(url){
     device.vibrate()
     taken = false
     addListeners()
+}
+
+function showImg(src){
+    $("#large-image").show();
+    $(".large_image").attr("src", src)
 }
 </script>
 </html>
