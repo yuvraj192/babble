@@ -265,7 +265,7 @@
                     return
                 }
             };
-            xhttp.open("GET", "https://iotine.zapto.org:4600/logout/" + phoneNumber, true);
+            xhttp.open("GET", "http://iotine.zapto.org:4600/logout/" + phoneNumber, true);
             xhttp.send();
         }
         var activeElm;
@@ -476,7 +476,7 @@
                     return
                 }
             };
-            xhttp.open("GET", "https://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
+            xhttp.open("GET", "http://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
             await xhttp.send();
         }
 

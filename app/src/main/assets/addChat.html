@@ -101,7 +101,7 @@ var nonUser = 0;
                 return
             }
         };
-        xhttp.open("GET", `https://iotine.zapto.org:4600/isRegistered/${mobile}`, true);
+        xhttp.open("GET", `http://iotine.zapto.org:4600/isRegistered/${mobile}`, true);
         await xhttp.send();
     }
 

@@ -314,7 +314,7 @@ function unsendMessage(){
                     return
                 }
             };
-            xhttp.open("GET", "https://iotine.zapto.org:4600/deleteMsg/" + ucid+"/"+activeElm.id, true);
+            xhttp.open("GET", "http://iotine.zapto.org:4600/deleteMsg/" + ucid+"/"+activeElm.id, true);
             xhttp.send();
 
 }
@@ -371,7 +371,7 @@ function getChats(ucid){
                     return
                 }
             };
-            xhttp.open("GET", "https://iotine.zapto.org:4600/chats/" + ucid, true);
+            xhttp.open("GET", "http://iotine.zapto.org:4600/chats/" + ucid, true);
             xhttp.send();
 }
 
