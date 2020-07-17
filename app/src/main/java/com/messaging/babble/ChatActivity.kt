@@ -2,7 +2,6 @@ package com.messaging.babble
 
 import android.Manifest
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,18 +14,12 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Gallery
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
-import com.messaging.babble.GalleryOpen
 import kotlinx.android.synthetic.main.activity_chat.*
-import kotlinx.android.synthetic.main.activity_gallery_open.*
-import org.json.JSONException
-import org.json.JSONObject
-import java.security.Permissions
 
 
 class ChatActivity : AppCompatActivity() {
@@ -66,7 +59,7 @@ class ChatActivity : AppCompatActivity() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                             val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
-                            requestPermissions(permissions, GalleryOpen.PERMISSION_CODE);
+                            requestPermissions(permissions, ChatActivity.PERMISSION_CODE);
 
                         } else {
                             pickImageFromGallery();
@@ -165,7 +158,6 @@ class ChatActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             //image_view.setImageURI(data?.data)
             var imurl = data?.data
-            Toast.makeText(applicationContext, imurl.toString(), Toast.LENGTH_SHORT).show()
             chatView.post(Runnable {
                 chatView.loadUrl("javascript:prevImage('$imurl')")
             })
