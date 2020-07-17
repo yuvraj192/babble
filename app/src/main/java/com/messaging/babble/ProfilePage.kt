@@ -15,6 +15,7 @@ class ProfilePage : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         if(profileView != null){
             val webSettings = profileView!!.settings
+            profileView.settings.javaScriptEnabled = true
             profileView!!.webViewClient= WebViewClient()
             profileView!!.webChromeClient = WebChromeClient()
 
