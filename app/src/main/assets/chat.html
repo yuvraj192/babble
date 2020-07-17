@@ -61,6 +61,11 @@
             align-self: flex-end;
         }
 
+        .from-me.no-color{
+            background-color:transparent !important;
+            padding:0pc !important;
+        }
+
         .from-me:before {
             right: -7px;
             border-right: 20px solid #0B93F6;
@@ -76,6 +81,15 @@
             border-bottom-left-radius: 10px;
             -webkit-transform: translate(-30px, -2px);
             transform: translate(-30px, -2px);
+        }
+
+        .no-color:after{
+            display:none;
+        }
+        .no-color:before{
+            width:0px;
+            border-right:none;
+            display:none;
         }
 
         .from-them {
@@ -156,6 +170,9 @@
         .modal-content,
         .modal {
             transition: 0.2s cubic-bezier(0.62, 0.48, 0, 0.68) all !important;
+        }
+        .msg-img{
+            width:100px;height:200px;
         }
     </style>
 
@@ -420,10 +437,24 @@ function addListeners() {
 function openGallery(){
     photo.Gallery()
  }
-function prevImage(url){
-alert("here")
-    templ = `<p class="from-me chat-bubble"> <img src="${url}" /> </p>`
-    $(".chat-body").append(templ)
+async function prevImage(url){
+    var to = `${tonum}`
+    var from = `${phoneNumber}`
+    var timestamp = Date.now()
+
+    var ID =  '_' + Math.random().toString(36).substr(2, 9);
+
+    //await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
+    var chat = `<p style="display:none;" id="${ID}" class="from-me no-color"> <img class="rounded-lg msg-img" src="${url}" /> </p>`
+
+    $(".chat-body").append(chat)
+    $(`#${ID}`).show()
+    $('html, body').animate({
+        scrollTop: $('#chat_body').prop("scrollHeight")
+    }, 100);
+    device.vibrate()
+    taken = false
+    addListeners()
 }
 </script>
 </html>
