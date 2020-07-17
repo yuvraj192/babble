@@ -62,6 +62,7 @@ class HomeActivity : AppCompatActivity() {
                 @JavascriptInterface
                 fun load(num: String, name: String) {
                     openActivity(num, name)
+                    //sendNoti("9891192693", "Mummy 😘😘", "Hello 😀😀")
                 }
             }, "chat")
 
