@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
     <script src="jquery.js"></script>
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
+    />
     <style>
         body {
             -webkit-touch-callout: none;
@@ -210,7 +214,7 @@
 </div>
 
 <div class="modal px-3" id="chat-settings">
-    <div class="modal-content p-5 ml-1 rounded-lg" style="bottom:20px !important; max-width:92% !important;">
+    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__slideInUp" style="bottom:20px !important; max-width:92% !important;">
         <section class="text-gray-700 body-font overflow-auto">
             <div class="container mx-auto">
                 <div class="flex flex-wrap -m-2">
@@ -327,7 +331,7 @@
             }
         }
 
-        var longpress = 900;
+        var longpress = 600;
         var inter;
         // holds the start time
         var start;
@@ -367,7 +371,7 @@
 
         function addPin() {
             var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat">
+            var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat animate__animated animate__rubberBand">
                 <a class="tooltip block relative h-24 w-24 rounded-full overflow-hidden pin-img">
                     <span style="display:none;" class="tooltiptext truncate ${activeElm.id.split('_')[0]}_pintip"></span>
                     <img alt="ecommerce" class="avt-img object-cover object-center w-full h-full block bg-green-200"
@@ -391,7 +395,7 @@
                         <img alt="team"
                         class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                         src="1.png">
-                        <div class='status-circle text-sm'>😀</div>
+                        <div class='status-circle text-sm animate__animated animate__tada'>🥰</div>
                     </div>
                     <div class="flex-grow border-b pb-2">
                         <h2 class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name"></h2>
@@ -468,7 +472,7 @@
                                         <img alt="team"
                                              class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                                         src="1.png">
-                                        <div class='status-circle text-sm'>😀</div>
+                                        <div class='status-circle text-sm animate__animated animate__tada'>🥰</div>
                                         </div>
                                         <div class="flex-grow border-b pb-2">
                                             <h2 class="text-gray-900 title-font font-bold ${message}_name">${message}</h2>
@@ -519,7 +523,7 @@
                                              class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                                         src="1.png">
 
-                                        <div class='status-circle text-sm'><span>😀</span></div>
+                                        <div class='status-circle text-sm'>😀</div>
                                         </div>
                                         <div class="flex-grow border-b pb-2">
                                             <h2 class="text-gray-900 title-font font-bold ${message}_name">${name}</h2>
