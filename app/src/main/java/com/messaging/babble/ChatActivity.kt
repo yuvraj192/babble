@@ -2,6 +2,7 @@ package com.messaging.babble
 
 import android.app.PendingIntent.getActivity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -11,11 +12,13 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Gallery
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
+import com.messaging.photopicker.GalleryOpen
 import kotlinx.android.synthetic.main.activity_chat.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -48,6 +51,13 @@ class ChatActivity : AppCompatActivity() {
                     finish()
                 }
             }, "chat")
+
+            chatView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun Gallery() {
+                    openGal()
+                }
+            }, "photo")
 
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
@@ -116,6 +126,10 @@ class ChatActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "", Toast.LENGTH_LONG)
             chatView.loadUrl("javascript:recieveMessage('$msg', '$time', '$mid')")
         })
+    }
+    private fun openGal(){
+        val intent = Intent(this@ChatActivity, GalleryOpen::class.java)
+        startActivity(intent)
     }
 
 }
