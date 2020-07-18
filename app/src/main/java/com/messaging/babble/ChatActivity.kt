@@ -100,18 +100,6 @@ class ChatActivity : AppCompatActivity() {
 
             }, "device")
 
-            chatView.addJavascriptInterface(object: Any(){
-                @JavascriptInterface
-                fun setActivity(act: Int){
-                    if(act == 1){
-                        socket.emit("act", "Online", phoneNumber)
-                    }else if(act == 0){
-                        socket.emit("act", "Offline", phoneNumber)
-                    }
-                }
-
-            }, "user")
-
 
             chatView.loadUrl("file:///android_asset/chat.html")
 

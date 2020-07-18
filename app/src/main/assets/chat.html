@@ -49,6 +49,7 @@
             position: relative;
             padding: 10px 20px;
             border-radius: 25px;
+            position:relative;
         }
 
         p:before,
@@ -102,6 +103,15 @@
             align-self: flex-start;
         }
 
+        .from-me a, .from-them a{
+            color: #42b0ff;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .dollar{
+            color:#19ff55 !important;
+        }
         .from-them:before {
             left: -7px;
             border-left: 20px solid #E5E5EA;
@@ -189,6 +199,40 @@
             bottom:10px;
             overflow-y:auto;
         }
+#output a{
+ color: #42b0ff;
+ cursor:pointer;
+ text-decoration:none;
+}
+
+#output .attherate{
+padding:5px;
+ padding-left:7px;
+ padding-right:7px;
+ background-color:grey;
+ border-radius:8px;
+ font-weight:bold;
+}
+
+#input {
+ color: black
+ }
+
+#output {
+   position: absolute;
+   z-index: 1;
+   background-color: transparent;
+   white-space: pre;
+}
+
+.heart{
+    position:absolute;
+    bottom:-10px;
+    border-radius:50%;
+    width: 25px;
+    height: 25px;
+    text-align:center;
+}
     </style>
 
 </head>
@@ -250,9 +294,8 @@
 
 <footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white">
     <div class="flex rounded-full py-1 w-full float-left mb-2 pr-5" style="background: #f5f5f5;">
-        <input type="text"
-               class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full text-black"
-               placeholder="Message..." onkeydown="check()" onkeyup="check()" onfocusout="check()" onmouseleave="check()" oninput="check()" onchange="check()" style="background: #f5f5f5;">
+        <span  id="output" class="break-words float-left placeholder-gray opacity-0 rounded-tl-full focus:outline-none rounded-bl-full text-black p-0 m-0" style="max-width:100px;"></span>
+        <div contenteditable="true" class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full" id="input" spellcheck="fasle" onkeyup="check()"  oninput="check()" style="background: #f5f5f5;"></div>
     <div class="otherBtn flex">
         <button
                 class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
@@ -303,10 +346,19 @@ document.onload = function() {
     }
 
 function check(){
-var msg = document.querySelector(".msg").value
+var msg = $(".msg").html()
     if(msg.length != 0){
         $(".sndBtn").show()
         $(".otherBtn").hide()
+        var str = $('.msg').text();
+	    str = str.replace(/(<)/gi, '&lt;');
+	    str = str.replace(/(<)/gi, '&lg;');
+	    str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, '<br />');
+	    str = str.replace(/₹(.+?)(?=[\s.,:,]|$)/g, '<b class="dollar">₹$1</b>');
+	    str = str.replace(/#(.+?)(?=[\s.,:,]|$)/g, '<a href="#">#$1</a>');
+	    str = str.replace(/@(.+?)(?=[\s.,:,]|$)/g, '<a href="#" class="attherate">$1</a>');
+	    str = str.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g, '<a href="#">$1</a>');
+	    $('#output').html(`${str}`);
     }else if(msg.length == 0){
         $(".sndBtn").hide()
         $(".otherBtn").show()
@@ -315,7 +367,7 @@ var msg = document.querySelector(".msg").value
 
 $(".msg").keypress(function(event) {
       if (event.keyCode === 13) {
-           sendMessage()
+           //sendMessage()
       }
       if (event.keyCode === 8) {
            check()
@@ -323,7 +375,7 @@ $(".msg").keypress(function(event) {
 });
 
 function recieveMessage(msg, time, mid){
-     var chat = `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg}</p>`
+     var chat = `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span> </p>`
      $(".chat-body").append(chat)
       $('html, body').animate({
         scrollTop: $('#chat_body').prop("scrollHeight")
@@ -331,7 +383,7 @@ function recieveMessage(msg, time, mid){
 }
 
 async function sendMessage(){
-    var cmsg = $(".msg").val()
+    var cmsg = $("#output").html()
     if(cmsg == "" || cmsg == " ") return;
     var to = `${tonum}`
     var from = `${phoneNumber}`
@@ -340,10 +392,12 @@ async function sendMessage(){
     var ID =  '_' + Math.random().toString(36).substr(2, 9);
 
     await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
-    var chat = `<p id="${ID}" class="from-me animate__animated animate__bounceInUp animate__faster">${cmsg}</p>`
+
+    var chat = `<p id="${ID}" class="from-me animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span> </p>`
 
     $(".chat-body").append(chat)
-    $(".msg").val("")
+    $(".msg").text("")
+    $("#output").html("")
     $(".msg").focus()
     $('html, body').animate({
         scrollTop: $('#chat_body').prop("scrollHeight")
@@ -413,9 +467,9 @@ function getChats(ucid){
 
                     messages.forEach(message => {
                         if(message.from == phoneNumber){
-                            templ = `<p id="${message.mid}" class="from-me chat-bubble">${message.data}</p>`
+                            templ = `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span> </p>`
                         }else if(message.to == phoneNumber) {
-                            templ = `<p id="${message.mid}" class="from-them">${message.data}</p>`
+                            templ = `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span></p>`
                         }
                         $(".chat-body").prepend(templ)
                         $('html, body').animate({
@@ -474,6 +528,22 @@ function addListeners() {
                     clearInterval(inter)
                     start = 0
                 })
+                item.addEventListener("dblclick", e => {
+                if(item.querySelector(".heart").style.display == "none"){
+                    item.querySelector(".heart").style.display = "block"
+                }else if(item.querySelector(".heart").style.display == "block"){
+                    item.querySelector(".heart").style.display = "none"
+                }
+                })
+            })
+            document.querySelectorAll('.from-them').forEach(item => {
+                item.addEventListener("dblclick", e => {
+                if(item.querySelector(".heart").style.display == "none"){
+                    item.querySelector(".heart").style.display = "block"
+                }else if(item.querySelector(".heart").style.display == "block"){
+                    item.querySelector(".heart").style.display = "none"
+                }
+                })
             })
         }
 function openGallery(){
@@ -509,19 +579,6 @@ function showImg(src){
 }
 </script>
 <script>
-
-    function checkPageFocus() {
-       let body = document.querySelector('body');
-
-        if (document.hasFocus()) {
-            user.setActivity(0)
-        }
-        else {
-            user.setActivity(1)
-        }
-    }
-
-setInterval(checkPageFocus, 300);
 
 </script>
 </html>

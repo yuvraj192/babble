@@ -112,18 +112,6 @@ class HomeActivity : AppCompatActivity() {
 
             }, "profile")
 
-            homeView.addJavascriptInterface(object: Any(){
-                @JavascriptInterface
-                fun setActivity(act: Int){
-                    if(act == 1){
-                        socket.emit("act", "Online", phoneNumber)
-                    }else if(act == 0){
-                        socket.emit("act", "Offline", phoneNumber)
-                    }
-                }
-
-            }, "user")
-
             homeView.loadUrl("file:///android_asset/home.html")
             homeView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
