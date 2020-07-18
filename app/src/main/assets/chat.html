@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
 
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <style>
-    body {
+        :root {
+            --after: #f7fafc;
+        }
+
+        body {
             -webkit-touch-callout: none;
             /* iOS Safari */
             -webkit-user-select: none;
@@ -28,6 +29,7 @@
             /* Internet Explorer/Edge */
             user-select: none;
         }
+
         .chat-body {
             font-family: "Helvetica Neue", Helvetica, sans-serif;
             font-size: 20px;
@@ -49,7 +51,7 @@
             position: relative;
             padding: 10px 20px;
             border-radius: 25px;
-            position:relative;
+            position: relative;
         }
 
         p:before,
@@ -66,9 +68,9 @@
             align-self: flex-end;
         }
 
-        .from-me.no-color{
-            background-color:transparent !important;
-            padding:0pc !important;
+        .from-me.no-color {
+            background-color: transparent !important;
+            padding: 0pc !important;
         }
 
         .from-me:before {
@@ -82,19 +84,20 @@
         .from-me:after {
             right: -56px;
             width: 26px;
-            background: #f7fafc;
+            background: var(--after);
             border-bottom-left-radius: 10px;
             -webkit-transform: translate(-30px, -2px);
             transform: translate(-30px, -2px);
         }
 
-        .no-color:after{
-            display:none;
+        .no-color:after {
+            display: none;
         }
-        .no-color:before{
-            width:0px;
-            border-right:none;
-            display:none;
+
+        .no-color:before {
+            width: 0px;
+            border-right: none;
+            display: none;
         }
 
         .from-them {
@@ -103,15 +106,17 @@
             align-self: flex-start;
         }
 
-        .from-me a, .from-them a{
+        .from-me a,
+        .from-them a {
             color: #42b0ff;
-            cursor:pointer;
-            text-decoration:none;
+            cursor: pointer;
+            text-decoration: none;
         }
 
-        .dollar{
-            color:#19ff55 !important;
+        .dollar {
+            color: #19ff55 !important;
         }
+
         .from-them:before {
             left: -7px;
             border-left: 20px solid #E5E5EA;
@@ -127,7 +132,7 @@
             border-bottom-right-radius: 10px;
             -webkit-transform: translate(-30px, -2px);
             transform: translate(-30px, -2px);
-            z-index:1 !important;
+            z-index: 1 !important;
         }
 
         .modal {
@@ -161,6 +166,8 @@
             width: 100%;
             /* Could be more or less, depending on screen size */
             max-height: 400px;
+            box-shadow: 0px 1px 4px -2px #333;
+            text-shadow: 0px -1px #333;
         }
 
         /* The Close Button */
@@ -185,68 +192,90 @@
         .modal {
             transition: 0.2s cubic-bezier(0.62, 0.48, 0, 0.68) all !important;
         }
-        .msg-img{
-            width:200px;
-            height:200px;
+
+        .msg-img {
+            width: 200px;
+            height: 200px;
         }
-        .cont-lrg-img{
-            background-color:transparent !important;
-            top:10px !important;
-            max-height:80%;
-            max-width:100%;
-            margin-top:10%;
-            margin-bottom:10%;
-            bottom:10px;
-            overflow-y:auto;
+
+        .cont-lrg-img {
+            background-color: transparent !important;
+            top: 10px !important;
+            max-height: 80%;
+            max-width: 100%;
+            margin-top: 10%;
+            margin-bottom: 10%;
+            bottom: 10px;
+            overflow-y: auto;
         }
-#output a{
- color: #42b0ff;
- cursor:pointer;
- text-decoration:none;
-}
 
-#output .attherate{
-padding:5px;
- padding-left:7px;
- padding-right:7px;
- background-color:grey;
- border-radius:8px;
- font-weight:bold;
-}
+        #output a {
+            color: #42b0ff;
+            cursor: pointer;
+            text-decoration: none;
+        }
 
-#input {
- color: black
- }
+        #output .attherate {
+            padding: 5px;
+            padding-left: 7px;
+            padding-right: 7px;
+            background-color: grey;
+            border-radius: 8px;
+            font-weight: bold;
+        }
 
-#output {
-   position: absolute;
-   z-index: 1;
-   background-color: transparent;
-   white-space: pre;
-}
+        #input {
+            color: black
+        }
 
-.msgReaction{
-    position:absolute;
-    bottom:-10px;
-    border-radius:50%;
-    width: 25px;
-    height: 25px;
-    text-align:center;
-}
-.hashtag{
-    color:cyan;
-}
+        #output {
+            position: absolute;
+            z-index: 1;
+            background-color: transparent;
+            white-space: pre;
+        }
+
+        .msgReaction {
+            position: absolute;
+            bottom: -10px;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            text-align: center;
+        }
+
+        .hashtag {
+            color: cyan;
+        }
+
+        #anim {
+            height: 90%;
+            width: 100%;
+            margin: 2em auto 0;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            bottom: 10%;
+            z-index: 2000;
+        }
+
+        #anim span {
+            width: 40px;
+            height: 40px;
+        }
     </style>
 
 </head>
 
 <body id="chatCont" class="bg-gray-100">
-<header class="text-gray-700 body-font pb-3 head shadow-lg bg-white fixed inset-x-0 top-0 z-10" style="height:78px;">
+<header class="text-gray-700 body-font pb-3 head shadow-lg bg-white fixed inset-x-0 top-0 z-10"
+        style="height:78px;">
     <div class="container absolute left-0 top-0 mx-auto flex p-1 flex-col items-center">
         <a
                 class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
             <div class="rounded-lg overflow-hidden mr-2">
-                <img alt="content" class="object-cover object-center bg-green-200 rounded-full" style="height:40px;width:40px;" src="1.png">
+                <img alt="content" class="object-cover object-center bg-green-200 rounded-full"
+                     style="height:40px;width:40px;" src="1.png">
             </div>
             <h2 class="title-font text-xs font-medium text-gray-900 mt-3 mb-3" id="contactName"></h2>
         </a>
@@ -270,14 +299,15 @@ padding:5px;
 </section>
 
 <div class="modal px-3" id="chat-settings">
-    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__pulse" style="bottom:20px !important; max-width:92% !important;">
+    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__bounceInUp"
+         style="bottom:20px !important; max-width:92% !important;">
         <section class="text-gray-700 body-font overflow-auto">
             <div class="container mx-auto">
                 <div class="flex flex-wrap -m-2">
                     <div onclick="unsendMessage()" class="p-2 lg:w-1/3 md:w-1/2 w-full border-t border-gray-300">
                         <div class="h-full flex items-center border-gray-200 p-4 text-red-500 rounded-lg">
                             <i alt="team"
-                               class="material-icons w-8 h-8 text-red-500 object-cover object-center flex-shrink-0 rounded-full mr-4">delete</i>
+                               class="material-icons w-8 h-8 text-red-500 object-cover object-center flex-shrink-0 rounded-full mr-4 unsendicon">delete</i>
                             <div class="flex-grow">
                                 <h2 class="title-font font-medium">Unsend Message</h2>
                             </div>
@@ -290,13 +320,17 @@ padding:5px;
 </div>
 
 <div class="modal px-3 animate__animated animate__fadeIn animate__faster" id="large-image">
-    <div class="modal-content cont-lrg-img p-5 ml-1 rounded-lg animate__animated animate__pulse" style="bottom:20px !important; max-width:92% !important;">
+    <div class="modal-content cont-lrg-img p-5 ml-1 rounded-lg animate__animated animate__pulse"
+         style="bottom:20px !important; max-width:92% !important;">
         <img src="" class="large_image rounded-lg" alt="">
     </div>
 </div>
 
 <footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white">
-    <div onclick="$(this).hide()" class="emojiCenter flex py-1 mb-2 px-5 flex-wrap animate__animated animate__bounceInUp animate__faster" style="display:none;">
+    <div onclick="$(this).hide()"
+         class="emojiCenter flex py-1 mb-2 px-5 flex-wrap animate__animated animate__bounceInUp animate__faster"
+         style="display:none;">
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2 cancel">❌</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😂</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😍</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">❤</span>
@@ -307,306 +341,437 @@ padding:5px;
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">🤷</span>
     </div>
     <div class="flex rounded-full py-1 w-full float-left mb-2 pr-5" style="background: #f5f5f5;">
-        <span  id="output" class="break-words float-left placeholder-gray opacity-0 rounded-tl-full focus:outline-none rounded-bl-full text-black p-0 m-0" style="max-width:100px;"></span>
-        <div contenteditable="true" class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full" id="input" spellcheck="fasle" onkeyup="check()"  oninput="check()" style="background: #f5f5f5;"></div>
-    <div class="otherBtn flex">
-        <button
-                class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
-            <i class="material-icons">mic_none</i>
-        </button>
-        <button
-                onclick="openGallery()"
-                class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+            <span id="output"
+                  class="break-words float-left placeholder-gray opacity-0 rounded-tl-full focus:outline-none rounded-bl-full text-black p-0 m-0"
+                  style="max-width:100px;"></span>
+        <input
+             class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full"
+             id="input" spellcheck="fasle" onkeyup="check()" oninput="check()" style="background: #f5f5f5;" />
+        <div class="otherBtn flex">
+            <button
+                    class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+                <i class="material-icons">mic_none</i>
+            </button>
+            <button onclick="openGallery()"
+                    class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
 
-            <i class="material-icons">wallpaper</i>
-        </button>
-        <button
-                class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
-            <i class="material-icons">camera_alt</i>
-        </button>
+                <i class="material-icons">wallpaper</i>
+            </button>
+            <button
+                    class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+                <i class="material-icons">camera_alt</i>
+            </button>
         </div>
         <button style="display:none;" onclick="sendMessage()"
-                class="sndBtn inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-blue-700 md:mt-0  animate__animated animate__fadeInRight animate__faster">
+                class="sndBtn inline-flex items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-blue-700 md:mt-0  animate__animated animate__fadeInRight animate__faster" style="margin-left:10px;">
             SEND
         </button>
     </div>
 </footer>
+
+<div id="anim" style="display:none;">
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+    <span class="w-1/9 h-6 w-6 mx-2">😂</span>
+</div>
+
 </body>
 <script src="jquery.js"></script>
 <script>
+    let root = document.documentElement;
 
-$(".msg").focus()
-$(".msg").click()
-var phoneNumber;
-var tonum;
-var ucid;
-var longpress = 900;
-var inter;
-// holds the start time
-var start;
-var disableHold = false;
-var taken = false;
+    $(".msg").focus()
+    $(".msg").click()
+    var phoneNumber;
+    var tonum;
+    var ucid;
+    var longpress = 900;
+    var inter;
+    // holds the start time
+    var start;
+    var disableHold = false;
+    var taken = false;
 
-window.onscroll = () =>{
-    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-        $(".head").addClass("shadow-lg")
-    }else{
-        $(".head").removeClass("shadow--lg")
+    window.onscroll = () => {
+        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            $(".head").addClass("shadow-lg")
+        } else {
+            $(".head").removeClass("shadow--lg")
+        }
     }
-}
-document.onload = function() {
+    document.onload = function () {
         document.body.scrollTop = document.body.scrollHeight;
     }
 
-function check(){
-var msg = $(".msg").html()
-    if(msg.length != 0){
-        $(".sndBtn").show()
-        $(".otherBtn").hide()
-        var str = $('.msg').text();
-	    str = str.replace(/(<)/gi, '&lt;');
-	    str = str.replace(/(<)/gi, '&lg;');
-	    str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, '<br />');
-	    str = str.replace(/₹(.+?)(?=[\s.,:,]|$)/g, '<b class="dollar">₹$1</b>');
-	    str = str.replace(/#(.+?)(?=[\s.,:,]|$)/g, '<b class="hashtag px-2 bg-gray-100 rounded-full">#$1</b>');
-	    str = str.replace(/@(.+?)(?=[\s.,:,]|$)/g, '<a href="#" class="attherate">$1</a>');
-	    str = str.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g, '<a href="#">$1</a>');
-	    $('#output').html(`${str}`);
-    }else if(msg.length == 0){
-        $(".sndBtn").hide()
-        $(".otherBtn").show()
+    function check() {
+        var msg = $(".msg").val()
+        if (msg.length != 0) {
+            $(".sndBtn").show()
+            $(".otherBtn").hide()
+            var str = $('.msg').val();
+            str = str.replace(/(<)/gi, '&lt;');
+            str = str.replace(/(<)/gi, '&lg;');
+            str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, '<br />');
+            str = str.replace(/₹(.+?)(?=[\s.,:,]|$)/g, '<b class="dollar px-2 bg-gray-100 rounded-full animate__animated animate__fadeInDown">₹$1</b>');
+            str = str.replace(/#(.+?)(?=[\s.,:,]|$)/g, '<b class="hashtag px-2 bg-gray-100 rounded-full animate__animated animate__bounce">#$1</b>');
+            str = str.replace(/@(.+?)(?=[\s.,:,]|$)/g, '<a href="#" class="attherate px-2 bg-gray-100 rounded-full animate__animated animate__bounce">$1</a>');
+            str = str.replace(
+                /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g,
+                '<a href="#">$1</a>');
+            $('#output').html(`${str}`);
+        } else if (msg.length == 0) {
+            $(".sndBtn").hide()
+            $(".otherBtn").show()
+        }
     }
-}
 
-$(".msg").keypress(function(event) {
-      if (event.keyCode === 13) {
-           //sendMessage()
-      }
-      if (event.keyCode === 8) {
-           check()
-      }
-});
+    $(".msg").keypress(function (event) {
+        if (event.keyCode === 13) {
+            sendMessage()
+        }
+        if (event.keyCode === 8) {
+            check()
+        }
+    });
 
-function recieveMessage(msg, time, mid){
-     var chat = `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
-     $(".chat-body").append(chat)
-      $('html, body').animate({
-        scrollTop: $('#chat_body').prop("scrollHeight")
-    }, 1000);
-}
+    function recieveMessage(msg, time, mid) {
+        var chat =
+            `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
+        $(".chat-body").append(chat)
+        $('html, body').animate({
+            scrollTop: $('#chat_body').prop("scrollHeight")
+        }, 1000);
+        setTimeout(addListeners, 300)
+    }
 
-async function sendMessage(){
-    var cmsg = $("#output").html()
-    if(cmsg == "" || cmsg == " ") return;
-    var to = `${tonum}`
-    var from = `${phoneNumber}`
-    var timestamp = Date.now()
+    async function sendMessage() {
+        var cmsg = $("#output").html()
+        if (cmsg == "" || cmsg == " ") return;
+        var to = `${tonum}`
+        var from = `${phoneNumber}`
+        var timestamp = Date.now()
 
-    var ID =  '_' + Math.random().toString(36).substr(2, 9);
+        var ID = '_' + Math.random().toString(36).substr(2, 9);
 
-    await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
+        await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
 
-    var chat = `<p id="${ID}" class="from-me animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
+        var chat =
+            `<p id="${ID}" class="from-me chat-bubble animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
 
-    $(".chat-body").append(chat)
-    $(".msg").text("")
-    $("#output").html("")
-    $(".msg").focus()
-    $('html, body').animate({
-        scrollTop: $('#chat_body').prop("scrollHeight")
-    }, 100);
-    device.vibrate()
-    taken = false
-    addListeners()
-}
+        $(".chat-body").append(chat)
+        $(".msg").val("")
+        $("#output").html("")
+        $(".msg").focus()
+        $('html, body').animate({
+            scrollTop: $('#chat_body').prop("scrollHeight")
+        }, 100);
+        device.vibrate()
+        addListeners()
+    }
 
-function unsendMessage(){
-    var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    $(activeElm).hide('slow')
-                    $(activeElm).remove()
-                    msgg.delete(`${tonum}`, `${ucid}`, `${activeElm.id}`)
-                    taken = false;
-                } else {
-                    taken = false;
-                    return
-                }
-            };
-            xhttp.open("GET", "http://iotine.zapto.org:4600/deleteMsg/" + ucid+"/"+activeElm.id, true);
-            xhttp.send();
+    function unsendMessage() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                $(activeElm).hide('slow')
+                $(activeElm).remove()
+                msgg.delete(`${tonum}`, `${ucid}`, `${activeElm.id}`)
+                root.style.setProperty('--active', "#f7fafc")
+                taken = false;
+            } else {
+                taken = false;
+                return
+            }
+        };
+        xhttp.open("GET", "http://iotine.zapto.org:4600/deleteMsg/" + ucid + "/" + activeElm.id, true);
+        xhttp.send();
 
-}
+    }
 
-var setModal = document.querySelector("#chat-settings")
-var imgModal = document.querySelector("#large-image")
+    var setModal = document.querySelector("#chat-settings")
+    var imgModal = document.querySelector("#large-image")
 
-        // Get the button that opens the modal
-        var btn = document.getElementById("settings");
+    // Get the button that opens the modal
+    var btn = document.getElementById("settings");
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
-        // When the user clicks on the button, open the modal
+    // When the user clicks on the button, open the modal
 
-        // When the user clicks on <span> (x), close the modal
+    // When the user clicks on <span> (x), close the modal
 
-        setModal.onclick = function () {
+    setModal.onclick = function () {
+        setModal.style.display = "none";
+        $(activeElm).css("z-index", "0")
+        taken = false;
+    }
+
+    imgModal.onclick = function () {
+        imgModal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == setModal) {
             setModal.style.display = "none";
-            $(activeElm).css("z-index", "0")
             taken = false;
         }
+    }
 
-        imgModal.onclick = function () {
-            imgModal.style.display = "none";
-        }
+    function getChats(ucid) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var messages = JSON.parse(this.responseText)
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == setModal) {
-                setModal.style.display = "none";
-                taken = false;
+                var ID = '_' + Math.random().toString(36).substr(2, 9);
+                var templ;
+
+                messages.forEach(message => {
+                    if (message.from == phoneNumber) {
+                        templ =
+                            `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">${message.reaction}</span> </p>`
+                    } else if (message.to == phoneNumber) {
+                        templ =
+                            `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">${message.reaction}</span></p>`
+                    }
+                    $(".chat-body").prepend(templ)
+
+                    if (typeof (message.reaction) != "undefined") {
+                        document.querySelector(`#${message.mid}`).querySelector(".msgReaction").style
+                            .display = "block";
+                    }
+
+                    $('html, body').animate({
+                        scrollTop: $('#chat_body').prop("scrollHeight")
+                    }, 0);
+                    taken = false;
+                    addListeners()
+                })
+            } else {
+                return
             }
-        }
+        };
+        xhttp.open("GET", "http://iotine.zapto.org:4600/chats/" + ucid, true);
+        xhttp.send();
+    }
 
-function getChats(ucid){
-    var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    var messages = JSON.parse(this.responseText)
+    function updateNumber(pno, toNum, name) {
+        phoneNumber = pno;
+        tonum = toNum;
+        $("#contactName").html(name)
+        ucid = [tonum, pno].sort().join('')
+        getChats(ucid)
+    }
 
-                    var ID =  '_' + Math.random().toString(36).substr(2, 9);
-                    var templ;
+    function deleteMessage(from, _id) {
+        $(`#${_id.id}`).removeClass('animate__bounceInUp')
+        $(`#${_id.id}`).addClass('animate__fadeOut')
 
-                    messages.forEach(message => {
-                        if(message.from == phoneNumber){
-                            templ = `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__rubberBand msgReaction text-sm" style="display:none">${message.reaction}</span> </p>`
-                        }else if(message.to == phoneNumber) {
-                            templ = `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__rubberBand msgReaction text-sm" style="display:none">${message.reaction}</span></p>`
-                        }
-                        $(".chat-body").prepend(templ)
+        document.querySelector(`#${_id.id}`).addEventListener('animationend', () => {
+            $(`#${_id.id}`).remove()
+        });
+    }
+    var likeelm;
 
-                        if(typeof(message.reaction) != "undefined"){
-                            document.querySelector(`#${message.mid}`).querySelector(".msgReaction").style.display = "block";
-                        }
-
-                        $('html, body').animate({
-                            scrollTop: $('#chat_body').prop("scrollHeight")
-                        }, 0);
-                        taken = false;
-                        addListeners()
-                    })
+    function addListeners() {
+        taken = false
+        document.querySelectorAll('.chat-bubble').forEach(item => {
+            item.addEventListener('touchstart', event => {
+                if (!taken) {
+                    taken = true
+                    start = new Date().getTime();
+                    inter = setInterval(function () {
+                        if (new Date().getTime() >= (start + longpress)) {
+                            start = 0
+                            clearInterval(inter)
+                            root.style.setProperty('--active', "#000000")
+                            $(item).css("z-index", "101")
+                            document.querySelector("#chat-settings").style.display = "block"
+                            device.vibrate()
+                            activeElm = item
+                        } else {}
+                    }, 100);
                 } else {
                     return
                 }
-            };
-            xhttp.open("GET", "http://iotine.zapto.org:4600/chats/" + ucid, true);
-            xhttp.send();
-}
-
-function updateNumber(pno, toNum, name){
-    phoneNumber = pno;
-    tonum = toNum;
-    $("#contactName").html(name)
-    ucid = [tonum, pno].sort().join('')
-    getChats( ucid )
-}
-
-function deleteMessage(from, _id){
-    $(`#${_id.id}`).removeClass('animate__bounceInUp')
-    $(`#${_id.id}`).addClass('animate__fadeOut')
-
-    document.querySelector(`#${_id.id}`).addEventListener('animationend', () => {
-        $(`#${_id.id}`).remove()
-    });
-}
-var likeelm;
-function addListeners() {
-            taken = false
-            document.querySelectorAll('.chat-bubble').forEach(item => {
-                item.addEventListener('touchstart', event => {
-                    if (!taken) {
-                        taken = true
-                        start = new Date().getTime();
-                        inter = setInterval(function () {
-                            if (new Date().getTime() >= (start + longpress)) {
-                                start = 0
-                                clearInterval(inter)
-                                $(item).css("z-index", "101")
-                                $("#chat-settings").show()
-                                device.vibrate()
-                                activeElm = item
-                            } else {}
-                        }, 100);
-                    } else {
-                        return
-                    }
-                })
-                item.addEventListener("touchend", event => {
-                    clearInterval(inter)
-                    start = 0
-                })
-
             })
-            document.querySelectorAll('.from-them').forEach(item => {
-                item.addEventListener("dblclick", e => {
-                if(document.querySelector(".emojiCenter").style.display == "none"){
-                     $(".emojiCenter").show()
-                     likeelm = item
-                }else if(document.querySelector(".emojiCenter").style.display == ""){
-                     $(".emojiCenter").hide()
-                     likeelm = ''
+            item.addEventListener("touchend", event => {
+                clearInterval(inter)
+                start = 0
+            })
+
+        })
+        document.querySelectorAll('.from-them').forEach(item => {
+            item.addEventListener("dblclick", e => {
+                if (document.querySelector(".emojiCenter").style.display == "none") {
+                    document.querySelector(".emojiCenter").style.display = "block"
+                    likeelm = item
+                } else if (document.querySelector(".emojiCenter").style.display == "") {
+                    document.querySelector(".emojiCenter").style.display = "none"
+                    likeelm = ''
                 }
-                })
             })
-        }
-function openGallery(){
-    photo.Gallery()
- }
-async function prevImage(url){
-    var mediaType = url.split("/")
-    var to = `${tonum}`
-    var from = `${phoneNumber}`
-    var timestamp = Date.now()
-
-    var ID =  '_' + Math.random().toString(36).substr(2, 9);
-    var chat;
-    //await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
-    if(mediaType[4] == "video"){
-        chat = `<p id="${ID}" class="from-me no-color animate__animated animate_jello"> <video width="320" height="240" src="${url}">Something went wrong</video> </p>`
-    }else if(mediaType[4] == "images" || mediaType[4] == "image"){
-        chat = `<p  id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="${url}" /> </p>`
+        })
     }
 
-    $(".chat-body").append(chat)
-    $('html, body').animate({
-        scrollTop: $('#chat_body').prop("scrollHeight")
-    }, 100);
-    device.vibrate()
-    taken = false
-    addListeners()
-}
+    function openGallery() {
+        photo.Gallery()
+    }
+    async function prevImage(url) {
+        var mediaType = url.split("/")
+        var to = `${tonum}`
+        var from = `${phoneNumber}`
+        var timestamp = Date.now()
 
-function showImg(src){
-    $("#large-image").show();
-    $(".large_image").attr("src", src)
-}
+        var ID = '_' + Math.random().toString(36).substr(2, 9);
+        var chat;
+        //await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
+        if (mediaType[4] == "video") {
+            chat =
+                `<p id="${ID}" class="from-me no-color animate__animated animate_jello"> <video width="320" height="240" src="${url}">Something went wrong</video> </p>`
+        } else if (mediaType[4] == "images" || mediaType[4] == "image") {
+            chat =
+                `<p  id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="${url}" /> </p>`
+        }
 
-document.querySelectorAll('.emj').forEach(item => {
-  item.addEventListener('click', event => {
-    likeelm.querySelector(".msgReaction").innerHTML = item.innerHTML
-    likeelm.querySelector(".msgReaction").style.display = "block"
-    react.onMessage(likeelm.id, item.innerHTML, `${tonum}`, `${phoneNumber}`)
-  })
-})
+        $(".chat-body").append(chat)
+        $('html, body').animate({
+            scrollTop: $('#chat_body').prop("scrollHeight")
+        }, 100);
+        device.vibrate()
+        taken = false
+        addListeners()
+    }
 
-function recieveReaction(mid, reaction){
-    document.querySelector(`#${mid}`).querySelector(".msgReaction").style.display = "none"
-    document.querySelector(`#${mid}`).querySelector(".msgReaction").innerHTML = reaction
-    document.querySelector(`#${mid}`).querySelector(".msgReaction").style.display = ""
-}
+    function showImg(src) {
+        $("#large-image").show();
+        $(".large_image").attr("src", src)
+    }
+
+    document.querySelectorAll('.emj').forEach(item => {
+        item.addEventListener('click', event => {
+            if(item.classList.contains('cancel')){
+                likeelm.querySelector(".msgReaction").innerHTML = ""
+                react.onMessage(likeelm.id, "", `${tonum}`, `${phoneNumber}`)
+            }else{
+                likeelm.querySelector(".msgReaction").innerHTML = item.innerHTML
+                react.onMessage(likeelm.id, item.innerHTML, `${tonum}`, `${phoneNumber}`)
+            }
+            likeelm.querySelector(".msgReaction").style.display = "block"
+            likeelm = ''
+        })
+    })
+
+    function recieveReaction(mid, reaction) {
+        document.querySelector(`#${mid}`).querySelector(".msgReaction").style.display = "none"
+        document.querySelector(`#${mid}`).querySelector(".msgReaction").innerHTML = reaction
+        animateEmojis(reaction)
+        document.querySelector(`#${mid}`).querySelector(".msgReaction").style.display = ""
+    }
+
+    // shim layer with setTimeout fallback
+    function animateEmojis(reaction) {
+    if(reaction == "") return
+        $('#anim').show();
+        window.requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+        })();
+
+        var $parent = $("#anim"),
+            $elements = $('span', $parent),
+            vertSpeed = 5,
+            horiSpeed = 5;
+
+        var height = $parent.height(),
+            width = $parent.width();
+        $parent.css("overflow", "hidden");
+
+        // store all the data for animation
+        var items = [];
+        for (var i = 0; i < $elements.length; i++) {
+            var $element = $($elements[i]),
+                elementWidth = $element.width(),
+                elementHeight = $element.height();
+
+
+            $($element).html(reaction)
+
+            $element.css("position", "absolute");
+
+            var item = {
+                element: $element[0],
+                elementHeight: elementHeight,
+                elementWidth: elementWidth,
+                ySpeed: -vertSpeed,
+
+                omega: 2 * Math.PI * horiSpeed / (width * 60), //omega= 2Pi*frequency
+                random: (Math.random() / 2 + 0.5) * i * 10000, //random time offset
+                x: function (time) {
+                    return (Math.sin(this.omega * (time + this.random)) + 1) / 2 * (width - elementWidth);
+                },
+                y: height + (Math.random() + 1) * i * elementHeight,
+            }
+            items.push(item);
+        }
+
+        var counter = 0;
+        var animationStep = function () { //called 60 times a second
+            var time = +new Date(); //little trick, gives unix time in ms
+            var check = (counter % 10 === 0);
+
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i];
+
+                transformString = "translate3d(" + item.x(time) + "px," + item.y + "px,0px)";
+                item.element.style.transform = transformString;
+                item.element.style.webkitTransform = transformString;
+
+                item.y += item.ySpeed;
+                if (check && item.y < -item.elementHeight) { //check bounds every 10th iteration
+                    item.y = height;
+                }
+            }
+
+            counter %= 10;
+            counter++;
+            requestAnimationFrame(animationStep);
+        }
+        setTimeout(function () {
+            $('#anim').hide();
+        }, 5000);
+        requestAnimationFrame(animationStep);
+    }
 </script>
 <script>
 
 </script>
+
 </html>
