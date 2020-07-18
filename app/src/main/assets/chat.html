@@ -62,7 +62,7 @@
 
         .from-me {
             color: white;
-            background: #0B93F6;
+            background: #ff5722;
             align-self: flex-end;
         }
 
@@ -73,7 +73,7 @@
 
         .from-me:before {
             right: -7px;
-            border-right: 20px solid #0B93F6;
+            border-right: 20px solid #ff5722;
             border-bottom-left-radius: 16px 14px;
             -webkit-transform: translate(0, -2px);
             transform: translate(0, -2px);
@@ -225,13 +225,16 @@ padding:5px;
    white-space: pre;
 }
 
-.heart{
+.msgReaction{
     position:absolute;
     bottom:-10px;
     border-radius:50%;
     width: 25px;
     height: 25px;
     text-align:center;
+}
+.hashtag{
+    color:cyan;
 }
     </style>
 
@@ -293,6 +296,16 @@ padding:5px;
 </div>
 
 <footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white">
+    <div onclick="$(this).hide()" class="emojiCenter flex py-1 mb-2 px-5 flex-wrap animate__animated animate__bounceInUp animate__faster" style="display:none;">
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😂</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😍</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">❤</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">🤬</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😭</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😱</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😑</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">🤷</span>
+    </div>
     <div class="flex rounded-full py-1 w-full float-left mb-2 pr-5" style="background: #f5f5f5;">
         <span  id="output" class="break-words float-left placeholder-gray opacity-0 rounded-tl-full focus:outline-none rounded-bl-full text-black p-0 m-0" style="max-width:100px;"></span>
         <div contenteditable="true" class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full" id="input" spellcheck="fasle" onkeyup="check()"  oninput="check()" style="background: #f5f5f5;"></div>
@@ -355,7 +368,7 @@ var msg = $(".msg").html()
 	    str = str.replace(/(<)/gi, '&lg;');
 	    str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, '<br />');
 	    str = str.replace(/₹(.+?)(?=[\s.,:,]|$)/g, '<b class="dollar">₹$1</b>');
-	    str = str.replace(/#(.+?)(?=[\s.,:,]|$)/g, '<a href="#">#$1</a>');
+	    str = str.replace(/#(.+?)(?=[\s.,:,]|$)/g, '<b class="hashtag px-2 bg-gray-100 rounded-full">#$1</b>');
 	    str = str.replace(/@(.+?)(?=[\s.,:,]|$)/g, '<a href="#" class="attherate">$1</a>');
 	    str = str.replace(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g, '<a href="#">$1</a>');
 	    $('#output').html(`${str}`);
@@ -375,7 +388,7 @@ $(".msg").keypress(function(event) {
 });
 
 function recieveMessage(msg, time, mid){
-     var chat = `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span> </p>`
+     var chat = `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">❤</span> </p>`
      $(".chat-body").append(chat)
       $('html, body').animate({
         scrollTop: $('#chat_body').prop("scrollHeight")
@@ -393,7 +406,7 @@ async function sendMessage(){
 
     await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
 
-    var chat = `<p id="${ID}" class="from-me animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span> </p>`
+    var chat = `<p id="${ID}" class="from-me animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">❤</span> </p>`
 
     $(".chat-body").append(chat)
     $(".msg").text("")
@@ -467,11 +480,16 @@ function getChats(ucid){
 
                     messages.forEach(message => {
                         if(message.from == phoneNumber){
-                            templ = `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span> </p>`
+                            templ = `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__rubberBand msgReaction text-sm" style="display:none">${message.reaction}</span> </p>`
                         }else if(message.to == phoneNumber) {
-                            templ = `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__bounce heart text-sm" style="display:none">❤</span></p>`
+                            templ = `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__rubberBand msgReaction text-sm" style="display:none">${message.reaction}</span></p>`
                         }
                         $(".chat-body").prepend(templ)
+
+                        if(typeof(message.reaction) != "undefined"){
+                            document.querySelector(`#${message.mid}`).querySelector(".msgReaction").style.display = "block";
+                        }
+
                         $('html, body').animate({
                             scrollTop: $('#chat_body').prop("scrollHeight")
                         }, 0);
@@ -502,7 +520,7 @@ function deleteMessage(from, _id){
         $(`#${_id.id}`).remove()
     });
 }
-
+var likeelm;
 function addListeners() {
             taken = false
             document.querySelectorAll('.chat-bubble').forEach(item => {
@@ -528,20 +546,16 @@ function addListeners() {
                     clearInterval(inter)
                     start = 0
                 })
-                item.addEventListener("dblclick", e => {
-                if(item.querySelector(".heart").style.display == "none"){
-                    item.querySelector(".heart").style.display = "block"
-                }else if(item.querySelector(".heart").style.display == "block"){
-                    item.querySelector(".heart").style.display = "none"
-                }
-                })
+
             })
             document.querySelectorAll('.from-them').forEach(item => {
                 item.addEventListener("dblclick", e => {
-                if(item.querySelector(".heart").style.display == "none"){
-                    item.querySelector(".heart").style.display = "block"
-                }else if(item.querySelector(".heart").style.display == "block"){
-                    item.querySelector(".heart").style.display = "none"
+                if(document.querySelector(".emojiCenter").style.display == "none"){
+                     $(".emojiCenter").show()
+                     likeelm = item
+                }else if(document.querySelector(".emojiCenter").style.display == ""){
+                     $(".emojiCenter").hide()
+                     likeelm = ''
                 }
                 })
             })
@@ -576,6 +590,20 @@ async function prevImage(url){
 function showImg(src){
     $("#large-image").show();
     $(".large_image").attr("src", src)
+}
+
+document.querySelectorAll('.emj').forEach(item => {
+  item.addEventListener('click', event => {
+    likeelm.querySelector(".msgReaction").innerHTML = item.innerHTML
+    likeelm.querySelector(".msgReaction").style.display = "block"
+    react.onMessage(likeelm.id, item.innerHTML, `${tonum}`, `${phoneNumber}`)
+  })
+})
+
+function recieveReaction(mid, reaction){
+    document.querySelector(`#${mid}`).querySelector(".msgReaction").style.display = "none"
+    document.querySelector(`#${mid}`).querySelector(".msgReaction").innerHTML = reaction
+    document.querySelector(`#${mid}`).querySelector(".msgReaction").style.display = ""
 }
 </script>
 <script>

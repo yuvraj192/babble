@@ -100,6 +100,14 @@ class ChatActivity : AppCompatActivity() {
 
             }, "device")
 
+            chatView.addJavascriptInterface(object: Any(){
+                @JavascriptInterface
+                fun onMessage(mid: String, reaction: String, to: String, from: String){
+                    socket.emit("reaction", mid, reaction, to.toString(), from.toString())
+                }
+
+            }, "react")
+
 
             chatView.loadUrl("file:///android_asset/chat.html")
 
@@ -121,6 +129,10 @@ class ChatActivity : AppCompatActivity() {
 
             socket.on("deleteMsg", Emitter.Listener { args ->
                 deletemsg(args[0].toString(), args[1].toString())
+            })
+
+            socket.on("reaction", Emitter.Listener { args ->
+                reactOnMsg(args[0].toString(), args[1].toString())
             })
 
         }
@@ -175,6 +187,13 @@ class ChatActivity : AppCompatActivity() {
         chatView.post(Runnable {
             Toast.makeText(applicationContext, "", Toast.LENGTH_LONG)
             chatView.loadUrl("javascript:recieveMessage('$msg', '$time', '$mid')")
+        })
+    }
+
+    private fun reactOnMsg(mid: String, reaction: String){
+        chatView.post(Runnable {
+            Toast.makeText(applicationContext, reaction, Toast.LENGTH_LONG)
+            chatView.loadUrl("javascript:recieveReaction('$mid', '$reaction')")
         })
     }
 
