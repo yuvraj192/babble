@@ -388,7 +388,7 @@ $(".msg").keypress(function(event) {
 });
 
 function recieveMessage(msg, time, mid){
-     var chat = `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">❤</span> </p>`
+     var chat = `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
      $(".chat-body").append(chat)
       $('html, body').animate({
         scrollTop: $('#chat_body').prop("scrollHeight")
@@ -406,7 +406,7 @@ async function sendMessage(){
 
     await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
 
-    var chat = `<p id="${ID}" class="from-me animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">❤</span> </p>`
+    var chat = `<p id="${ID}" class="from-me animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
 
     $(".chat-body").append(chat)
     $(".msg").text("")
