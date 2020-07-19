@@ -10,10 +10,7 @@
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
     <script src="jquery.js"></script>
-    <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <style>
         body {
             -webkit-touch-callout: none;
@@ -59,7 +56,7 @@
             bottom: 0;
             width: 100%;
             /* Could be more or less, depending on screen size */
-            max-height: 400px;
+            max-height: 600px;
         }
 
         /* The Close Button */
@@ -86,58 +83,61 @@
         }
 
         .tooltip {
-  position: relative;
-  display: inline-block;
-}
+            position: relative;
+            display: inline-block;
+        }
 
-.tooltip .tooltiptext {
-  width: 60px;
-  margin-left:15px;
-  margin-top:20px;
-  background-color: #E5E5EA;
-  color: #000;
-  text-align: center;
-  border-radius: 16px 14px;
-  padding-left: 6px;
+        .tooltip .tooltiptext {
+            width: 60px;
+            margin-left: 15px;
+            margin-top: 20px;
+            background-color: #E5E5EA;
+            color: #000;
+            text-align: center;
+            border-radius: 16px 14px;
+            padding-left: 6px;
 
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-.status-circle {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  border: 2px solid white;
-  bottom: 0;
-  bottom:-5px;
-  right: 5px;
-  padding:0px;
-  background-color:#f0f0f0;
-  position: absolute;
-  text-align:center;
-  align-items:center;
-}
-.pinstatus-circle{
-    width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  border: 2px solid white;
-  bottom: 0;
-  right: 5px;
-  padding:0px;
-  background-color:#f0f0f0;
-  position: absolute;
-  text-align:center;
-  align-items:center;
-}
-.custom__delay{
-  --animate-delay: 0.1s !important;
-}
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
+        .status-circle {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid white;
+            bottom: 0;
+            bottom: -5px;
+            right: 5px;
+            padding: 0px;
+            background-color: #f0f0f0;
+            position: absolute;
+            text-align: center;
+            align-items: center;
+        }
+
+        .pinstatus-circle {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            border: 2px solid white;
+            bottom: 0;
+            right: 5px;
+            padding: 0px;
+            background-color: #f0f0f0;
+            position: absolute;
+            text-align: center;
+            align-items: center;
+        }
+
+        .custom__delay {
+            --animate-delay: 0.1s !important;
+        }
     </style>
 </head>
 
@@ -177,7 +177,7 @@
 <div id="myModal" class="modal">
 
     <!-- Modal content -->
-    <div class="modal-content px-5 animate__animated animate__slideInUp custom__delay" onclick="return;"
+    <div class="modal-content px-5 animate__animated animate__slideInUp animate__faster" onclick="return;"
          style="margin:0;border-top-left-radius: 30px;border-top-right-radius: 30px;">
         <div class="py-5 mx-auto flex flex-wrap flex-col md:flex-row items-center">
             <a
@@ -188,7 +188,7 @@
 
         <hr class="mb-2">
 
-        <section class="text-gray-700 body-font overflow-auto">
+        <section class="text-gray-700 body-font overflow-auto main-settings">
             <div class="container mx-auto">
                 <div class="flex flex-wrap -m-2">
                     <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
@@ -201,12 +201,44 @@
                             </div>
                         </div>
                     </div>
+                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full" onclick="changeMood()">
+                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                            <i alt="team"
+                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">whatshot</i>
+                            <div class="flex-grow">
+                                <h2 class="text-gray-900 title-font font-medium"> Change Mood <i
+                                        class="material-icons float-right">chevron_right</i> </h2>
+                            </div>
+                        </div>
+                    </div>
                     <div onclick="profile.load()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
                         <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                             <i alt="team"
                                class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">account_circle</i>
                             <div class="flex-grow">
                                 <h2 class="text-gray-900 title-font font-medium"> My Profile <i
+                                        class="material-icons float-right">chevron_right</i> </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="profile.load()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                            <i alt="team"
+                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">color_lens</i>
+                            <div class="flex-grow">
+                                <h2 class="text-gray-900 title-font font-medium">Choose Theme <br> <span
+                                        class="text-sm text-gray-500">Daylight</span> <i
+                                        class="material-icons float-right"
+                                        style="margin-top:-15px;">chevron_right</i> </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div onclick="profile.load()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                            <i alt="team"
+                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">face</i>
+                            <div class="flex-grow">
+                                <h2 class="text-gray-900 title-font font-medium">Floating Reactions <i
                                         class="material-icons float-right">chevron_right</i> </h2>
                             </div>
                         </div>
@@ -224,12 +256,117 @@
                 </div>
             </div>
         </section>
+        <section style="display:none;"
+                 class="text-gray-700 body-font overflow-hidden mood-sec animate__animated animate__fadeIn animate__faster">
+            <div class="container mx-auto">
+                <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+                    <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex flex-col text-center items-center">
+                        <div
+                                class="w-20 h-20 inline-flex items-center justify-center rounded-full text-indigo-500 mb-5 flex-shrink-0">
+                            <div class="relative">
+                                <img alt="team"
+                                     class="w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                     src="1.png">
+                                <div class='mood-circle status-circle text-sm animate__animated animate__tada'>❣
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <h2 class="text-gray-900 text-lg title-font font-medium">Divyansh</h2>
+                            <p class="leading-relaxed text-sm text-gray-400 -mt-1">Bored</p>
+                            <a class="mt-3 text-indigo-500 inline-flex items-center opacity-0">Learn More
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round"
+                                     stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2"
+                                     viewBox="0 0 24 24">
+                                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                            <div class="flex flex-wrap -m-4 -mt-6 overflow-y-auto px-5 mb-5">
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood mood-none">
+                                            ❌
+                                        </div>
+                                    </a>
+                                    <span>None</span>
+                                </div>
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood">
+                                            😘
+                                        </div>
+                                    </a>
+                                    <span>Lovely</span>
+                                </div>
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood">
+                                            🚫
+                                        </div>
+                                    </a>
+                                    <span>Busy</span>
+                                </div>
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood">
+                                            🙃
+                                        </div>
+                                    </a>
+                                    <span>Bored</span>
+                                </div>
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood">
+                                            📺
+                                        </div>
+                                    </a>
+                                    <span>Watching</span>
+                                </div>
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood">
+                                            🍕
+                                        </div>
+                                    </a>
+                                    <span>Eating</span>
+                                </div>
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood">
+                                            📚
+                                        </div>
+                                    </a>
+                                    <span>Studying</span>
+                                </div>
+                                <div style="display:block;" class="w-1/4 p-4">
+                                    <a
+                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                                        <div class="relative text-lg mt-4 mood">
+                                            🎮
+                                        </div>
+                                    </a>
+                                    <span>Gaming</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 
 </div>
 
 <div class="modal px-3" id="chat-settings">
-    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__slideInUp animate__faster" style="bottom:20px !important; max-width:92% !important;">
+    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__slideInUp animate__faster"
+         style="bottom:20px !important; max-width:92% !important;">
         <section class="text-gray-700 body-font overflow-auto">
             <div class="container mx-auto">
                 <div class="flex flex-wrap -m-2">
@@ -288,6 +425,7 @@
 
 <script>
         var phoneNumber;
+        var activeSetting;
 
         function logout() {
             if (phoneNumber == "") return;
@@ -306,7 +444,7 @@
         var times = 0;
 
         function openChat(item) {
-            if(times > 0) return
+            if (times > 0) return
             times = 1
             var num = item.id.split("_")[0]
             taken = false;
@@ -331,7 +469,7 @@
 
         // When the user clicks on <span> (x), close the modal
         modal.onclick = function () {
-            modal.style.display = "none";
+            //modal.style.display = "none";
         }
         setModal.onclick = function () {
             setModal.style.display = "none";
@@ -343,6 +481,8 @@
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+                activeSetting.style.display = "none";
+                $(".main-settings").show()
             }
         }
 
@@ -418,7 +558,7 @@
                     </div>
                     <div class="flex-grow border-b pb-2">
                         <h2 class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name"></h2>
-                        <p class="text-gray-500">UI Designer</p>
+                        <p class="text-gray-500 text-sm">Bored</p>
                     </div>
                 </div>
             </div>`
@@ -471,7 +611,9 @@
                     clearInterval(inter)
                     start = 0
                 })
-                item.addEventListener("click", function() { openChat(item) })
+                item.addEventListener("click", function () {
+                    openChat(item)
+                })
             })
         }
 
@@ -483,32 +625,33 @@
                     var messages = JSON.parse(this.responseText);
 
                     messages.forEach(message => {
-                    contacts.getName(message)
+                        contacts.getName(message)
                         var ID = '_' + Math.random().toString(36).substr(2, 9);
                         var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__bounceInUp animate__faster">
                                     <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                                     <div class="relative">
                                         <img alt="team"
-                                             class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                             class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                                         src="1.png">
-                                        <div class='status-circle text-sm animate__animated animate__tada'>☠</div>
+                                        <div class='status-circle text-sm animate__animated animate__tada ${message}_mood' style="display:block"></div>
                                         </div>
-                                        <div class="flex-grow border-b pb-2">
+                                        <div class="flex-grow">
                                             <h2 class="text-gray-900 title-font font-bold ${message}_name">${message}</h2>
-                                            <p class="text-gray-500 ${message}_LS"></p>
+                                            <p class="text-gray-500 text-sm">Bored</p>
                                         </div>
                                     </div>
                                  </div>`
 
-                    $(".chats-cont").append(templ)
-                    taken = false;
-                    addListeners()
-                    getLastSeen(message)
+                        $(".chats-cont").append(templ)
+                        getMoodOf(message)
+                        taken = false;
+                        addListeners()
+                        //getLastSeen(message)
                     })
 
                 } else if (this.status == 404) {
-                 $(".chats-cont").html("")
-                var templ = `<div id="add_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+                    $(".chats-cont").html("")
+                    var templ = `<div id="add_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
                                     <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                                         <div class="flex-grow border-b pb-2">
                                             <h2 class="text-gray-900 title-font font-bold add_name">Start a new chat</h2>
@@ -524,59 +667,69 @@
             await xhttp.send();
         }
 
-        function updateChatList(message, name, msg){
-        if($(`#${message}_message`).hasClass('pin-chat')){
-            $(`.${message}_pintip`).html(msg)
-            $(`.${message}_pintip`).show('fast')
-        }else{
-            if($('.chats-cont').first().attr('id') != `${message}_message`){
-                $(`#${message}_message`).hide('fast')
-                $(`#${message}_message`).remove()
+        function updateChatList(message, name, msg) {
+            if ($(`#${message}_message`).hasClass('pin-chat')) {
+                $(`.${message}_pintip`).html(msg)
+                $(`.${message}_pintip`).show('fast')
+            } else {
+                return
             }
-
-            var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
-                                    <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                                        <div class="relative">
-                                        <img alt="team"
-                                             class="w-12 h-12 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                                        src="1.png">
-
-                                        <div class='status-circle text-sm'>😀</div>
-                                        </div>
-                                        <div class="flex-grow border-b pb-2">
-                                            <h2 class="text-gray-900 title-font font-bold ${message}_name">${name}</h2>
-                                            <p class="text-black font-bold">${msg}</p>
-                                        </div>
-                                    </div>
-                                 </div>`
-                    $(".chats-cont").prepend(templ)
-                    $(`.${ID}`).show('fast')
-                    taken = false;
-                    addListeners()
-             }
         }
 
-        function updateName(name, num){
+        function updateName(name, num) {
             $(`.${num}_name`).html(name)
         }
 
-        async function getLastSeen(of){
+        async function getLastSeen( of ) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     var LS = JSON.parse(this.responseText);
                     $(`.${of}_LS`).html(`Last seen ${LS.lastOnline}`)
-                 }
+                }
             }
-            xhttp.open("GET", "http://iotine.zapto.org:4600/lastSeenOf/" + of, true);
+            xhttp.open("GET", "http://iotine.zapto.org:4600/lastSeenOf/" + of , true);
             await xhttp.send();
         }
+
+        function changeMood() {
+            $('.main-settings').hide();
+            $('.mood-sec').show()
+            activeSetting = $(".mood-sec")
+        }
+
+        document.querySelectorAll(".mood").forEach(mood => {
+            mood.addEventListener('click', () => {
+                if (mood.classList.contains("mood-none")) {
+                    updateMood("")
+                    $(".mood-circle").hide()
+                } else {
+                    updateMood(mood.innerHTML)
+                }
+            })
+        })
+
+        function updateMood(mood) {
+            device.vibrate()
+            $(".mood-circle").hide().html(mood).show('fast')
+        }
+
+        function getMoodOf(num) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText != '') {
+                        $(`${num}_mood`).show().text(`${this.responseText}`)
+                        alert($(`${num}_mood`).text())
+                    } else {
+                        $(`${num}_mood`).hide()
+                    }
+                }
+            }
+            xhttp.open("GET", "http://iotine.zapto.org:4600/moodOf/" + num, true);
+            xhttp.send();
+        }
     </script>
-
-<script>
-
-</script>
 </body>
 
 </html>
