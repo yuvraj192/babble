@@ -64,7 +64,7 @@
 
         .from-me {
             color: white;
-            background: #ff5722;
+            background: #7d4df9;
             align-self: flex-end;
         }
 
@@ -75,7 +75,7 @@
 
         .from-me:before {
             right: -7px;
-            border-right: 20px solid #ff5722;
+            border-right: 20px solid #7d4df9;
             border-bottom-left-radius: 16px 14px;
             -webkit-transform: translate(0, -2px);
             transform: translate(0, -2px);
@@ -124,10 +124,12 @@
             transform: translate(-30px, -2px);
             z-index: 1 !important;
         }
-        .from-them.no-color{
-            background-color:transparent !important;
-            margin-left:-30px !important;
+
+        .from-them.no-color {
+            background-color: transparent !important;
+            margin-left: -30px !important;
         }
+
         .no-color:after {
             display: none;
         }
@@ -267,10 +269,56 @@
             height: 40px;
         }
 
-        .from-me.audio-msg {
-            max-width: 185px;
-            margin-right: 110px;
+        .audio-msg audio {
+            max-width: 240px;
         }
+
+        .audio-msg audio:focus {
+            outline: none
+        }
+
+        .from-me.audio-msg, .from-them.audio-msg {
+            padding: 10px !important;
+            padding-top:15px !important;
+            padding-bottom:15px !important;
+        }
+        .recordshadow{
+            color:black !important;
+            padding-left:2rem;
+            padding-right:0.5rem;
+        }
+
+        .outer-2 {
+  width: 25px;
+  height: 25px;
+  padding-left:5px;
+  -webkit-transform: scale(1);
+  border-radius: 100%;
+  position:absolute;
+  z-index:0;
+  background-color: #7d4df9;
+  transition: 1.5s all ease;
+  -webkit-animation: woong-2 1.0s infinite;
+  -webkit-animation-delay: 2.0s;
+}
+
+@-webkit-keyframes woong-2 {
+  0% {
+    -webkit-transform: scale(1.2);
+    opacity: 0.6;
+  }
+  50% {
+    -webkit-transform: scale(1.6);
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: scale(2);
+    opacity: 0;
+  }
+}
+#recordButton{
+    position: relative;
+}
     </style>
 
 </head>
@@ -356,10 +404,11 @@
                 class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full"
                 id="input" spellcheck="fasle" onkeyup="check()" oninput="check()" style="background: #f5f5f5;" />
         <div class="otherBtn flex">
-            <button id="recordButton"
-                    class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
-                <i class="material-icons">mic_none</i>
-            </button>
+            <div id="recordButton"
+                    class="inline-flex items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+                <div class="outer-2" style="display:none"></div>
+                <button style="margin-top:7px;"><i class="material-icons">mic_none</i></button>
+            </div>
             <button onclick="openGallery()"
                     class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
 
@@ -471,10 +520,10 @@
         var chat;
         if (mid.split("_")[0] == "audio") {
             chat =
-                `<p id="${mid}" class="from-them no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
+                `<p id="${mid}" class="from-them no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
         } else {
             chat =
-                `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
+                `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
         }
         $(".chat-body").append(chat)
         $('html, body').animate({
@@ -495,7 +544,7 @@
         await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
 
         var chat =
-            `<p id="${ID}" class="from-me chat-bubble animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
+            `<p id="${ID}" class="from-me chat-bubble animate__animated animate__bounceInUp animate__faster">${cmsg} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
 
         $(".chat-body").append(chat)
         $(".msg").val("")
@@ -571,18 +620,18 @@
                     if (message.from == phoneNumber) {
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
-                                `<p id="${message.mid}" class="from-me no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">${message.reaction}</span> </p>`
+                                `<p id="${message.mid}" class="from-me audio-msg chat-bubble"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
                         } else {
                             templ =
-                                `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">${message.reaction}</span> </p>`
+                                `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
                         }
                     } else if (message.to == phoneNumber) {
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
-                                `<p id="${message.mid}" class="from-them no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">${message.reaction}</span> </p>`
+                                `<p id="${message.mid}" class="from-them audio-msg chat-bubble"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
                         } else {
                             templ =
-                                `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none">${message.reaction}</span></p>`
+                                `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
                         }
                     }
                     $(".chat-body").prepend(templ)
@@ -657,9 +706,6 @@
                 if (document.querySelector(".emojiCenter").style.display == "none") {
                     document.querySelector(".emojiCenter").style.display = "block"
                     likeelm = item
-                } else if (document.querySelector(".emojiCenter").style.display == "") {
-                    document.querySelector(".emojiCenter").style.display = "none"
-                    likeelm = ''
                 }
             })
         })
@@ -682,16 +728,37 @@
                 `<p id="${ID}" class="from-me no-color animate__animated animate_jello"> <video width="320" height="240" src="${url}">Something went wrong</video> </p>`
         } else if (mediaType[4] == "images" || mediaType[4] == "image") {
             chat =
-                `<p  id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="${url}" /> </p>`
+                `<p  id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" id="image${ID}" class="rounded-lg msg-img animate__animated animate_jello" src="${url}" /> </p>`
         }
 
         $(".chat-body").append(chat)
+
+        uploadImage(url);
+
         $('html, body').animate({
             scrollTop: $('#chat_body').prop("scrollHeight")
         }, 100);
+
         device.vibrate()
         taken = false
         addListeners()
+    }
+
+    function uploadImage(url) {
+        var img = new Image;
+        var c = document.createElement("canvas");
+        var ctx = c.getContext("2d");
+
+        img.onload = function () {
+            c.width = this.naturalWidth; // update canvas size to match image
+            c.height = this.naturalHeight;
+            ctx.drawImage(this, 0, 0); // draw in image
+            c.toBlob(function (blob) { // get content as JPEG blob
+                alert(blob)
+            }, "image/jpeg", 0.75);
+        };
+        img.crossOrigin = "content://"; // if from different origin
+        img.src = url;
     }
 
     function showImg(src) {
@@ -821,6 +888,8 @@
 
     function startRecording() {
         audio.record()
+        $(".outer-2").show()
+        recordButton.classList.add("recordshadow")
         device.vibrate()
         console.log("recordButton clicked");
 
@@ -897,7 +966,8 @@
     }
 
     function stopRecording() {
-        console.log("stopButton clicked");
+        $(".outer-2").hide()
+        recordButton.classList.remove("recordshadow")
 
         //disable the stop button, enable the record too allow for new recordings
         recordButton.disabled = false;
@@ -926,7 +996,7 @@
         xhr.onload = function (e) {
             if (this.readyState === 4) {
                 var chat =
-                    `<p id="${ID}" class="from-me no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${this.responseText}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
+                    `<p id="${ID}" class="from-me audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${this.responseText}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
 
                 msg.send(`${this.responseText}`, `${tonum}`, `${phoneNumber}`, `${timestamp}`, `audio${ID}`)
                 $(".chat-body").append(chat)
