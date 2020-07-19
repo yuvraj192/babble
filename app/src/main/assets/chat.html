@@ -263,6 +263,10 @@
             width: 40px;
             height: 40px;
         }
+        .from-me.audio-msg{
+            max-width:185px;
+            margin-right:20px;
+        }
     </style>
 
 </head>
@@ -345,10 +349,10 @@
                   class="break-words float-left placeholder-gray opacity-0 rounded-tl-full focus:outline-none rounded-bl-full text-black p-0 m-0"
                   style="max-width:100px;"></span>
         <input
-             class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full"
-             id="input" spellcheck="fasle" onkeyup="check()" oninput="check()" style="background: #f5f5f5;" />
+                class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-tl-full focus:outline-none rounded-bl-full"
+                id="input" spellcheck="fasle" onkeyup="check()" oninput="check()" style="background: #f5f5f5;" />
         <div class="otherBtn flex">
-            <button
+            <button id="recordButton"
                     class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
                 <i class="material-icons">mic_none</i>
             </button>
@@ -363,7 +367,8 @@
             </button>
         </div>
         <button style="display:none;" onclick="sendMessage()"
-                class="sndBtn inline-flex items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-blue-700 md:mt-0  animate__animated animate__fadeInRight animate__faster" style="margin-left:10px;">
+                class="sndBtn inline-flex items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-blue-700 md:mt-0  animate__animated animate__fadeInRight animate__faster"
+                style="margin-left:10px;">
             SEND
         </button>
     </div>
@@ -395,7 +400,6 @@
     <span class="w-1/9 h-6 w-6 mx-2"></span>
     <span class="w-1/9 h-6 w-6 mx-2"></span>
 </div>
-
 </body>
 <script src="jquery.js"></script>
 <script>
@@ -433,9 +437,13 @@
             str = str.replace(/(<)/gi, '&lt;');
             str = str.replace(/(<)/gi, '&lg;');
             str = str.replace(/(?:\r\n|\n\r|\r|\n)/g, '<br />');
-            str = str.replace(/₹(.+?)(?=[\s.,:,]|$)/g, '<b class="dollar px-2 bg-gray-100 rounded-full animate__animated animate__fadeInDown">₹$1</b>');
-            str = str.replace(/#(.+?)(?=[\s.,:,]|$)/g, '<b class="hashtag px-2 bg-gray-100 rounded-full animate__animated animate__bounce">#$1</b>');
-            str = str.replace(/@(.+?)(?=[\s.,:,]|$)/g, '<a href="#" class="attherate px-2 bg-gray-100 rounded-full animate__animated animate__bounce">$1</a>');
+            str = str.replace(/₹(.+?)(?=[\s.,:,]|$)/g,
+                '<b class="dollar px-2 bg-gray-100 rounded-full animate__animated animate__fadeInDown">₹$1</b>');
+            str = str.replace(/#(.+?)(?=[\s.,:,]|$)/g,
+                '<b class="hashtag px-2 bg-gray-100 rounded-full animate__animated animate__bounce">#$1</b>');
+            str = str.replace(/@(.+?)(?=[\s.,:,]|$)/g,
+                '<a href="#" class="attherate px-2 bg-gray-100 rounded-full animate__animated animate__bounce">$1</a>'
+                );
             str = str.replace(
                 /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/g,
                 '<a href="#">$1</a>');
@@ -673,10 +681,10 @@
 
     document.querySelectorAll('.emj').forEach(item => {
         item.addEventListener('click', event => {
-            if(item.classList.contains('cancel')){
+            if (item.classList.contains('cancel')) {
                 likeelm.querySelector(".msgReaction").innerHTML = ""
                 react.onMessage(likeelm.id, "", `${tonum}`, `${phoneNumber}`)
-            }else{
+            } else {
                 likeelm.querySelector(".msgReaction").innerHTML = item.innerHTML
                 react.onMessage(likeelm.id, item.innerHTML, `${tonum}`, `${phoneNumber}`)
             }
@@ -694,7 +702,7 @@
 
     // shim layer with setTimeout fallback
     function animateEmojis(reaction) {
-    if(reaction == "") return
+        if (reaction == "") return
         $('#anim').show();
         window.requestAnimationFrame = (function () {
             return window.requestAnimationFrame ||
@@ -770,8 +778,151 @@
         requestAnimationFrame(animationStep);
     }
 </script>
+<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
 <script>
+    // VOICE MESSAGE
 
+    //webkitURL is deprecated but nevertheless
+    URL = window.URL || window.webkitURL;
+
+    var gumStream; //stream from getUserMedia()
+    var rec; //Recorder.js object
+    var input; //MediaStreamAudioSourceNode we'll be recording
+    var format;
+    // shim for AudioContext when it's not avb.
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioContext //audio context to help us record
+
+    var recordButton = document.getElementById("recordButton");
+
+    //add events to those 2 buttons
+    recordButton.addEventListener("touchstart", startRecording);
+    recordButton.addEventListener("touchend", stopRecording);
+
+    function startRecording() {
+        audio.record()
+        device.vibrate()
+        console.log("recordButton clicked");
+
+        /*
+        	Simple constraints object, for more advanced audio features see
+        	https://addpipe.com/blog/audio-constraints-getusermedia/
+        */
+
+        var constraints = {
+            audio: true,
+            video: false
+        }
+
+        /*
+    	Disable the record button until we get a success or fail from getUserMedia()
+	*/
+
+        recordButton.disabled = true;
+
+        /*
+    	We're using the standard promise based getUserMedia()
+    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+	*/
+
+        navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+            console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+
+            /*
+            	create an audio context after getUserMedia is called
+            	sampleRate might change after getUserMedia is called, like it does on macOS when recording through AirPods
+            	the sampleRate defaults to the one set in your OS for your playback device
+            */
+            audioContext = new AudioContext();
+
+            //update the format
+            format = "Format: 1 channel pcm @ " + audioContext
+                .sampleRate / 1000 + "kHz"
+
+            /*  assign to gumStream for later use  */
+            gumStream = stream;
+
+            /* use the stream */
+            input = audioContext.createMediaStreamSource(stream);
+
+            /*
+            	Create the Recorder object and configure to record mono sound (1 channel)
+            	Recording 2 channels  will double the file size
+            */
+            rec = new Recorder(input, {
+                numChannels: 1
+            })
+
+            //start the recording process
+            rec.record()
+
+            console.log("Recording started");
+
+        }).catch(function (err) {
+            //enable the record button if getUserMedia() fails
+            recordButton.disabled = false;
+        });
+    }
+
+    function pauseRecording() {
+        console.log("pauseButton clicked rec.recording=", rec.recording);
+        if (rec.recording) {
+            //pause
+            rec.stop();
+        } else {
+            //resume
+            rec.record()
+
+        }
+    }
+
+    function stopRecording() {
+        console.log("stopButton clicked");
+
+        //disable the stop button, enable the record too allow for new recordings
+        recordButton.disabled = false;
+
+        //reset button just in case the recording is stopped while paused
+        //tell the recorder to stop the recording
+        rec.stop();
+
+        //stop microphone access
+        gumStream.getAudioTracks()[0].stop();
+
+        //create the wav blob and pass it on to createDownloadLink
+        rec.exportWAV(createDownloadLink);
+    }
+
+    function createDownloadLink(blob) {
+        var ID = '_' + Math.random().toString(36).substr(2, 9);
+
+        var url = URL.createObjectURL(blob);
+
+        var filename = new Date().toISOString();
+
+        var chat =
+            `<p id="${ID}" class="from-me no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="${url}" controls="true"></audio> <span class="animate__animated animate__bounce msgReaction text-sm" style="display:none"></span> </p>`
+
+        $(".chat-body").append(chat)
+
+        $('html, body').animate({
+            scrollTop: $('#chat_body').prop("scrollHeight")
+        }, 100);
+
+        device.vibrate()
+        addListeners()
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function (e) {
+            if (this.readyState === 4) {
+                alert("Server returned: ", e.target.responseText);
+            }
+        };
+        var fd = new FormData();
+        fd.append("audio_data", blob, filename);
+        xhr.open("POST", "http://iotine.zapto.org:8088/upload.php", true);
+        xhr.send(fd);
+    }
 </script>
 
 </html>

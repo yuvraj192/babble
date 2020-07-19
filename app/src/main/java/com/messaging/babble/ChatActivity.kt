@@ -2,6 +2,7 @@ package com.messaging.babble
 
 import android.Manifest
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,12 +11,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.webkit.JavascriptInterface
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
@@ -27,6 +28,9 @@ class ChatActivity : AppCompatActivity() {
     var phoneNumber: String? = null
     var toNum: String? = null
     var toName: String? = null
+    private val RECORD_REQUEST_CODE = 101
+    private val DESKTOP_USER_AGENT =
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,8 @@ class ChatActivity : AppCompatActivity() {
         if (chatView != null){
             val websettings = chatView!!.settings
             chatView.settings.javaScriptEnabled = true
+            chatView.settings.setUserAgentString(DESKTOP_USER_AGENT);
+            chatView.settings.setMediaPlaybackRequiresUserGesture(false);
             chatView!!.webViewClient = WebViewClient()
             chatView!!.webChromeClient = WebChromeClient()
 
@@ -108,8 +114,51 @@ class ChatActivity : AppCompatActivity() {
 
             }, "react")
 
+            chatView.addJavascriptInterface(object: Any(){
+                @JavascriptInterface
+                fun record(){
+                    val permission: Int
+
+                    permission = ContextCompat.checkSelfPermission(
+                        this@ChatActivity,
+                        Manifest.permission.RECORD_AUDIO
+                    )
+                    if (permission != PackageManager.PERMISSION_GRANTED) {
+
+                        // Should we show an explanation?
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this@ChatActivity,
+                                Manifest.permission.RECORD_AUDIO
+                            )
+                        ) {
+                            // Show an expanation to the user *asynchronously* -- don't block
+                        } else {
+                            ActivityCompat.requestPermissions(
+                                this@ChatActivity,
+                                arrayOf(Manifest.permission.RECORD_AUDIO),
+                                RECORD_REQUEST_CODE
+                            )
+                        }
+                    }
+                }
+
+            }, "audio")
+
+
 
             chatView.loadUrl("file:///android_asset/chat.html")
+
+            chatView.webChromeClient = object : WebChromeClient() {
+                override fun onPermissionRequest(request: PermissionRequest) {
+                        if (request.origin
+                                .toString() == "file:///"
+                        ) {
+                            request.grant(request.resources)
+                        } else {
+                            request.deny()
+                        }
+                }
+            }
 
             chatView!!.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
