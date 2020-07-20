@@ -358,7 +358,7 @@
                     class="material-icons">chevron_left</i></a>
         </nav>
         <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5  ">
-            <button
+            <button onclick="videoCall()"
                     class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base mt-3 md:mt-0  ">
                 <i class="material-icons">videocam</i>
             </button>
@@ -489,6 +489,7 @@
     var phoneNumber;
     var tonum;
     var ucid;
+    var name;
     var longpress = 900;
     var inter;
     // holds the start time
@@ -505,6 +506,11 @@
     }
     document.onload = function () {
         document.body.scrollTop = document.body.scrollHeight;
+    }
+
+    function videoCall(){
+        var ucid = [tonum, phoneNumber].sort().join('')
+        video.call(`${ucid}`, `${tonum}`, `${phoneNumber}`, `${name}`)
     }
 
     function check() {
@@ -701,6 +707,7 @@
         phoneNumber = pno;
         tonum = toNum;
         $("#contactName").html(name)
+        name = name
         ucid = [tonum, pno].sort().join('')
         getChats(ucid)
     }

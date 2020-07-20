@@ -108,6 +108,13 @@ class ChatActivity : AppCompatActivity() {
 
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
+                fun call(ucid: String, to: String, from: String, name: String) {
+                    signalUser(to, from, name, ucid)
+                }
+            }, "video")
+
+            chatView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
                 fun delete(to: String, ucid: String, _id: String) {
                     socket.emit("deleteMsg", to, ucid, _id)
 
@@ -265,6 +272,18 @@ class ChatActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, reaction, Toast.LENGTH_LONG)
             chatView.loadUrl("javascript:recieveReaction('$mid', '$reaction')")
         })
+    }
+
+    //video calls
+
+    private fun signalUser(to: String, from: String, name: String, ucid: String){
+        val intent = Intent(this@ChatActivity, VideoCall::class.java)
+        intent.putExtra("phoneNumber", from)
+        intent.putExtra("to", to)
+        intent.putExtra("name", name)
+        intent.putExtra("ucid", ucid)
+        socket.emit("signal", to, from)
+        startActivity(intent)
     }
 
 }
