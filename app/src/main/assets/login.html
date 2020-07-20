@@ -13,7 +13,12 @@
     <script src="jquery.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
-    <style>.center {
+    <style>
+    body {
+  //background-image: url("https://cliply.co/wp-content/uploads/2019/08/371908020_CONFETTI_400px.gif");
+  background-repeat: repeat;
+}
+    .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -30,7 +35,7 @@
 </head>
 <body class="theme-shade-bg">
 
-<section class="text-gray-700 body-font">
+<section class="text-gray-700 body-font log-sec">
     <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
         <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <img src="logo.png" class="center animate__animated animate__tada" style="float:center;height:120px;width:120px;" alt="">
@@ -38,6 +43,38 @@
             <input class="bg-white rounded focus:outline-none text-base px-4 py-3 mb-4 pno placeholder-gray-600" placeholder="Mobile Number" type="tel" maxlength="10">
             <button onclick="login()" class="theme-shade-text bg-white  border-0 py-2 px-8 focus:outline-none rounded text-center">Continue <i class="material-icons text-sm mt-2">arrow_forward</i> </button>
 
+        </div>
+    </div>
+</section>
+<section class="text-gray-700 body-font name-sec animate__animated animate__fadeIn" style="display:none">
+    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+        <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+            <h2 align="center" class="text-black text-3xl font-medium title-font mb-12"><b>What's your name?</b></h2>
+            <input class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 fname placeholder-gray-600" placeholder="First name" type="text">
+            <input class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 lname placeholder-gray-600" placeholder="last name" type="text">
+            <span class="text-xs text-gray-500 text-center items-center">By tapping 'Sign up', you agree to the <span class="theme-shade-text font-bold">Terms of Service</span> and <span class="theme-shade-text font-bold">Privacy Policy</span> </span>
+            <button onclick="$('.bd-sec').show();$('.name-sec').hide()" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Sign Up </button>
+
+        </div>
+    </div>
+</section>
+<section class="text-gray-700 body-font bd-sec animate__animated animate__fadeIn" style="display:none">
+    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+        <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+            <h2 align="center" class="text-black text-2xl font-medium title-font mb-12"><b>When's your birthday?</b></h2>
+            <input class="bg-white rounded focus:outline-none text-base px-4 pl-24 border-b py-3 mb-4 bdate placeholder-gray-600 w-full" type="date" value="2002-09-21">
+            <button onclick="requestOTP()" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Continue </button>
+
+        </div>
+    </div>
+</section>
+<section class="text-gray-700 body-font otp-sec animate__animated animate__fadeIn" style="display:none">
+    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+        <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+            <h2 align="center" class="text-black text-2xl font-medium title-font mb-2"><b>Verify your phonenumber!</b></h2>
+            <span class="text-xs text-gray-500 mb-10 text-center items-center">Please enter the <span class="theme-shade-text font-bold">OTP</span> sent to  <span class="theme-shade-text font-bold">8802335287</span> </span>
+            <input id="partitioned" class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 otp placeholder-gray-600 w-full" placeholder="One Time Password" type="tel" maxlength="6" />
+            <button onclick="verify.performClick()" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Continue </button>
         </div>
     </div>
 </section>
@@ -51,12 +88,27 @@
             if (this.readyState == 4 && this.status == 200) {
                 valid.performClick(phoneNumber);
             }else if(this.status == 404){
-                window.location.replace("register.html")
+                reg.save(phoneNumber)
+                document.querySelector('body').classList.remove('theme-shade-bg')
+                $('.log-sec').hide()
+                $('.name-sec').show()
                 change.backColor()
             }
         };
         xhttp.open("GET", "http://iotine.zapto.org:4600/login/"+phoneNumber, true);
         xhttp.send();
+    }
+
+        function requestOTP(){
+        get.OTP()
+    }
+
+    function showOTPBox(){
+        $('.otp-sec').show()
+        $('.bd-sec').hide()
+    }
+    function putOTP(code){
+        $(".otp").val(code)
     }
 </script>
 </body>
