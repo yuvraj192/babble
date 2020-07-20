@@ -85,6 +85,10 @@ class HomeActivity : AppCompatActivity() {
                 fun logout(){
                     logAct()
                     socket.disconnect()
+                    val settings = getSharedPreferences("btor56ungh", 0)
+                    val editor = settings.edit()
+                    editor.putString("ughn8dh", "")
+                    editor.commit()
                     finish()
                 }
             }, "app")

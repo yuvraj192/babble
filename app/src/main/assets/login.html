@@ -14,8 +14,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <style>
-    body {
-  //background-image: url("https://cliply.co/wp-content/uploads/2019/08/371908020_CONFETTI_400px.gif");
+    .body {
+  background-image: url("https://cliply.co/wp-content/uploads/2019/08/371908020_CONFETTI_400px.gif");
   background-repeat: repeat;
 }
     .center {
@@ -39,7 +39,8 @@
     <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
         <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <img src="logo.png" class="center animate__animated animate__tada" style="float:center;height:120px;width:120px;" alt="">
-            <h2 align="center" class="text-white text-lg font-medium title-font mb-12"><b>Babble</b></h2>
+            <h2 align="center" class="text-white text-lg font-medium title-font mb-2 animate__animated animate__pulse"><b>Babble</b></h2>
+            <span class="text-xl text-white text-center items-center animate__animated animate__fadeIn mb-10 font-bold">Welcome</span>
             <input class="bg-white rounded focus:outline-none text-base px-4 py-3 mb-4 pno placeholder-gray-600" placeholder="Mobile Number" type="tel" maxlength="10">
             <button onclick="login()" class="theme-shade-text bg-white  border-0 py-2 px-8 focus:outline-none rounded text-center">Continue <i class="material-icons text-sm mt-2">arrow_forward</i> </button>
 
@@ -72,9 +73,18 @@
     <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
         <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <h2 align="center" class="text-black text-2xl font-medium title-font mb-2"><b>Verify your phonenumber!</b></h2>
-            <span class="text-xs text-gray-500 mb-10 text-center items-center">Please enter the <span class="theme-shade-text font-bold">OTP</span> sent to  <span class="theme-shade-text font-bold">8802335287</span> </span>
+            <span class="text-xs text-gray-500 mb-10 text-center items-center">Please enter the <span class="theme-shade-text font-bold">OTP</span> sent to  <span class="theme-shade-text font-bold unum"></span> </span>
             <input id="partitioned" class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 otp placeholder-gray-600 w-full" placeholder="One Time Password" type="tel" maxlength="6" />
             <button onclick="verify.performClick()" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Continue </button>
+        </div>
+    </div>
+</section>
+<section class="text-gray-700 body-font congo-sec animate__animated animate__fadeIn" style="display:none">
+    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+        <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+            <h2 align="center" class="text-black text-2xl font-medium title-font mb-2 animate__animated animate__fadeIn"><b>Welcome <span class="uname"></span>! </b></h2>
+            <span class="text-xs text-black mb-10 text-center items-center animate__animated animate__fadeInUp">Your account has been created <span class="theme-shade-text font-bold">Succesfully</span></span>
+            <button onclick="endSetup()" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Continue </button>
         </div>
     </div>
 </section>
@@ -89,7 +99,8 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                valid.performClick(phoneNumber);
+                valid.performClick(btoa(phoneNumber));
+                go.home(phoneNumber)
             }else if(this.status == 404){
                 reg.save(phoneNumber)
                 document.querySelector('body').classList.remove('theme-shade-bg')
@@ -114,6 +125,7 @@
     }
 
     function showOTPBox(){
+        $(".unum").html(phoneNumber)
         $('.otp-sec').show()
         $('.bd-sec').hide()
     }
@@ -125,13 +137,25 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                valid.performClick(phoneNumber);
+                $(".otp-sec").hide()
+                $(".uname").html(name.split(" ")[0])
+                $(".congo-sec").show()
+                document.querySelector('body').className += " body"
             }else if(this.status == 404){
                 make.toast("There was an error creating your account.Please try again later.")
             }
         };
         xhttp.open("GET", "http://iotine.zapto.org:4600/register/"+phoneNumber+"/"+name+"/"+bd, true);
         xhttp.send();
+    }
+
+    function endSetup(){
+        valid.performClick(btoa(phoneNumber));
+        go.home(phoneNumber)
+    }
+
+    function goTohome(pno){
+        go.home(atob(pno))
     }
 </script>
 </body>

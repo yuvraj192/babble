@@ -17,7 +17,7 @@
 />
     <style>
 .loader {
-  border-top-color: #3498db;
+  border-top-color: #7d4df9;
   -webkit-animation: spinner 1.5s linear infinite;
   animation: spinner 1.5s linear infinite;
 }
@@ -31,6 +31,12 @@
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+.theme-shade-text{
+            color: #7d4df9 !important;
+        }
+        .theme-shade-bg{
+            background-color: #7d4df9 !important;
+        }
 </style>
 </head>
 
@@ -38,7 +44,7 @@
 <header class="text-gray-700 body-font bg-white fixed inset-x-0 top-0 z-10" style="height:56px;">
     <div class="container mx-auto flex p-5 flex-col items-center">
         <nav class="flex items-center text-base fixed left-0 top-0 ml-6 mt-5">
-            <a id="settings" class="mr-5 rounded-full text-sm text-blue-500" onclick="contacts.close()"> <i class="material-icons">chevron_left</i> </a>
+            <a id="settings" class="mr-5 rounded-full text-sm theme-shade-text" onclick="contacts.close()"> <i class="material-icons">chevron_left</i> </a>
         </nav>
         <a
                 class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">

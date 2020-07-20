@@ -1,5 +1,6 @@
 package com.messaging.babble
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -18,6 +19,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
+import java.util.Base64
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,10 +28,12 @@ class MainActivity : AppCompatActivity() {
     //firebase auth object
     private var mAuth: FirebaseAuth? = null
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val settings = getSharedPreferences("btor56ungh", 0)
         mAuth = FirebaseAuth.getInstance();
 
         if(loginView!= null){
@@ -41,10 +45,20 @@ class MainActivity : AppCompatActivity() {
             loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
                 fun performClick(phoneNumber: String) {
-                    goHome(phoneNumber)
+                    val settings = getSharedPreferences("btor56ungh", 0)
+                    val editor = settings.edit()
+                    editor.putString("ughn8dh", phoneNumber.toString())
+                    editor.commit()
                     finish()
                 }
             }, "valid")
+
+            loginView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun home(phoneNumber: String) {
+                   goHome(phoneNumber)
+                }
+            }, "go")
 
             loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
@@ -94,6 +108,10 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
+                    if(settings.getString("ughn8dh", "").toString() != ""){
+                        var pn: String = settings.getString("ughn8dh", "").toString()
+                        loginView.loadUrl("javascript:goTohome('$pn')")
+                    }
                 }
             }
         }
