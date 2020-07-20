@@ -138,6 +138,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
+                loginView.loadUrl("javascript:vfcFailed()")
                 Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_LONG).show()
             }
 
