@@ -183,6 +183,7 @@ private fun goHome(phoneNumber: String){
     val intent = Intent(this@MainActivity, HomeActivity::class.java)
     intent.putExtra("phoneNumber", phoneNumber)
     startActivity(intent)
+    finish()
 }
 }
 
