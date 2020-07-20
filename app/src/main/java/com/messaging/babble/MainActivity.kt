@@ -55,6 +55,13 @@ class MainActivity : AppCompatActivity() {
 
             loginView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
+                fun toast(msg: String) {
+                    Toast.makeText(this@MainActivity, msg, Toast.LENGTH_LONG).show()
+                }
+            }, "make")
+
+            loginView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
                 fun save(phoneNumber: String) {
                     phonenum = phoneNumber
                 }
@@ -139,7 +146,7 @@ class MainActivity : AppCompatActivity() {
                 this@MainActivity,
                 OnCompleteListener<AuthResult?> { task ->
                     if (task.isSuccessful) {
-                        goHome(phonenum)
+                        loginView.loadUrl("javascript:finishSetup()")
                     } else {
                         var message =
                             "Somthing is wrong, we will fix it soon..."
