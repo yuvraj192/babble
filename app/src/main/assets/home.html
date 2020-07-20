@@ -138,6 +138,9 @@
         .custom__delay {
             --animate-delay: 0.1s !important;
         }
+        .theme-shade-text{
+            color: #7d4df9 !important;
+        }
     </style>
 </head>
 
@@ -145,7 +148,7 @@
 <header class="text-gray-700 body-font bg-white fixed inset-x-0 top-0 z-10" style="height:56px;">
     <div class="container mx-auto flex p-5 flex-col items-center">
         <nav class="flex items-center text-base fixed left-0 top-0 ml-6 mt-5">
-            <a id="settings" class="mr-5 rounded-full text-sm text-blue-500">Options</a>
+            <a id="settings" class="mr-5 rounded-full text-sm theme-shade-text">Options</a>
         </nav>
         <a
                 class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
@@ -153,7 +156,7 @@
         </a>
         <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5 mt-2 ">
             <button onclick="newChat.add()"
-                    class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base md:mt-0 text-blue-500 ">
+                    class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base md:mt-0 theme-shade-text ">
                 <i class="material-icons">launch</i>
             </button>
         </div>
@@ -643,7 +646,7 @@
                                  </div>`
 
                         $(".chats-cont").append(templ)
-                        getMoodOf(message)
+                        //getMoodOf(message)
                         taken = false;
                         addListeners()
                         //getLastSeen(message)
@@ -695,7 +698,7 @@
         function changeMood() {
             $('.main-settings').hide();
             $('.mood-sec').show()
-            activeSetting = $(".mood-sec")
+            activeSetting = document.querySelector(".mood-sec")
         }
 
         document.querySelectorAll(".mood").forEach(mood => {

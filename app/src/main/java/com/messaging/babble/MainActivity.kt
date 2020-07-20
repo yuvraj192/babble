@@ -2,20 +2,24 @@ package com.messaging.babble
 
 import android.content.Intent
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlin.math.log
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
         if(loginView!= null){
             val webSettings = loginView!!.settings
             loginView.settings.javaScriptEnabled = true
@@ -29,6 +33,17 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
             }, "valid")
+
+            loginView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun backColor() {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        val window = window
+                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                        window.statusBarColor = Color.WHITE
+                    }
+                }
+            }, "change")
 
 
 

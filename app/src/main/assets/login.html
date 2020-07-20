@@ -11,23 +11,32 @@
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="tailwind.css">
     <script src="jquery.js"></script>
-</head>
-<body bgcolor="white">
-<style>.center {
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <style>.center {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-}</style>
+}
+
+    .theme-shade-text{
+            color: #7d4df9 !important;
+        }
+        .theme-shade-bg{
+            background-color: #7d4df9 !important;
+        }
+</style>
+</head>
+<body class="theme-shade-bg">
 
 <section class="text-gray-700 body-font">
     <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
         <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
-            <img src="logo-removebg-preview.png" class="center" style="float:center" height="250" width="250" alt="">
-            <h2 align="center" class="text-gray-900 text-lg font-medium title-font mb-5">Welcome to Babble</h2>
-            <input class="bg-white rounded border border-gray-400 focus:outline-none text-base px-4 py-2 mb-4" placeholder="Name" type="text">
-            <input class="bg-white rounded border border-gray-400 focus:outline-none text-base px-4 py-2 mb-4 pno" placeholder="Mobile Number" type="tel">
-            <button onclick="login()" class="text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none rounded text-center">Lets go <i class="material-icons text-sm mt-1">arrow_forward</i> </button>
+            <img src="logo.png" class="center animate__animated animate__tada" style="float:center;height:120px;width:120px;" alt="">
+            <h2 align="center" class="text-white text-lg font-medium title-font mb-12"><b>Babble</b></h2>
+            <input class="bg-white rounded focus:outline-none text-base px-4 py-3 mb-4 pno placeholder-gray-600" placeholder="Mobile Number" type="tel" maxlength="10">
+            <button onclick="login()" class="theme-shade-text bg-white  border-0 py-2 px-8 focus:outline-none rounded text-center">Continue <i class="material-icons text-sm mt-2">arrow_forward</i> </button>
 
         </div>
     </div>
@@ -41,8 +50,9 @@
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 valid.performClick(phoneNumber);
-            }else{
-                return
+            }else if(this.status == 404){
+                window.location.replace("register.html")
+                change.backColor()
             }
         };
         xhttp.open("GET", "http://iotine.zapto.org:4600/login/"+phoneNumber, true);
