@@ -199,9 +199,18 @@
         }
 
         .msg-img {
-            width: 200px;
+            width: 125px;
             height: 200px;
         }
+
+        .from-them .msg-img {
+            margin-left: 10px;
+        }
+
+        .from-me .msg-img {
+            margin-left: 10px;
+        }
+
 
         .cont-lrg-img {
             background-color: transparent !important;
@@ -277,49 +286,55 @@
             outline: none
         }
 
-        .from-me.audio-msg, .from-them.audio-msg {
+        .from-me.audio-msg,
+        .from-them.audio-msg {
             padding: 10px !important;
-            padding-top:15px !important;
-            padding-bottom:15px !important;
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
         }
-        .recordshadow{
-            color:black !important;
-            padding-left:2rem;
-            padding-right:0.5rem;
+
+        .recordshadow {
+            color: black !important;
+            padding-left: 2rem;
+            padding-right: 0.5rem;
         }
 
         .outer-2 {
-  width: 25px;
-  height: 25px;
-  padding-left:5px;
-  -webkit-transform: scale(1);
-  border-radius: 100%;
-  position:absolute;
-  z-index:0;
-  background-color: #7d4df9;
-  transition: 1.5s all ease;
-  -webkit-animation: woong-2 1.0s infinite;
-  -webkit-animation-delay: 2.0s;
-}
+            width: 25px;
+            height: 25px;
+            padding-left: 5px;
+            -webkit-transform: scale(1);
+            border-radius: 100%;
+            position: absolute;
+            z-index: 0;
+            background-color: #7d4df9;
+            transition: 1.5s all ease;
+            -webkit-animation: woong-2 1.0s infinite;
+            -webkit-animation-delay: 2.0s;
+        }
 
-@-webkit-keyframes woong-2 {
-  0% {
-    -webkit-transform: scale(1.2);
-    opacity: 0.6;
-  }
-  50% {
-    -webkit-transform: scale(1.6);
-    opacity: 0.5;
-  }
-  100% {
-    -webkit-transform: scale(2);
-    opacity: 0;
-  }
-}
-#recordButton{
-    position: relative;
-}
-    .theme-shade-text{
+        @-webkit-keyframes woong-2 {
+            0% {
+                -webkit-transform: scale(1.2);
+                opacity: 0.6;
+            }
+
+            50% {
+                -webkit-transform: scale(1.6);
+                opacity: 0.5;
+            }
+
+            100% {
+                -webkit-transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        #recordButton {
+            position: relative;
+        }
+
+        .theme-shade-text {
             color: #7d4df9 !important;
         }
     </style>
@@ -385,6 +400,13 @@
     </div>
 </div>
 
+<div class="modal px-3 animate__animated animate__fadeIn animate__faster" id="large-video">
+    <div class="modal-content cont-lrg-img p-5 ml-1 rounded-lg animate__animated animate__pulse"
+         style="bottom:20px !important; max-width:92% !important;">
+        <video src="" controls class="large_video rounded-lg" preload="metadata"></video>
+    </div>
+</div>
+
 <footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white">
     <div onclick="$(this).hide()"
          class="emojiCenter flex py-1 mb-2 px-5 flex-wrap animate__animated animate__bounceInUp animate__faster pl-6 border-b border-gray-100 pb-4"
@@ -408,12 +430,12 @@
                 class="inline-flex oth items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0 mr-4 ">
             <i class="material-icons">camera_alt</i>
         </button>
-        <input  placeholder="Message..."
-                class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-full focus:outline-none "
-                id="input" spellcheck="fasle" onkeyup="check()" oninput="check()" style="background: #f5f5f5;" />
+        <input placeholder="Message..."
+               class="float-left msg placeholder-gray p-2 px-3 pl-5 w-3/4 rounded-full focus:outline-none " id="input"
+               spellcheck="fasle" onkeyup="check()" oninput="check()" style="background: #f5f5f5;" />
         <div class="otherBtn flex">
             <div id="recordButton"
-                    class="inline-flex items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
+                 class="inline-flex items-center bg-transparent border-0 focus:outline-none mx-2 rounded-full text-base text-black md:mt-0  ">
                 <div class="outer-2" style="display:none"></div>
                 <button style="margin-top:7px;"><i class="material-icons">mic_none</i></button>
             </div>
@@ -525,6 +547,9 @@
         if (mid.split("_")[0] == "audio") {
             chat =
                 `<p id="${mid}" class="from-them no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
+        } else if (mid.split("_")[0] == "img") {
+            chat =
+                `<p  id="${mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="http://iotine.zapto.org/Babble/uploads/${msg}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
         } else {
             chat =
                 `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
@@ -582,6 +607,7 @@
 
     var setModal = document.querySelector("#chat-settings")
     var imgModal = document.querySelector("#large-image")
+    var videoModal = document.querySelector("#large-video")
 
     // Get the button that opens the modal
     var btn = document.getElementById("settings");
@@ -602,6 +628,11 @@
     imgModal.onclick = function () {
         imgModal.style.display = "none";
     }
+
+    videoModal.onclick = function () {
+        videoModal.style.display = "none";
+    }
+
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
@@ -625,6 +656,9 @@
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
                                 `<p id="${message.mid}" class="from-me audio-msg chat-bubble"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
+                        } else if (message.mid.split("_")[0] == "img") {
+                            templ =
+                                `<p  id="${message.mid}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="http://iotine.zapto.org/Babble/uploads/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
                         } else {
                             templ =
                                 `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
@@ -633,6 +667,9 @@
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
                                 `<p id="${message.mid}" class="from-them audio-msg chat-bubble"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
+                        } else if (message.mid.split("_")[0] == "img") {
+                            templ =
+                                `<p  id="${message.mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="http://iotine.zapto.org/Babble/uploads/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
                         } else {
                             templ =
                                 `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
@@ -713,7 +750,35 @@
                 }
             })
         })
-    }
+
+        document.querySelectorAll('img.msg-img').forEach(img => {
+            img.addEventListener('touchstart', e => {
+                var pr = $(img).parent().attr('id')
+                if (!taken) {
+                    taken = true
+                    start = new Date().getTime();
+                    inter = setInterval(function () {
+                        if (new Date().getTime() >= (start + longpress)) {
+                            start = 0
+                            clearInterval(inter)
+                            root.style.setProperty('--active', "#000000")
+                            $(img).css("z-index", "101")
+                            document.querySelector("#chat-settings").style.display = "block"
+                            device.vibrate()
+                            activeElm = document.querySelector(`#${pr}`)
+                        } else {}
+                    }, 100);
+                } else {
+                    return
+                }
+            })
+            img.addEventListener('touchend', e => {
+                var pr = $(img).parent().attr('id')
+                clearInterval(inter)
+                start = 0
+            })
+        })
+      }
 
     function openGallery() {
         photo.Gallery()
@@ -726,18 +791,16 @@
 
         var ID = '_' + Math.random().toString(36).substr(2, 9);
         var chat;
-        //await msg.send(cmsg, to, from, `${timestamp}`, `${ID}`)
         if (mediaType[4] == "video") {
-            chat =
-                `<p id="${ID}" class="from-me no-color animate__animated animate_jello"> <video width="320" height="240" src="${url}">Something went wrong</video> </p>`
+           chat =
+                `<p id="${ID}" class="from-me animate__animated animate_jello"> <span class="video-msg flex" onclick="playVideo('${url}')"> <i class="material-icons">play_arrow</i> Play video</span> </p>`
         } else if (mediaType[4] == "images" || mediaType[4] == "image") {
             chat =
-                `<p  id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" id="image${ID}" class="rounded-lg msg-img animate__animated animate_jello" src="${url}" /> </p>`
+                `<p  id="${ID}" class="from-me no-color"> <img onclick="showImg(this.src)" id="image${ID}" class="rounded-lg msg-img animate__animated animate_jello" src="${url}" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span></p>`
+            uploadImage(url, to, from, timestamp, ID);
         }
 
         $(".chat-body").append(chat)
-
-        uploadImage(url);
 
         $('html, body').animate({
             scrollTop: $('#chat_body').prop("scrollHeight")
@@ -748,20 +811,36 @@
         addListeners()
     }
 
-    function uploadImage(url) {
+    function playVideo(url){
+        $("#large-video").show();
+        $(".large_video").attr("src", url)
+    }
+
+    function uploadImage(url, tonum, phoneNumber, timestamp, ID) {
         var img = new Image;
         var c = document.createElement("canvas");
         var ctx = c.getContext("2d");
+        var filename = new Date().toISOString() + ".jpeg";
 
         img.onload = function () {
             c.width = this.naturalWidth; // update canvas size to match image
             c.height = this.naturalHeight;
             ctx.drawImage(this, 0, 0); // draw in image
             c.toBlob(function (blob) { // get content as JPEG blob
-                alert(blob)
+                var xhr = new XMLHttpRequest();
+                xhr.onload = function (e) {
+                    if (this.readyState === 4) {
+                        msg.send(`${this.responseText}`, `${tonum}`, `${phoneNumber}`, `${timestamp}`,
+                            `img${ID}`)
+                    }
+                };
+                var fd = new FormData();
+                fd.append("img_data", blob, filename);
+                xhr.open("POST", "http://iotine.zapto.org:4600/imgmsg", true);
+                xhr.send(fd);
             }, "image/jpeg", 0.75);
         };
-        img.crossOrigin = "content://"; // if from different origin
+        img.crossOrigin = "Anonymous"; // if from different origin
         img.src = url;
     }
 

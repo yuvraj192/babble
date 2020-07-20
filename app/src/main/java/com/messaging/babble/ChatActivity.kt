@@ -52,10 +52,23 @@ class ChatActivity : AppCompatActivity() {
         if (chatView != null){
             val websettings = chatView!!.settings
             chatView.settings.javaScriptEnabled = true
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
+            {
+
+                websettings.setAllowFileAccess(true);
+                websettings.setAllowContentAccess(true);
+                websettings.setAllowFileAccessFromFileURLs(true);
+                websettings.setAllowUniversalAccessFromFileURLs(true);
+
+            }
+
             chatView.settings.setUserAgentString(DESKTOP_USER_AGENT);
             chatView.settings.setMediaPlaybackRequiresUserGesture(false);
             chatView!!.webViewClient = WebViewClient()
             chatView!!.webChromeClient = WebChromeClient()
+
+
 
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
