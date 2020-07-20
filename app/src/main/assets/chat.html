@@ -348,7 +348,7 @@
         <a
                 class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
             <div class="rounded-lg overflow-hidden mr-2">
-                <img alt="content" class="object-cover object-center bg-green-200 rounded-full"
+                <img alt="content" class="object-cover object-center bg-green-200 rounded-full todp"
                      style="height:40px;width:40px;" src="1.png">
             </div>
             <h2 class="title-font text-xs font-medium text-gray-900 mt-3 mb-3" id="contactName"></h2>
@@ -546,7 +546,7 @@
         var chat;
         if (mid.split("_")[0] == "audio") {
             chat =
-                `<p id="${mid}" class="from-them no-color audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
+                `<p id="${mid}" class="from-them audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
         } else if (mid.split("_")[0] == "img") {
             chat =
                 `<p  id="${mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="http://iotine.zapto.org/Babble/uploads/${msg}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
@@ -651,6 +651,7 @@
                 var ID = '_' + Math.random().toString(36).substr(2, 9);
                 var templ;
 
+                loadDp()
                 messages.forEach(message => {
                     if (message.from == phoneNumber) {
                         if (message.mid.split("_")[0] == "audio") {
@@ -1097,6 +1098,16 @@
         fd.append("audio_data", blob, filename);
         xhr.open("POST", "http://iotine.zapto.org:4600/audiomsg", true);
         xhr.send(fd);
+    }
+    function loadDp() {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function (e) {
+            if (this.readyState === 4) {
+                $(`.todp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+            }
+        };
+        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + tonum, true);
+        xhr.send();
     }
 </script>
 

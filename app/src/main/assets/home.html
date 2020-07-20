@@ -141,6 +141,13 @@
         .theme-shade-text{
             color: #7d4df9 !important;
         }
+        .avt-img{
+        max-height:6rem;
+        min-height:6rem;
+
+        min-width:6rem;
+        max-width:6rem;
+        }
     </style>
 </head>
 
@@ -268,7 +275,7 @@
                                 class="w-20 h-20 inline-flex items-center justify-center rounded-full text-indigo-500 mb-5 flex-shrink-0">
                             <div class="relative">
                                 <img alt="team"
-                                     class="w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                                     class="w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 ourdp"
                                      src="1.png">
                                 <div class='mood-circle status-circle text-sm animate__animated animate__tada our_mood'>
                                 </div>
@@ -468,7 +475,7 @@
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
-                activeSetting.style.display = "none";
+                if(activeSetting != "" || typeof activeSetting != "undefined") activeSetting.style.display = "none";
                 $(".main-settings").show()
             }
         }
@@ -521,13 +528,15 @@
                     <span style="display:none;" class="tooltiptext truncate ${activeElm.id.split('_')[0]}_pintip"></span>
                     <div class="relative">
                         <img alt="ecommerce" class="avt-img w-16 object-cover object-center w-full rounded-full h-full block bg-green-200 _${activeElm.id.split('_')[0]}_dp"
-                            src="${dp}" type="image/jpeg" style="max-height:6rem;">
+                            src="${dp}" type="image/jpeg">
                         <div class='pinstatus-circle text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood'>${mood}</div>
                     </div>
+                    <span class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name opacity-0"></span>
                 </a>
             </div>`
             $(".pinsCont").append(templ)
             $(`.${ID}`).show('fast')
+            contacts.getName(activeElm.id.split('_')[0])
             $(activeElm).hide('slow')
             $(activeElm).remove()
             device.vibrate()
@@ -692,6 +701,7 @@
                     $('.main-settings').hide();
                     $('.mood-sec').show()
                     activeSetting = document.querySelector(".mood-sec")
+                    loadOurDp()
                     if (this.responseText != '') {
                         $(".our_mood").html(this.responseText)
                     } else {
@@ -750,6 +760,16 @@
             }
         };
         xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + num, true);
+        xhr.send();
+    }
+    function loadOurDp() {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function (e) {
+            if (this.readyState === 4) {
+                $(`.ourdp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+            }
+        };
+        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
         xhr.send();
     }
     </script>
