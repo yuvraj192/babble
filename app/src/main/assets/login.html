@@ -52,7 +52,7 @@
         <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <h2 align="center" class="text-black text-2xl font-medium title-font mb-2 animate__animated animate__fadeIn"><b>Device Verification Required</b></h2>
             <span class="text-xs text-black mb-10 text-center items-center animate__animated animate__fadeInUp">We need to verify this device</span>
-            <button onclick="requestOTP();this.innerHTML = 'Verifying...';this.disabled = true;" class="bg-white theme-shade-text border-0 py-2 px-8 focus:outline-none rounded text-center mt-4 vfc-btn">Verify Now </button>
+            <button onclick="endSetup()//requestOTP();this.innerHTML = 'Verifying...';this.disabled = true;" class="bg-white theme-shade-text border-0 py-2 px-8 focus:outline-none rounded text-center mt-4 vfc-btn">Verify Now </button>
         </div>
     </div>
 </section>
@@ -84,7 +84,7 @@
             <h2 align="center" class="text-black text-2xl font-medium title-font mb-2"><b>Verify your phonenumber!</b></h2>
             <span class="text-xs text-gray-500 mb-10 text-center items-center">Please enter the <span class="theme-shade-text font-bold">OTP</span> sent to  <span class="theme-shade-text font-bold unum"></span> </span>
             <input id="partitioned" class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 otp placeholder-gray-600 w-full" placeholder="One Time Password" type="tel" maxlength="6" />
-            <button onclick="verify.performClick()" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Continue </button>
+            <button onclick="verify.performClick($('.otp').val())" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Continue </button>
         </div>
     </div>
 </section>

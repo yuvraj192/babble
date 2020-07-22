@@ -138,15 +138,17 @@
         .custom__delay {
             --animate-delay: 0.1s !important;
         }
-        .theme-shade-text{
+
+        .theme-shade-text {
             color: #7d4df9 !important;
         }
-        .avt-img{
-        max-height:6rem;
-        min-height:6rem;
 
-        min-width:6rem;
-        max-width:6rem;
+        .avt-img {
+            max-height: 6rem;
+            min-height: 6rem;
+
+            min-width: 6rem;
+            max-width: 6rem;
         }
     </style>
 </head>
@@ -277,7 +279,8 @@
                                 <img alt="team"
                                      class="w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 ourdp"
                                      src="1.png">
-                                <div class='mood-circle status-circle text-sm animate__animated animate__tada our_mood'>
+                                <div
+                                        class='mood-circle status-circle text-sm animate__animated animate__tada our_mood'>
                                 </div>
                             </div>
                         </div>
@@ -475,7 +478,8 @@
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
-                if(activeSetting != "" || typeof activeSetting != "undefined") activeSetting.style.display = "none";
+                if (activeSetting != "" || typeof activeSetting != "undefined") activeSetting.style.display =
+                    "none";
                 $(".main-settings").show()
             }
         }
@@ -520,7 +524,7 @@
 
         function addPin() {
             var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var mood= $(`.${activeElm.id.split('_')[0]}_mood`).html()
+            var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
             var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
 
             var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat animate__animated animate__rubberBand">
@@ -546,7 +550,7 @@
 
         function removePin() {
             var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var mood= $(`.${activeElm.id.split('_')[0]}_mood`).html()
+            var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
             var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
 
             var templ = `<div id="${activeElm.id}" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__zoomInDown custom__delay" style="display:none;">
@@ -557,8 +561,11 @@
                         src="${dp}" type="image/jpeg">
                         <div class='status-circle text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood'>${mood}</div>
                     </div>
-                    <div class="flex-grow">
+                    <div class="flex-grow border-b pb-3">
                         <h2 class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name"></h2>
+                        <div class="flex w-full">
+                         <p class="theme-shade-text text-sm ${activeElm.id.split('_')[0]}_nm font-bold float-left truncate"></p>
+                         </div>
                         <p class="text-gray-500 text-sm ${activeElm.id.split('_')[0]}_mtitle"></p>
                     </div>
                 </div>
@@ -614,6 +621,8 @@
                     start = 0
                 })
                 item.addEventListener("click", function () {
+                    var nm = item.id.split("_")[0] + "_nm"
+                    $(`.${nm}`).html("")
                     openChat(item)
                 })
             })
@@ -627,6 +636,7 @@
                     var messages = JSON.parse(this.responseText);
 
                     messages.forEach(message => {
+                    message = atob(message)
                         contacts.getName(message)
                         var ID = '_' + Math.random().toString(36).substr(2, 9);
                         var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__bounceInUp animate__faster">
@@ -637,8 +647,11 @@
                                         src="1.png" type="image/jpeg">
                                         <div class='status-circle text-sm animate__animated animate__tada ${message}_mood' style="display:block"></div>
                                         </div>
-                                        <div class="flex-grow">
+                                        <div class="flex-grow border-b pb-3">
                                             <h2 class="text-gray-900 title-font font-bold ${message}_name">${message}</h2>
+                                            <div class="flex w-full">
+                                            <p class="theme-shade-text text-sm ${message}_nm font-bold float-left truncate"></p>
+                                            </div>
                                             <p class="text-gray-500 text-sm ${message}_mtitle"></p>
                                         </div>
                                     </div>
@@ -647,7 +660,7 @@
                         $(".chats-cont").append(templ)
                         taken = false;
                         addListeners()
-                        loadDp(message)
+                        loadDp(btoa(message))
                         getMoodOf(message)
                         //getLastSeen(message)
                     })
@@ -670,12 +683,18 @@
             await xhttp.send();
         }
 
-        function updateChatList(message, name, msg) {
-            if ($(`#${message}_message`).hasClass('pin-chat')) {
-                $(`.${message}_pintip`).html(msg)
-                $(`.${message}_pintip`).show('fast')
+        function updateChatList(message, name, msg, mid) {
+            if (mid.split("_")[0] == "img") {
+                $(`.${message}_nm`).html("Sent you a photo")
+            }else if(mid.split("_")[0] == "audio"){
+                $(`.${message}_nm`).html("Sent you a voicenote")
             } else {
-                return
+                if ($(`#${message}_message`).hasClass('pin-chat')) {
+                    $(`.${message}_pintip`).html(msg)
+                    $(`.${message}_pintip`).show('fast')
+                } else {
+                    $(`.${message}_nm`).html("New message")
+                }
             }
         }
 
@@ -738,7 +757,8 @@
                     }
                 }
             }
-            xhttp.open("GET", "http://iotine.zapto.org:4600/updateMoodOf/" + phoneNumber+"/"+mood+"/"+title, true);
+            xhttp.open("GET", "http://iotine.zapto.org:4600/updateMoodOf/" + phoneNumber + "/" + mood + "/" + title,
+                true);
             xhttp.send();
         }
 
@@ -758,26 +778,28 @@
             xhttp.open("GET", "http://iotine.zapto.org:4600/moodOf/" + num, true);
             xhttp.send();
         }
+
         function loadDp(num) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function (e) {
-            if (this.readyState === 4) {
-                $(`._${num}_dp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
-            }
-        };
-        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + num, true);
-        xhr.send();
-    }
-    function loadOurDp() {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function (e) {
-            if (this.readyState === 4) {
-                $(`.ourdp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
-            }
-        };
-        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
-        xhr.send();
-    }
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function (e) {
+                if (this.readyState === 4) {
+                    $(`._${atob(num)}_dp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+                }
+            };
+            xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + num, true);
+            xhr.send();
+        }
+
+        function loadOurDp() {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function (e) {
+                if (this.readyState === 4) {
+                    $(`.ourdp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+                }
+            };
+            xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
+            xhr.send();
+        }
     </script>
 </body>
 

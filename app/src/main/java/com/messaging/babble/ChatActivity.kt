@@ -263,7 +263,7 @@ class ChatActivity : AppCompatActivity() {
     private fun addMessage(msg: String, by: String, from: String, time: String, mid: String){
         chatView.post(Runnable {
             Toast.makeText(applicationContext, "", Toast.LENGTH_LONG)
-            chatView.loadUrl("javascript:recieveMessage('$msg', '$time', '$mid')")
+            chatView.loadUrl("javascript:recieveMessage('$msg', '$time', '$mid', '$from')")
         })
     }
 

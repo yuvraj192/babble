@@ -1,13 +1,8 @@
 package com.messaging.babble
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -19,24 +14,18 @@ import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.RemoteViews
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
-import kotlinx.android.synthetic.main.activity_add_chat.*
-import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
     private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
-    lateinit var notificationManager : NotificationManager
-    lateinit var notificationChannel : NotificationChannel
-    lateinit var builder : Notification.Builder
-    private val CHANNEL_ID = "com.messaging.babble"
+    //lateinit var notificationManager : NotificationManager
+    //lateinit var notificationChannel : NotificationChannel
+    //lateinit var builder : Notification.Builder
+    //private val CHANNEL_ID = "com.messaging.babble"
 
     var phoneNumber: String? = null
 
@@ -44,10 +33,17 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        //notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManage
 
         val intent = intent
         phoneNumber = intent.getStringExtra("phoneNumber")
+
+        val rec = Intent(this@HomeActivity, notifreciever::class.java)
+        val extras = Bundle()
+        extras.putString("phoneNumber", phoneNumber)
+        rec.putExtras(extras)
+        rec.setAction("com.messaging.babble.notifreciever");
+        sendBroadcast(rec)
 
         socket.connect()
         socket.emit("join", phoneNumber)
@@ -136,13 +132,17 @@ class HomeActivity : AppCompatActivity() {
             }
 
             socket.on("message", Emitter.Listener { args ->
-                notifyMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString())
+                notifyMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString(), args[4].toString())
             })
 
         }
 
+        val notifier = Intent(this@HomeActivity, notificationservice::class.java)
+        notifier.putExtra("phoneNumber", phoneNumber)
+        startService(notifier)
+
         }
-    private fun notifyMessage(msg: String, to: String, from: String ,time: String){
+    private fun notifyMessage(msg: String, to: String, from: String ,time: String, mid: String){
         val cursor = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
             null,
@@ -157,9 +157,9 @@ class HomeActivity : AppCompatActivity() {
                 cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
 
             if(from == mobile){
-                sendNoti(from, name, msg)
+                //sendNoti(from, name, msg)
                 homeView.post(Runnable {
-                    homeView.loadUrl("javascript:updateChatList('$from', '$name', '$msg')")
+                    homeView.loadUrl("javascript:updateChatList('$from', '$name', '$msg', '$mid')")
                 })
             }
         }
@@ -205,7 +205,7 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
 
     }
-
+/*
     private fun createNotificationChannel(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "App Notification"
@@ -245,7 +245,7 @@ class HomeActivity : AppCompatActivity() {
         with(NotificationManagerCompat.from(this)){
             notify(0, builder.build())
         }
-    }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()
