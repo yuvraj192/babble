@@ -744,6 +744,7 @@ function loadPin(){
           $(`.${message}_nm`).html("New message")
         }
       }
+      $()
     }
 
     function updateName(name, num) {
@@ -787,7 +788,7 @@ function loadPin(){
     document.querySelectorAll(".mood").forEach(mood => {
       mood.addEventListener('click', () => {
         if (mood.classList.contains("mood-none")) {
-          updateMood("")
+          updateMood("", "")
           $(".mood-circle").hide()
           $(`.mood-title`).html("")
         } else {
