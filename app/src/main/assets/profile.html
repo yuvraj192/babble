@@ -61,7 +61,7 @@
                     <a class="mt-3 text-indigo-500 inline-flex items-center" onclick="switcher('.profilepicture')">Edit</a>
                     <div class="flex-grow w-full mx-auto">
                         <h2 class="text-gray-900 text-lg title-font font-medium"> <span class="uname" onclick="switcher('.changeName')">  </span> </h2>
-                        <p class="leading-relaxed text sm text-gray-400 bdt" onclick="switcher('.birthday')"></p>
+                        <p class="leading-relaxed text sm text-gray-400 bdt" onclick="//switcher('.birthday')"></p>
                         <p class="leading-relaxed text-sm opacity-0">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy</p>
                     </div>
                 </div>
@@ -254,7 +254,7 @@ function changeName(elm){
 
 function switcher(elm){
     setTimeout(() => $('.fullpage').addClass('prepage').removeClass('fullpage'), 150)
-    $(elm).show().addClass('subpage')
+    $(elm).addClass('subpage').show()
 }
 
 function deswitch(){
