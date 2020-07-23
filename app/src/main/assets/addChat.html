@@ -138,7 +138,7 @@ var nonUser = 0;
                 $(`.${num}_dp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
             }
         };
-        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + btoa(num), true);
+        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + num, true);
         xhr.send();
     }
 </script>
