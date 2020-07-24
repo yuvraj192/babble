@@ -38,13 +38,6 @@ class HomeActivity : AppCompatActivity() {
         val intent = intent
         phoneNumber = intent.getStringExtra("phoneNumber")
 
-        val rec = Intent(this@HomeActivity, notifreciever::class.java)
-        val extras = Bundle()
-        extras.putString("phoneNumber", phoneNumber)
-        rec.putExtras(extras)
-        rec.setAction("com.messaging.babble.notifreciever");
-        sendBroadcast(rec)
-
         socket.connect()
         socket.emit("join", phoneNumber)
 
