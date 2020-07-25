@@ -466,7 +466,7 @@
       var num = item.id.split("_")[0]
       taken = false;
       chat.load(num, $(`.${num}_name`).html())
-      window.location.replace('home.html')
+      window.location.reload()
     }
 
     // Get the modal
@@ -541,7 +541,7 @@
       phoneNumber = pno;
       getDetails()
       getChatList()
-      await loadPin()
+      loadPin()
     }
 
     function addPin(vibration) {
@@ -734,17 +734,19 @@ async function loadPin(){
     function updateChatList(num, name, msg, mid) {
       if (mid.split("_")[0] == "img") {
         $(`.${num}_nm`).html("Sent you a photo")
+        bringToTop(num)
       } else if (mid.split("_")[0] == "audio") {
         $(`.${num}_nm`).html("Sent you a voicenote")
+        bringToTop(num)
       } else {
         if ($(`#${num}_message`).hasClass('pin-chat')) {
           $(`.${num}_pintip`).html(msg)
           $(`.${num}_pintip`).show('fast')
         } else {
           $(`.${num}_nm`).html("New message")
+          bringToTop(num)
         }
       }
-      bringToTop(num)
     }
 
     function bringToTop(num){

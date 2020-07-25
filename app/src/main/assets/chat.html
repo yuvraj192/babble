@@ -337,12 +337,37 @@
         .theme-shade-text {
             color: #7d4df9 !important;
         }
+        .fullpage{
+            height: 100%;
+            width:100%
+            padding-top:2.2% !important;
+        }
+        .prepage{
+            margin-top:2%;
+            height: 98%;
+            width:90%;
+            background-color:#dedede;
+            padding-top:3% !important;
+            transition:0.5s ease all;
+        }
+        .preTools{
+            width:90%;
+        }
+        .subpage{
+            height: 97.9%;
+            width:95%;
+            background-color:#fff;
+            padding:2.9% !important;
+            transition:0.5s ease all;
+            z-index:9999;
+        }
     </style>
 
 </head>
 
 <body id="chatCont" class="bg-gray-100">
-<header class="text-gray-700 body-font pb-3 head shadow-lg bg-white fixed inset-x-0 top-0 z-10"
+<div class="mainChatCont">
+<header class="text-gray-700 body-font pb-3 head shadow-lg bg-white fixed inset-x-0 top-0 z-10 header mx-auto"
         style="height:78px;">
     <div class="container absolute left-0 top-0 mx-auto flex p-1 flex-col items-center">
         <a
@@ -407,7 +432,7 @@
     </div>
 </div>
 
-<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white">
+<footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white chatToolsFooter">
     <div onclick="$(this).hide()"
          class="emojiCenter flex py-1 mb-2 px-5 flex-wrap animate__animated animate__bounceInUp animate__faster pl-6 border-b border-gray-100 pb-4"
          style="display:none;">
@@ -481,6 +506,10 @@
     <span class="w-1/9 h-6 w-6 mx-2"></span>
     <span class="w-1/9 h-6 w-6 mx-2"></span>
     <span class="w-1/9 h-6 w-6 mx-2"></span>
+</div>
+</div>
+<div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto galleryView subpage" style="display:none;">
+    <button class="left-0 top-0 float-left text-red-700" onclick="deswitch('.galleryView')">Cancel</button>
 </div>
 </body>
 <script src="jquery.js"></script>
@@ -793,7 +822,14 @@
       }
 
     function openGallery() {
-        photo.Gallery()
+        $('.galleryView').show()
+        setTimeout(() => {
+            //photo.Gallery()
+            $('.chat-body').hide()
+            $('body').removeClass('bg-gray-100').addClass('bg-black')
+            $('.header').addClass('prepage rounded-t-lg')
+            $('.chatToolsFooter').addClass('opacity-0')
+        }, 350)
     }
     async function prevImage(url) {
         var mediaType = url.split("/")
@@ -1120,6 +1156,17 @@
         xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + tonum, true);
         xhr.send();
     }
+function deswitch(elm){
+    $('.prepage').removeClass('prepage')
+    $('.chat-body').show()
+    $('body').removeClass('bg-black').addClass('bg-gray-100')
+    $('.header').removeClass('rounded-t-lg')
+    $('.chatToolsFooter').removeClass('opacity-0')
+    $('html, body').animate({
+        scrollTop: $('#chat_body').prop("scrollHeight")
+    }, 100);
+    $(elm).hide()
+}
 </script>
 
 </html>

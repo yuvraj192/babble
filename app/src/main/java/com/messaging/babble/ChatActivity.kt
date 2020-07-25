@@ -80,9 +80,7 @@ class ChatActivity : AppCompatActivity() {
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
                 fun Gallery() {
-                    /*Toast.makeText(applicationContext, "HERE", Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@ChatActivity, GalleryOpen::class.java)
-                    startActivity(intent)*/
+
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                             val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
