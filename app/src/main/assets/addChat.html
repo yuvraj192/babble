@@ -112,7 +112,7 @@ var nonUser = 0;
                 return
             }
         };
-        xhttp.open("GET", `http://iotine.zapto.org:4600/isRegistered/${mobile}`, true);
+        xhttp.open("GET", `https://iotine.zapto.org:4600/isRegistered/${mobile}`, true);
         await xhttp.send();
     }
 
@@ -135,10 +135,10 @@ var nonUser = 0;
         var xhr = new XMLHttpRequest();
         xhr.onload = function (e) {
             if (this.readyState === 4) {
-                $(`.${num}_dp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+                $(`.${num}_dp`).attr('src', `https://iotine.zapto.org/Babble/uploads/${this.responseText}`)
             }
         };
-        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + num, true);
+        xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + num, true);
         xhr.send();
     }
 </script>

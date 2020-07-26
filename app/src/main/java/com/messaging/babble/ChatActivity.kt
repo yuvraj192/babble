@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_chat.*
 
 
 class ChatActivity : AppCompatActivity() {
-    private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
+    private val socket: Socket = IO.socket("https://iotine.zapto.org:4600/")
     var phoneNumber: String? = null
     var toNum: String? = null
     var toName: String? = null
@@ -106,8 +106,8 @@ class ChatActivity : AppCompatActivity() {
 
             chatView.addJavascriptInterface(object : Any() {
                 @JavascriptInterface
-                fun call(ucid: String, to: String, from: String, name: String) {
-                    signalUser(to, from, name, ucid)
+                fun call(to: String) {
+                    callUser(to)
                 }
             }, "video")
 
@@ -210,6 +210,16 @@ class ChatActivity : AppCompatActivity() {
                 reactOnMsg(args[0].toString(), args[1].toString())
             })
 
+            socket.on("incoming-vc", Emitter.Listener { args ->
+                chatView.post(Runnable {
+                    var rid: String = args[0].toString()
+                    var to: String = args[1].toString()
+                    val intent = Intent(this@ChatActivity, VideoCall::class.java)
+                    intent.putExtra("roomId", rid)
+                    startActivity(intent)
+                })
+            })
+
         }
 
     }
@@ -274,13 +284,10 @@ class ChatActivity : AppCompatActivity() {
 
     //video calls
 
-    private fun signalUser(to: String, from: String, name: String, ucid: String){
+    private fun callUser(to: String){
         val intent = Intent(this@ChatActivity, VideoCall::class.java)
-        intent.putExtra("phoneNumber", from)
-        intent.putExtra("to", to)
-        intent.putExtra("name", name)
-        intent.putExtra("ucid", ucid)
-        socket.emit("signal", to, from)
+        intent.putExtra("roomId", "CALLINGFROMHERE")
+        intent.putExtra("callTo", to)
         startActivity(intent)
     }
 

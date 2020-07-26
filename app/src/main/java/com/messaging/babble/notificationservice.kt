@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class notificationservice : Service() {
-    private val socket: Socket = IO.socket("http://iotine.zapto.org:4600/")
+    private val socket: Socket = IO.socket("https://iotine.zapto.org:4600/")
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
     lateinit var builder : Notification.Builder

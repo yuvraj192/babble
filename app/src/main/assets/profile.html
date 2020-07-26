@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:text-align="https://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -186,7 +186,7 @@
                 $('.bdt').html(details.bd)
             }
         };
-        xhr.open("GET", "http://iotine.zapto.org:4600/acDetails/" + phoneNumber, true);
+        xhr.open("GET", "https://iotine.zapto.org:4600/acDetails/" + phoneNumber, true);
         xhr.send();
     }
 
@@ -194,10 +194,10 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function (e) {
             if (this.readyState === 4) {
-                $(".dpimg").attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+                $(".dpimg").attr('src', `https://iotine.zapto.org/Babble/uploads/${this.responseText}`)
             }
         };
-        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
+        xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
         xhr.send();
     }
 
@@ -232,7 +232,7 @@
                 };
                 var fd = new FormData();
                 fd.append("dp_data", blob, filename);
-                xhr.open("POST", "http://iotine.zapto.org:4600/newdp/" + phoneNumber, true);
+                xhr.open("POST", "https://iotine.zapto.org:4600/newdp/" + phoneNumber, true);
                 xhr.send(fd);
             }, "image/jpeg", 0.75);
         };

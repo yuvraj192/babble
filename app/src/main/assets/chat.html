@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:text-align="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:text-align="https://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -542,7 +542,7 @@
 
     function videoCall(){
         var ucid = [tonum, phoneNumber].sort().join('')
-        video.call(`${ucid}`, `${tonum}`, `${phoneNumber}`, `${name}`)
+        video.call(`${tonum}`)
     }
 
     function check() {
@@ -585,10 +585,10 @@
         if(from != tonum) return
         if (mid.split("_")[0] == "audio") {
             chat =
-                `<p id="${mid}" class="from-them audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
+                `<p id="${mid}" class="from-them audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="https://iotine.zapto.org/Babble/uploads/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
         } else if (mid.split("_")[0] == "img") {
             chat =
-                `<p  id="${mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="http://iotine.zapto.org/Babble/uploads/${msg}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
+                `<p  id="${mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="https://iotine.zapto.org/Babble/uploads/${msg}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
         } else {
             chat =
                 `<p id="${mid}" class="from-them animate__animated animate__bounceInUp animate__faster">${msg} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
@@ -639,7 +639,7 @@
                 return
             }
         };
-        xhttp.open("GET", "http://iotine.zapto.org:4600/deleteMsg/" + ucid + "/" + activeElm.id, true);
+        xhttp.open("GET", "https://iotine.zapto.org:4600/deleteMsg/" + ucid + "/" + activeElm.id, true);
         xhttp.send();
 
     }
@@ -695,10 +695,10 @@
                     if (message.from == phoneNumber) {
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
-                                `<p id="${message.mid}" class="from-me audio-msg chat-bubble"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
+                                `<p id="${message.mid}" class="from-me audio-msg chat-bubble"> <audio src="https://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
                         } else if (message.mid.split("_")[0] == "img") {
                             templ =
-                                `<p  id="${message.mid}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="http://iotine.zapto.org/Babble/uploads/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
+                                `<p  id="${message.mid}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="https://iotine.zapto.org/Babble/uploads/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
                         } else {
                             templ =
                                 `<p id="${message.mid}" class="from-me chat-bubble">${message.data} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
@@ -706,10 +706,10 @@
                     } else if (message.to == phoneNumber) {
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
-                                `<p id="${message.mid}" class="from-them audio-msg chat-bubble"> <audio src="http://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
+                                `<p id="${message.mid}" class="from-them audio-msg chat-bubble"> <audio src="https://iotine.zapto.org/Babble/uploads/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
                         } else if (message.mid.split("_")[0] == "img") {
                             templ =
-                                `<p  id="${message.mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="http://iotine.zapto.org/Babble/uploads/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
+                                `<p  id="${message.mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="https://iotine.zapto.org/Babble/uploads/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
                         } else {
                             templ =
                                 `<p id="${message.mid}" class="from-them">${message.data} <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
@@ -732,7 +732,7 @@
                 return
             }
         };
-        xhttp.open("GET", "http://iotine.zapto.org:4600/chats/" + ucid, true);
+        xhttp.open("GET", "https://iotine.zapto.org:4600/chats/" + ucid, true);
         xhttp.send();
     }
 
@@ -884,7 +884,7 @@
                 };
                 var fd = new FormData();
                 fd.append("img_data", blob, filename);
-                xhr.open("POST", "http://iotine.zapto.org:4600/imgmsg", true);
+                xhr.open("POST", "https://iotine.zapto.org:4600/imgmsg", true);
                 xhr.send(fd);
             }, "image/jpeg", 0.75);
         };
@@ -1128,7 +1128,7 @@
         xhr.onload = function (e) {
             if (this.readyState === 4) {
                 var chat =
-                    `<p id="${ID}" class="from-me audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="http://iotine.zapto.org/Babble/uploads/${this.responseText}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
+                    `<p id="${ID}" class="from-me audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="https://iotine.zapto.org/Babble/uploads/${this.responseText}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
 
                 msg.send(`${this.responseText}`, `${tonum}`, `${phoneNumber}`, `${timestamp}`, `audio${ID}`)
                 $(".chat-body").append(chat)
@@ -1143,17 +1143,17 @@
         };
         var fd = new FormData();
         fd.append("audio_data", blob, filename);
-        xhr.open("POST", "http://iotine.zapto.org:4600/audiomsg", true);
+        xhr.open("POST", "https://iotine.zapto.org:4600/audiomsg", true);
         xhr.send(fd);
     }
     function loadDp() {
         var xhr = new XMLHttpRequest();
         xhr.onload = function (e) {
             if (this.readyState === 4) {
-                $(`.todp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+                $(`.todp`).attr('src', `https://iotine.zapto.org/Babble/uploads/${this.responseText}`)
             }
         };
-        xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + tonum, true);
+        xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + tonum, true);
         xhr.send();
     }
 function deswitch(elm){

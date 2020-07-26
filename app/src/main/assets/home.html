@@ -454,7 +454,7 @@
           return
         }
       };
-      xhttp.open("GET", "http://iotine.zapto.org:4600/logout/" + phoneNumber, true);
+      xhttp.open("GET", "https://iotine.zapto.org:4600/logout/" + phoneNumber, true);
       xhttp.send();
     }
     var activeElm;
@@ -610,7 +610,7 @@ function savePin(of){
 
         }
       }
-      xhttp.open("GET", "http://iotine.zapto.org:4600/pin/" + phoneNumber + "/" + of, true);
+      xhttp.open("GET", "https://iotine.zapto.org:4600/pin/" + phoneNumber + "/" + of, true);
       xhttp.send();
 }
 
@@ -625,7 +625,7 @@ async function loadPin(){
             }
         }
       }
-      xhttp.open("GET", "http://iotine.zapto.org:4600/pins/" + phoneNumber, true);
+      xhttp.open("GET", "https://iotine.zapto.org:4600/pins/" + phoneNumber, true);
       await xhttp.send();
 }
 
@@ -727,7 +727,7 @@ async function loadPin(){
           return
         }
       };
-      xhttp.open("GET", "http://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
+      xhttp.open("GET", "https://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
       await xhttp.send();
     }
 
@@ -769,7 +769,7 @@ async function loadPin(){
           $(`.${of}_LS`).html(`Last seen ${LS.lastOnline}`)
         }
       }
-      xhttp.open("GET", "http://iotine.zapto.org:4600/lastSeenOf/" + of , true);
+      xhttp.open("GET", "https://iotine.zapto.org:4600/lastSeenOf/" + of , true);
       await xhttp.send();
     }
 
@@ -791,7 +791,7 @@ async function loadPin(){
           }
         }
       }
-      xhttp.open("GET", "http://iotine.zapto.org:4600/moodOf/" + phoneNumber, true);
+      xhttp.open("GET", "https://iotine.zapto.org:4600/moodOf/" + phoneNumber, true);
       xhttp.send()
     }
 
@@ -818,7 +818,7 @@ async function loadPin(){
           }
         }
       }
-      xhttp.open("GET", "http://iotine.zapto.org:4600/updateMoodOf/" + phoneNumber + "/" + mood + "/" + title,
+      xhttp.open("GET", "https://iotine.zapto.org:4600/updateMoodOf/" + phoneNumber + "/" + mood + "/" + title,
         true);
       xhttp.send();
     }
@@ -836,7 +836,7 @@ async function loadPin(){
           }
         }
       }
-      xhttp.open("GET", "http://iotine.zapto.org:4600/moodOf/" + num, true);
+      xhttp.open("GET", "https://iotine.zapto.org:4600/moodOf/" + num, true);
       xhttp.send();
     }
 
@@ -847,7 +847,7 @@ async function loadPin(){
           $(`._${num}_dp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
         }
       };
-      xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + num, true);
+      xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + num, true);
       xhr.send();
     }
 
@@ -859,7 +859,7 @@ function getDetails(){
                 $('.suname').html(details.username)
             }
         };
-        xhr.open("GET", "http://iotine.zapto.org:4600/acDetails/" + phoneNumber, true);
+        xhr.open("GET", "https://iotine.zapto.org:4600/acDetails/" + phoneNumber, true);
         xhr.send();
     }
 
@@ -870,7 +870,7 @@ function getDetails(){
           $(`.ourdp`).attr('src', `http://iotine.zapto.org/Babble/uploads/${this.responseText}`)
         }
       };
-      xhr.open("GET", "http://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
+      xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
       xhr.send();
     }
   </script>

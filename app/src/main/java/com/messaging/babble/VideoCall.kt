@@ -8,10 +8,8 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
-import android.webkit.PermissionRequest
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,10 +18,8 @@ import kotlinx.android.synthetic.main.activity_video_call.*
 
 class VideoCall : AppCompatActivity() {
 
-    var phoneNumber: String? = null
-    var toNum: String? = null
-    var toName: String? = null
-    var ucid: String? = null
+    var rid: String? = null
+    var to: String? = null
     private val RECORD_REQUEST_CODE = 101
     private val DESKTOP_USER_AGENT =
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36"
@@ -34,10 +30,8 @@ class VideoCall : AppCompatActivity() {
         setContentView(R.layout.activity_video_call)
 
         val intent = intent
-        phoneNumber = intent.getStringExtra("phoneNumber")
-        toNum = intent.getStringExtra("to")
-        toName = intent.getStringExtra("name")
-        ucid = intent.getStringExtra("ucid")
+        rid = intent.getStringExtra("roomId")
+        to = intent.getStringExtra("callTo")
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = window
@@ -77,7 +71,19 @@ class VideoCall : AppCompatActivity() {
             vcView!!.webViewClient=  WebViewClient()
             vcView!!.webChromeClient=  WebChromeClient()
 
-            vcView!!.loadUrl("https://appr.tc/r/babble-video-room--vc-UCID_$ucid")
+            if(rid == "CALLINGFROMHERE"){
+                vcView!!.loadUrl("https://iotine.zapto.org:4600/")
+            }else {
+                vcView!!.loadUrl("https://iotine.zapto.org:4600/$rid")
+            }
+
+            vcView.addJavascriptInterface(object : Any() {
+                @JavascriptInterface
+                fun close() {
+                    finish()
+                }
+            }, "vc")
+
             vcView.setWebChromeClient(object : WebChromeClient() {
                 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
                 override fun onPermissionRequest(request: PermissionRequest) {
@@ -93,6 +99,11 @@ class VideoCall : AppCompatActivity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
+                    if(rid == "CALLINGFROMHERE"){
+                        vcView!!.loadUrl("javascript:CallTo('$to')")
+                    }else {
+                        vcView!!.loadUrl("javascript:justJoin()")
+                    }
                 }
             }
         }
