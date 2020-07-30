@@ -135,7 +135,7 @@ var nonUser = 0;
         var xhr = new XMLHttpRequest();
         xhr.onload = function (e) {
             if (this.readyState === 4) {
-                $(`.${num}_dp`).attr('src', `https://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+                $(`.${num}_dp`).attr('src', `https://iotine.zapto.org:4600/files/${this.responseText}`)
             }
         };
         xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + num, true);

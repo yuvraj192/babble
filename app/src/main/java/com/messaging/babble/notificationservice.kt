@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
+import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -42,6 +43,10 @@ class notificationservice : Service() {
 
             socket.on("message", Emitter.Listener { args ->
                 notifyMessage(args[0].toString(), args[1].toString(), args[2].toString(), args[3].toString(), args[4].toString())
+            })
+
+            socket.on("incoming-vc", Emitter.Listener { args ->
+                    //openVC(args[0].toString())
             })
 
         }
@@ -117,5 +122,13 @@ class notificationservice : Service() {
         with(NotificationManagerCompat.from(this)){
             notify(0, builder.build())
         }
+    }
+
+    private fun openVC(rid: String){
+        val intent = Intent(applicationContext, VideoCall::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        intent.putExtra("roomId", rid)
+        startActivity(intent)
     }
 }

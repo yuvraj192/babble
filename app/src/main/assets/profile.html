@@ -39,6 +39,14 @@
             background-color: #7d4df9 !important;
         }
         button:focus{ outline:none !important; }
+        .pic{
+            height:auto;
+            max-height:215px;
+            min-width:115px;
+            max-width:115px;
+            margin:5px;
+            border-radius:10px;
+        }
     </style>
 </head>
 
@@ -128,13 +136,14 @@
 </div>
 <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto profilepicture " style="display:none;">
     <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
+    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Uploading...';uploadImage()">Done</button>
     <section class="text-gray-700 body-font">
         <div class="container px-5 py-12 mx-auto">
             <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
                 <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex flex-col text-center items-center">
                     <div class="inline-flex items-center justify-center rounded-full text-indigo-500 flex-shrink-0">
                         <img alt="team"
-                             class="w-40 h-40 bg-white object-cover object-center flex-shrink-0 rounded-full ml-2 dpimg"
+                             class="w-40 h-40 bg-white object-cover object-center flex-shrink-0 rounded-full ml-2 subdpimg"
                              src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" type="image/jpeg" onclick="switcher('.profilepicture')" />
                     </div>
                     <div class="flex-grow w-full mx-auto opacity-0">
@@ -147,7 +156,7 @@
 
         <div class="flex -mt-10 border-t border-gray-200 pt-3" style="width:100% !important;">
             <h2 class="text-gray-900 title-font font-medium float-left mr-5">Suggestions</h2>
-            <p class="theme-shade-text text-sm" onclick="masterswitch('.allpics');photo.Gallery()">All Photos</p>
+            <p class="theme-shade-text text-sm float-right" onclick="masterswitch('.allpics');photo.Gallery()">All Photos</p>
         </div>
     </section>
 </div>
@@ -166,7 +175,12 @@
 </div>
 
 <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto allpics" style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700" onclick="mdeswitch('.allpics')">Cancel</button>
+    <button class="left-0 top-0 float-left text-red-700 cancel-btn" onclick="mdeswitch('.allpics')">Cancel</button>
+    <button class="left-0 top-0 float-right text-blue-700 final-btn animate__animated animate__fadeIn" style="display:none;" onclick="mdeswitch('.allpics')">Done</button>
+    <br>
+    <div class="picsContainer overflow-x-hidden h-full">
+
+    </div>
 </div>
 
 </body>
@@ -194,7 +208,8 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function (e) {
             if (this.readyState === 4) {
-                $(".dpimg").attr('src', `https://iotine.zapto.org/Babble/uploads/${this.responseText}`)
+                $(".dpimg").attr('src', `https://iotine.zapto.org:4600/files/${this.responseText}`)
+                $(".subdpimg").attr('src', `https://iotine.zapto.org:4600/files/${this.responseText}`)
             }
         };
         xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
@@ -207,13 +222,52 @@
         loadDp()
     }
 
-    async function prevImage(url, num) {
-        var mediaType = url.split("/")
+    firstCall = true
+    var lastRow;
+    var lastRowCount = 0
+
+    function prevImage(image, num) {
+        //if(firstCall){ $('.picsContainer').html(""); firstCall = false}
+        var imageTag = `<img src="${image}" class="pic">`
+        if(lastRowCount == 0){
+            var row = createNewRow()
+            row.innerHTML += imageTag
+            lastRowCount += 1
+        }else if(lastRowCount >= 3){
+            lastRowCount = 0
+            var row = createNewRow()
+            row.innerHTML += imageTag
+            lastRowCount += 1
+        }else{
+           $(`#${lastRow}`).append(imageTag)
+            lastRowCount += 1
+        }
         phoneNumber = num
-        uploadImage(url);
+        addListenersToImages()
+        //uploadImage(url);
     }
 
-    function uploadImage(url) {
+    function createNewRow(){
+        var row = document.createElement('div')
+        row.className += 'row w-full flex'
+        row.id = '_' + Math.random().toString(36).substr(2, 9);
+        lastRow = row.id
+        $('.picsContainer').append(row)
+        return row;
+    }
+
+    function addListenersToImages(){
+        var allImages = document.querySelectorAll('.pic')
+        allImages.forEach(item => {
+            item.addEventListener('click', event => {
+                $('.subdpimg').attr('src', item.src)
+                $('.upload-btn').show()
+                $('.final-btn').show()
+                allImages.disabled = "disabled"
+            })
+        })
+    }
+    function uploadImage() {
         var img = new Image;
         var c = document.createElement("canvas");
         var ctx = c.getContext("2d");
@@ -227,7 +281,7 @@
                 var xhr = new XMLHttpRequest();
                 xhr.onload = function (e) {
                     if (this.readyState === 4) {
-                        $(".dpimg").attr('src', url)
+                        deswitch()
                     }
                 };
                 var fd = new FormData();
@@ -237,7 +291,7 @@
             }, "image/jpeg", 0.75);
         };
         img.crossOrigin = "Anonymous"; // if from different origin
-        img.src = url;
+        img.src = $('.subdpimg').attr('src');
     }
 
 function changeName(elm){

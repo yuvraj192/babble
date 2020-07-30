@@ -14,14 +14,21 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.gallery_item.*
 
 class ProfilePage : AppCompatActivity() {
 
     var phoneNumber: String? = null
+    var galleryAdapter: GalleryAdapter? = null
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
@@ -66,18 +73,18 @@ class ProfilePage : AppCompatActivity() {
                     /*Toast.makeText(applicationContext, "HERE", Toast.LENGTH_LONG).show()
                     val intent = Intent(this@ChatActivity, GalleryOpen::class.java)
                     startActivity(intent)*/
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                            val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE);
-                            requestPermissions(permissions, ProfilePage.PERMISSION_CODE);
-
-                        } else {
-                            pickImageFromGallery();
-                        }
-
-                    }
-                    else{
-                        pickImageFromGallery()
+                    if (ContextCompat.checkSelfPermission(
+                            this@ProfilePage,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                        ActivityCompat.requestPermissions(
+                            this@ProfilePage,
+                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                            Gallery.MY_READ_PERMISSION_CODE
+                        )
+                    } else {
+                        loadImages()
                     }
                 }
             }, "photo")
@@ -99,41 +106,42 @@ class ProfilePage : AppCompatActivity() {
 
         }
     }
-
-    private fun pickImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.setType("image/*")
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private fun loadImages() {
+        val images: List<String> = ImagesGallery.listOfImages(this)
+        galleryAdapter = GalleryAdapter(this, images, object : GalleryAdapter.PhotoListener {
+            override fun onPhotoClick(path: String?) {
+                Toast.makeText(this@ProfilePage, "" + path, Toast.LENGTH_LONG).show()
+            }
+        })
+        var totalImages = images.size
+        profileView.post(Runnable {
+            for(image in images){
+                profileView.loadUrl("javascript:prevImage('$image', $phoneNumber)")
+            }
+        })
     }
 
-    companion object {
-        private val IMAGE_PICK_CODE = 1000;
-        private val PERMISSION_CODE = 1001;
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        when(requestCode){
-            PERMISSION_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    pickImageFromGallery()
-                }
-                else{
-                    Toast.makeText(this, "Permission Denied ", Toast.LENGTH_SHORT).show()
-                }
-
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == MY_READ_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Read External Storage Permission Granted", Toast.LENGTH_SHORT)
+                    .show()
+                loadImages()
+            } else {
+                Toast.makeText(this, "Read External Storage Permission Denied", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
-            //image_view.setImageURI(data?.data)
-            var imurl = data?.data
-            profileView.post(Runnable {
-                profileView.loadUrl("javascript:prevImage('$imurl', $phoneNumber)")
-            })
-        }
+    companion object {
+        private const val MY_READ_PERMISSION_CODE = 101
     }
 }
