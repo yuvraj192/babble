@@ -135,6 +135,15 @@ class HomeActivity : AppCompatActivity() {
         startService(notifier)
 
         }
+
+    override public fun onBackPressed() {
+        if (homeView.canGoBack()) {
+            return
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     private fun notifyMessage(msg: String, to: String, from: String ,time: String, mid: String){
         val cursor = contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,

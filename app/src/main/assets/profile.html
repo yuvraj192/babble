@@ -140,7 +140,7 @@
 </div>
 <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto profilepicture " style="display:none;">
     <button class="left-0 top-0 float-left text-red-700" onclick="deswitch();$('.upload-btn').hide()">Cancel</button>
-    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Updating...';uploadImage();$(this).hide()">Done</button>
+    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Updating...';uploadImage();">Done</button>
     <section class="text-gray-700 body-font">
         <div class="container px-5 py-12 mx-auto">
             <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
@@ -306,6 +306,7 @@
                     if (this.readyState === 4) {
                         $('.dpimg').attr('src', $('.subdpimg').attr('src'))
                         deswitch()
+                        $('.upload-btn').hide()
                     }
                 };
                 var fd = new FormData();

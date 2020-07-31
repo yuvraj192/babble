@@ -150,10 +150,16 @@
       min-width: 6rem;
       max-width: 6rem;
     }
+
+    .UnViewedStory{
+          background-image: linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%);
+          padding:3px !important;
+        }
+
   </style>
 </head>
 
-<body>
+<body onbeforeunload="handleBackPressed()">
 <header class="text-gray-700 body-font bg-white fixed inset-x-0 top-0 z-10" style="height:56px;">
     <div class="container mx-auto flex p-5 flex-col items-center">
         <nav class="flex items-center text-base fixed left-0 top-0 ml-6 mt-5">
@@ -223,24 +229,13 @@
                             </div>
                         </div>
                     </div>
-                    <div onclick="profile.load()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                    <div onclick="activeSetting = document.querySelector('.profile-sec');profile.load()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
                         <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                             <i alt="team"
                                class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">account_circle</i>
                             <div class="flex-grow">
                                 <h2 class="text-gray-900 title-font font-medium"> My Profile <i
                                         class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">color_lens</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">Choose Theme <br> <span
-                                        class="text-sm text-gray-500">Daylight</span> <i class="material-icons float-right"
-                                                                                         style="margin-top:-15px;">chevron_right</i> </h2>
                             </div>
                         </div>
                     </div>
@@ -397,16 +392,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">account_circle</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium"> Profile <i
-                                        class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
-                    </div>
                     <div onclick="addPin(true)" class="p-2 lg:w-1/3 md:w-1/2 w-full mpin">
                         <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                             <i alt="team"
@@ -439,10 +424,11 @@
         </section>
     </div>
 </div>
-
+<p class="profile-sec"></p>
 <script>
     var phoneNumber;
     var activeSetting;
+    var totalPins = 0;
 
     function logout() {
       if (phoneNumber == "") return;
@@ -545,7 +531,10 @@
     }
 
     function addPin(vibration) {
+      if(totalPins >= 9) return
+      totalPins += 1
       var ID = '_' + Math.random().toString(36).substr(2, 9);
+      console.log("adding pin")
       var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
       var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
       if(vibration) savePin(activeElm.id.split('_')[0])
@@ -553,7 +542,7 @@
                 <a class="tooltip block relative h-24 w-24 overflow-hidden pin-img">
                     <span style="display:none;" class="tooltiptext truncate ${activeElm.id.split('_')[0]}_pintip"></span>
                     <div class="relative">
-                        <img alt="ecommerce" class="avt-img w-16 object-cover object-center w-full rounded-full h-full block bg-green-200 _${activeElm.id.split('_')[0]}_dp"
+                        <img alt="ecommerce" class="avt-img w-16 object-cover object-center w-full rounded-full h-full block  _${activeElm.id.split('_')[0]}_dp"
                             src="${dp}" type="image/jpeg">
                         <div class='pinstatus-circle text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood'>${mood}</div>
                     </div>
@@ -571,6 +560,8 @@
     }
 
     function removePin() {
+      if(totalPins <= 0) return
+      totalPins -= 1
       var ID = '_' + Math.random().toString(36).substr(2, 9);
       var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
       var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
@@ -593,6 +584,7 @@
                 </div>
             </div>`
 
+      deletePin(activeElm.id.split('_')[0])
       $(".chats-cont").prepend(templ)
       $(`.${ID}`).show('fast')
       contacts.getName(activeElm.id.split('_')[0])
@@ -611,6 +603,17 @@ function savePin(of){
         }
       }
       xhttp.open("GET", "https://iotine.zapto.org:4600/pin/" + phoneNumber + "/" + of, true);
+      xhttp.send();
+}
+
+function deletePin(of){
+    var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if(this.readyState == 4 && this.status == 200){
+
+        }
+      }
+      xhttp.open("GET", "https://iotine.zapto.org:4600/unpin/" + phoneNumber + "/" + of, true);
       xhttp.send();
 }
 
@@ -898,6 +901,14 @@ function getDetails(){
             return false
         }
     }
+
+    function handleBackPressed(){
+         if (activeSetting != "" || typeof activeSetting != "undefined") {
+            activeSetting.style.display = "none";
+            $(".main-settings").show()
+         }
+    }
+
   </script>
 </body>
 
