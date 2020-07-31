@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.WindowManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
@@ -99,7 +100,7 @@ class ProfilePage : AppCompatActivity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    profileView.loadUrl("javascript:setPno('$phoneNumber')")
+                    profileView.loadUrl("javascript:setPno('$phoneNumber');")
                 }
             }
 
@@ -116,8 +117,12 @@ class ProfilePage : AppCompatActivity() {
         })
         var totalImages = images.size
         profileView.post(Runnable {
+            val handler = Handler()
+
             for(image in images){
-                profileView.loadUrl("javascript:prevImage('$image', $phoneNumber)")
+                handler.postDelayed({
+                    profileView.loadUrl("javascript:prevImage('$image', $phoneNumber)")
+                }, 2000)
             }
         })
     }
