@@ -68,9 +68,9 @@
                     <div class="inline-flex items-center justify-center rounded-full text-indigo-500 flex-shrink-0">
                         <img alt="team"
                              class="w-32 h-32 bg-white object-cover object-center flex-shrink-0 rounded-full ml-2 dpimg"
-                             src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" type="image/jpeg" onclick="switcher('.profilepicture')" />
+                             src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" type="image/jpeg" onclick="loadDp();switcher('.profilepicture')" />
                     </div>
-                    <a class="mt-3 text-indigo-500 inline-flex items-center" onclick="switcher('.profilepicture')">Edit</a>
+                    <a class="mt-3 text-indigo-500 inline-flex items-center" onclick="loadDp();switcher('.profilepicture')">Edit</a>
                     <div class="flex-grow w-full mx-auto">
                         <h2 class="text-gray-900 text-lg title-font font-medium"> <span class="uname" onclick="switcher('.changeName')">  </span> </h2>
                         <p class="leading-relaxed text sm text-gray-400 bdt" onclick="//switcher('.birthday')"></p>
@@ -139,8 +139,8 @@
     </div>
 </div>
 <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto profilepicture " style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
-    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Updating...';uploadImage()">Done</button>
+    <button class="left-0 top-0 float-left text-red-700" onclick="deswitch();$('.upload-btn').hide()">Cancel</button>
+    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Updating...';uploadImage();$(this).hide()">Done</button>
     <section class="text-gray-700 body-font">
         <div class="container px-5 py-12 mx-auto">
             <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
@@ -179,7 +179,7 @@
 </div>
 
 <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto allpics" style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700 cancel-btn" onclick="mdeswitch('.allpics');">Cancel</button>
+    <button class="left-0 top-0 float-left text-red-700 cancel-btn" onclick="$('.selectedImage').toggleClass('selectedImage');loadDp();mdeswitch('.allpics');$('.final-btn').hide()">Cancel</button>
     <button class="left-0 top-0 float-right text-blue-700 final-btn animate__animated animate__fadeIn" style="display:none;" onclick="mdeswitch('.allpics')">Done</button>
     <br>
     <div class="picsContainer overflow-x-hidden h-full">

@@ -546,8 +546,8 @@
 
     function addPin(vibration) {
       var ID = '_' + Math.random().toString(36).substr(2, 9);
-      var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
       var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
+      var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
       if(vibration) savePin(activeElm.id.split('_')[0])
       var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat animate__animated animate__rubberBand">
                 <a class="tooltip block relative h-24 w-24 overflow-hidden pin-img">
@@ -783,9 +783,15 @@ async function loadPin(){
           activeSetting = document.querySelector(".mood-sec")
           loadOurDp()
           var m = JSON.parse(this.responseText)
-          if (m.mood != '') {
-            $(".our_mood").html(m.mood)
-            $(".mood-title").html(m.mtitle)
+          if (m.mood != '' || typeof m.lastMoodUpdate != "undefined") {
+            if(!moodValidity(m.lastMoodUpdate)){
+                $(`.our_mood`).hide()
+                $(".mood-title").html("")
+                return
+            }else{
+                $(".our_mood").html(m.mood)
+                $(".mood-title").html(m.mtitle)
+            }
           } else {
             $(".our_mood").hide()
             $(".mood-title").html("")
@@ -829,9 +835,14 @@ async function loadPin(){
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
           var m = JSON.parse(this.responseText)
-          if (m.mood != '') {
-            $(`.${num}_mood`).show().html(`${m.mood}`)
-            $(`.${num}_mtitle`).html(`${m.mtitle}`)
+          if (m.mood != '' || typeof m.lastMoodUpdate != "undefined") {
+            if(!moodValidity(m.lastMoodUpdate)){
+                $(`.${num}_mood`).hide()
+                return
+            }else{
+                $(`.${num}_mood`).show().html(`${m.mood}`)
+                $(`.${num}_mtitle`).html(`${m.mtitle}`)
+            }
           } else {
             $(`.${num}_mood`).hide()
           }
@@ -873,6 +884,19 @@ function getDetails(){
       };
       xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
       xhr.send();
+    }
+
+    function moodValidity(lastUpdateTime){
+        var resolution;
+        resolution = Date.now() - parseInt(lastUpdateTime)
+        var resolutionTime = (((resolution / 1000) / 60)/ 60)
+        if(parseInt(resolutionTime) > 6){
+            return false
+        }else if(parseInt(resolutionTime) < 6){
+            return true
+        }else{
+            return false
+        }
     }
   </script>
 </body>
