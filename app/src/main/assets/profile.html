@@ -47,6 +47,10 @@
             margin:5px;
             border-radius:10px;
         }
+        .selectedImage{
+            border:5px solid #7d4df9 !important;
+            padding:5px !important;
+        }
     </style>
 </head>
 
@@ -136,7 +140,7 @@
 </div>
 <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto profilepicture " style="display:none;">
     <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
-    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Uploading...';uploadImage()">Done</button>
+    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Updating...';uploadImage()">Done</button>
     <section class="text-gray-700 body-font">
         <div class="container px-5 py-12 mx-auto">
             <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
@@ -156,7 +160,7 @@
 
         <div class="flex -mt-10 border-t border-gray-200 pt-3" style="width:100% !important;">
             <h2 class="text-gray-900 title-font font-medium float-left mr-5">Suggestions</h2>
-            <p class="theme-shade-text text-sm float-right" onclick="masterswitch('.allpics');photo.Gallery()">All Photos</p>
+            <p class="theme-shade-text text-sm float-right" onclick="masterswitch('.allpics');showImages()">All Photos</p>
         </div>
     </section>
 </div>
@@ -188,6 +192,7 @@
 <!--
 
 -->
+<script src="jQuery.loadScroll.js"></script>
 <script>
     var phoneNumber;
 
@@ -222,27 +227,38 @@
         loadDp()
     }
 
-    firstCall = true
+    images = []
     var lastRow;
     var lastRowCount = 0
+    var lastIndex = 0
 
-    async function prevImage(image, num) {
-        //if(firstCall){ $('.picsContainer').html(""); firstCall = false}
-        if(lastRowCount == 0){
-            await generateImagePreview(createNewRow(), image)
-            lastRowCount += 1
-        }else if(lastRowCount >= 3){
-            lastRowCount = 0
-            await generateImagePreview(createNewRow(), image)
-            lastRowCount += 1
-        }else{
-            await generateImagePreview(document.querySelector(`#${lastRow}`), image)
-            lastRowCount += 1
-        }
+    async function prevImage(image, num, totalImages) {
+        if(images.length >= parseInt(totalImages)-5) return
+        images.push(image)
         phoneNumber = num
+    }
+
+    async function showImages(){
+        for(i = lastIndex; i < lastIndex + 20; i++){
+            if(lastRowCount == 0){
+                await generateImagePreview(createNewRow(), images[i])
+                lastRowCount += 1
+            }else if(lastRowCount >= 3){
+                lastRowCount = 0
+                await generateImagePreview(createNewRow(), images[i])
+                lastRowCount += 1
+            }else{
+                await generateImagePreview(document.querySelector(`#${lastRow}`), images[i])
+                lastRowCount += 1
+            }
+        }
+
+        lastIndex += 20
+
         addListenersToImages()
         //uploadImage(url);
     }
+
     function generateImagePreview(row, image){
         var imageTag = `<img src="${image}" class="pic">`
         row.innerHTML += imageTag
@@ -260,13 +276,20 @@
         var allImages = document.querySelectorAll('.pic')
         allImages.forEach(item => {
             item.addEventListener('click', event => {
+                selectImage(item)
                 $('.subdpimg').attr('src', item.src)
                 $('.upload-btn').show()
                 $('.final-btn').show()
-                allImages.disabled = "disabled"
             })
         })
+        $('.pic').loadScroll(500);
     }
+
+    function selectImage(img){
+        $(".selectedImage").toggleClass("selectedImage")
+        $(img).addClass("selectedImage")
+    }
+
     function uploadImage() {
         var img = new Image;
         var c = document.createElement("canvas");
@@ -328,6 +351,13 @@ function mdeswitch(elm){
     $('.prepage').addClass('subpage').removeClass('prepage')
     $('.fullpage').addClass('prepage').removeClass('fullpage').show()
 }
+
+$(document).ready(function() {
+    $('.picsContainer').scroll(function() {
+        showImages()
+    });
+    photo.Gallery()
+});
 
 </script>
 

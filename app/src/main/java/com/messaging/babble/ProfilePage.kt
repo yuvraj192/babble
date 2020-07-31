@@ -121,7 +121,7 @@ class ProfilePage : AppCompatActivity() {
 
             for(image in images){
                 handler.postDelayed({
-                    profileView.loadUrl("javascript:prevImage('$image', $phoneNumber)")
+                    profileView.loadUrl("javascript:prevImage('$image', $phoneNumber, '$totalImages')")
                 }, 2000)
             }
         })
