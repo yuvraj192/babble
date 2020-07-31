@@ -40,7 +40,7 @@
         <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <img src="logo.png" class="center animate__animated animate__tada" style="float:center;height:120px;width:120px;" alt="">
             <h2 align="center" class="text-white text-lg font-medium title-font mb-2 animate__animated animate__pulse"><b>Babble</b></h2>
-            <span class="text-xl text-white text-center items-center animate__animated animate__fadeIn mb-10 font-bold">Welcome</span>
+            <span class="text-xl text-white text-center items-center animate__animated animate__fadeIn mb-10 font-bold">Lets Babble</span>
             <input class="bg-white rounded focus:outline-none text-base px-4 py-3 mb-4 pno placeholder-gray-600" placeholder="Mobile Number" type="tel" maxlength="10">
             <button onclick="login()" class="theme-shade-text bg-white  border-0 py-2 px-8 focus:outline-none rounded text-center lgbtn">Continue <i class="material-icons text-sm mt-2">arrow_forward</i> </button>
 
@@ -52,7 +52,7 @@
         <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
             <h2 align="center" class="text-black text-2xl font-medium title-font mb-2 animate__animated animate__fadeIn"><b>Device Verification Required</b></h2>
             <span class="text-xs text-black mb-10 text-center items-center animate__animated animate__fadeInUp">We need to verify this device</span>
-            <button onclick="requestOTP();this.innerHTML = 'Verifying...';this.disabled = true;" class="bg-white theme-shade-text border-0 py-2 px-8 focus:outline-none rounded text-center mt-4 vfc-btn">Verify Now </button>
+            <button onclick="endSetup()//requestOTP();this.innerHTML = 'Verifying...';this.disabled = true;" class="bg-white theme-shade-text border-0 py-2 px-8 focus:outline-none rounded text-center mt-4 vfc-btn">Verify Now </button>
         </div>
     </div>
 </section>
