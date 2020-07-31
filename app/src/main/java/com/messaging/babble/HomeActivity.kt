@@ -179,7 +179,7 @@ class HomeActivity : AppCompatActivity() {
             val mobile =
                 cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
 
-            if(num == mobile){
+            if(num == mobile || mobile == "+91 "+num || mobile == "91"+num || mobile == "+91"+num){
                 homeView.post(Runnable {
                     homeView.loadUrl("javascript:updateName('$name', '$num')")
                 })
