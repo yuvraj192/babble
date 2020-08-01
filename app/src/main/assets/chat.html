@@ -361,6 +361,44 @@
             transition:0.5s ease all;
             z-index:9999;
         }
+
+        .progressContainer{
+              width: 125px;
+              margin-top:-8px;
+              margin-left:45px;
+              background: transparent;
+              text-align: center;
+              z-index:2;
+              display:inline-block;
+        }
+
+        .progress {
+          width: 0px;
+          height: 5px;
+          border-radius:50px;
+          background: #7d4df9 ;
+          transition: width .1s linear;
+          margin-top:-40px;
+        }
+
+        .from-me-progressContainer{
+              width: 125px;
+              margin-top:-8px;
+              margin-left:230px;
+              background: transparent;
+              text-align: center;
+              z-index:2;
+              display:inline-block;
+        }
+
+        .from-me-progress {
+          width: 0px;
+          height: 5px;
+          border-radius:50px;
+          background: #fff ;
+          transition: width .1s linear;
+          margin-top:-40px;
+        }
     </style>
 
 </head>
@@ -373,8 +411,8 @@
         <a
                 class="flex order-first lg:order-none title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 mt-2 md:mb-0">
             <div class="rounded-lg overflow-hidden mr-2">
-                <img alt="content" class="object-cover object-center bg-green-200 rounded-full todp"
-                     style="height:40px;width:40px;" src="1.png">
+                <img  class="object-cover object-center rounded-full todp"
+                     style="height:40px;width:40px;" src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" loading="lazy">
             </div>
             <h2 class="title-font text-xs font-medium text-gray-900 mt-3 mb-3" id="contactName"></h2>
         </a>
@@ -434,18 +472,17 @@
 
 <footer class="text-gray-700 body-font fixed inset-x-0 bottom-0 px-2 z-10 pt-3 bg-white chatToolsFooter">
     <div onclick="$(this).hide()"
-         class="emojiCenter flex py-1 mb-2 px-5 flex-wrap animate__animated animate__bounceInUp animate__faster pl-6 border-b border-gray-100 pb-4"
+         class="emojiCenter flex py-1 mb-2 w-full pr-0 animate__animated animate__bounceInUp animate__faster pl-6 border-b border-gray-100 pb-4 overflow-x-auto"
          style="display:none;">
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2 cancel">❌</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😂</span>
-        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😍</span>
+        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">💯</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">❤</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">🤬</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😭</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😱</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">😑</span>
         <span class="emj text-sm w-1/9 h-6 w-6 mx-2">🤷</span>
-        <span class="emj text-sm w-1/9 h-6 w-6 mx-2">🥺</span>
 
 
     </div>
@@ -585,7 +622,7 @@
         if(from != tonum) return
         if (mid.split("_")[0] == "audio") {
             chat =
-                `<p id="${mid}" class="from-them audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="https://iotine.zapto.org:4600/files/${msg}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
+                `<p id="${mid}" class="from-them audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> <button onclick="toggleAudio('#audioTag_${mid}', this)">  <i class="material-icons">play_arrow</i> </button> <div class="progressContainer"><div class="progress" id="audioTag_${mid}_progress"></div></div> <audio id="audioTag_${mid}" src="https://iotine.zapto.org:4600/files/${msg}" controls="true" controlsList="nodownload" type="audio/wav" style="display:none"></audio>  </p>`
         } else if (mid.split("_")[0] == "img") {
             chat =
                 `<p  id="${mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="https://iotine.zapto.org:4600/files/${msg}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
@@ -695,7 +732,7 @@
                     if (message.from == phoneNumber) {
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
-                                `<p id="${message.mid}" class="from-me audio-msg chat-bubble"> <audio src="https://iotine.zapto.org:4600/files/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
+                                `<p id="${message.mid}" class="from-me audio-msg chat-bubble flex text-center w-1/2"> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> <button onclick="toggleAudio('#audioTag_${message.mid}', this)">  <i class="material-icons">play_arrow</i> </button> <div class="from-me-progressContainer"><div class="from-me-progress" id="audioTag_${message.mid}_progress"></div></div> <audio id="audioTag_${message.mid}" src="https://iotine.zapto.org:4600/files/${message.data}" controls="true" controlsList="nodownload" type="audio/wav" style="display: none"></audio>  </p>`
                         } else if (message.mid.split("_")[0] == "img") {
                             templ =
                                 `<p  id="${message.mid}" class="from-me no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="https://iotine.zapto.org:4600/files/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
@@ -706,7 +743,7 @@
                     } else if (message.to == phoneNumber) {
                         if (message.mid.split("_")[0] == "audio") {
                             templ =
-                                `<p id="${message.mid}" class="from-them audio-msg chat-bubble"> <audio src="https://iotine.zapto.org:4600/files/${message.data}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> </p>`
+                                `<p id="${message.mid}" class="from-them audio-msg chat-bubble flex text-center w-1/2"> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span> <button onclick="toggleAudio('#audioTag_${message.mid}', this)"><i class="material-icons">play_arrow</i></button> <div class="progressContainer"><div class="progress" id="audioTag_${message.mid}_progress"></div></div> <audio id="audioTag_${message.mid}" src="https://iotine.zapto.org:4600/files/${message.data}" controls="true" controlsList="nodownload" type="audio/wav" style="display: none"></audio>  </p>`
                         } else if (message.mid.split("_")[0] == "img") {
                             templ =
                                 `<p  id="${message.mid}" class="from-them no-color"> <img onclick="showImg(this.src)" class="rounded-lg msg-img animate__animated animate_jello" src="https://iotine.zapto.org:4600/files/${message.data}" type="image/jpeg" /> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none">${message.reaction}</span></p>`
@@ -1128,7 +1165,7 @@
         xhr.onload = function (e) {
             if (this.readyState === 4) {
                 var chat =
-                    `<p id="${ID}" class="from-me audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster"> <audio src="https://iotine.zapto.org/Babble/uploads/${this.responseText}" controls="true" controlsList="nodownload" type="audio/wav"></audio> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> </p>`
+                    `<p id="${ID}" class="from-me audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster w-1/2"> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> <button onclick="toggleAudio('#audioTag_${ID}', this)">  <i class="material-icons">play_arrow</i> </button> <div class="from-me-progressContainer"><div class="from-me-progress" id="audioTag_${ID}_progress"></div></div> <audio id="audioTag_${ID}" src="https://iotine.zapto.org/Babble/uploads/${this.responseText}" controls="true" controlsList="nodownload" type="audio/wav" style="display:none;"></audio>  </p>`
 
                 msg.send(`${this.responseText}`, `${tonum}`, `${phoneNumber}`, `${timestamp}`, `audio${ID}`)
                 $(".chat-body").append(chat)
@@ -1167,6 +1204,46 @@ function deswitch(elm){
     }, 100);
     $(elm).hide()
 }
+
+function toggleAudio(audioTag, togglingButton){
+        var timer;
+        var percent = 0;
+        var audio = document.querySelector(audioTag);
+        audio.addEventListener("playing", function(_event) {
+          var duration = _event.target.duration;
+          advance(duration, audio);
+        });
+        audio.addEventListener("pause", function(_event) {
+          clearTimeout(timer);
+        });
+        var advance = function(duration, element) {
+          var progress = document.querySelector(`${audioTag}_progress`);
+          increment = 10/duration
+          percent = Math.min(increment * element.currentTime * 10, 100);
+          progress.style.width = percent+'%'
+
+          startTimer(duration, element);
+        }
+        var startTimer = function(duration, element){
+          if(percent < 99) {
+            timer = setTimeout(function (){advance(duration, element)}, 100);
+          }else if(percent >= 99){
+            togglingButton.innerHTML = `<i class="material-icons">play_arrow</i>`
+            progress.style.width = '0px'
+            clearTimeout(timer);
+          }
+        }
+        if (!audio.paused) {
+            audio.pause();
+            togglingButton.innerHTML = `<i class="material-icons">play_arrow</i>`
+            isPlaying = false;
+        } else {
+            audio.play();
+            togglingButton.innerHTML = `<i class="material-icons">pause</i>`
+            isPlaying = true;
+        }
+}
+
 </script>
 
 </html>

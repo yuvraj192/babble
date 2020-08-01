@@ -88,10 +88,8 @@
     }
 
     .tooltip .tooltiptext {
-      width: 60px;
-      margin-left: 15px;
-      margin-top: 20px;
-      background-color: #E5E5EA;
+      width: 80px;
+      background-color: rgb(255 255 255 / 96%);
       color: #000;
       text-align: center;
       border-radius: 16px 14px;
@@ -99,8 +97,20 @@
 
       /* Position the tooltip */
       position: absolute;
-      z-index: 1;
+      z-index: 10;
     }
+
+    .tooltip .tooltiptext::before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: rgb(255 255 255 / 96%) transparent transparent transparent;
+    }
+
 
     .tooltip:hover .tooltiptext {
       visibility: visible;
@@ -144,18 +154,21 @@
     }
 
     .avt-img {
-      max-height: 6rem;
-      min-height: 6rem;
+      width:100%;
+      max-width:6rem;
+      height:auto;
+      max-height:6rem;
+    }
 
-      min-width: 6rem;
-      max-width: 6rem;
+    .squezeedPinSec{
+        max-height:36px !important;
+        overflow-x:auto;
     }
 
     .UnViewedStory{
           background-image: linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%);
           padding:3px !important;
         }
-
   </style>
 </head>
 
@@ -500,7 +513,7 @@
     addListeners()
 
     window.onscroll = function () {
-      disableHold = true
+      //disableHold = true
       scrollFunction()
     };
 
@@ -508,42 +521,44 @@
       if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
         $(".pinSec").addClass("fixed h-12 shadow-sm z-10")
         $(".pinsCont").removeClass("flex-wrap")
-        $(".pin-chat").removeClass("w-1/3").addClass("w-1/9")
-        $(".pin-img").removeClass("chat-item")
+        $(".pin-chat").removeClass("w-1/3 chat-item").addClass("w-1/9")
+        $(".pin-img").removeClass("h-24 w-24")
         $(".pin-img").css("height", "2.5rem")
         $(".pin-img").css("width", "2.5rem")
+        $(".avt-img").css("max-height", "2.5rem !important")
       } else {
-        $(".pinSec").removeClass("fixed h-12 shadow-sm")
+        $(".pinSec").removeClass("fixed h-12 shadow-sm z-10")
         $(".pinsCont").addClass("flex-wrap")
-        $(".pin-chat").removeClass("w-1/9").addClass("w-1/3")
-        $(".pin-img").addClass("chat-item")
+        $(".pin-chat").removeClass("w-1/9").addClass("w-1/3 chat-item")
+        $(".pin-img").addClass("h-24 w-24")
         $(".pin-img").css("height", "6rem")
         $(".pin-img").css("width", "6rem")
-        disableHold = false;
+        $(".avt-img").css("max-height", "6rem")
+        disableHold = false
       }
     }
 
     async function updateNumber(pno) {
       phoneNumber = pno;
       getDetails()
-      getChatList()
-      loadPin()
+      await getChatList()
+      await loadPin()
     }
 
     function addPin(vibration) {
       if(totalPins >= 9) return
       totalPins += 1
       var ID = '_' + Math.random().toString(36).substr(2, 9);
-      console.log("adding pin")
+      if(activeElm == null) return
       var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
       var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
       if(vibration) savePin(activeElm.id.split('_')[0])
       var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat animate__animated animate__rubberBand">
-                <a class="tooltip block relative h-24 w-24 overflow-hidden pin-img">
-                    <span style="display:none;" class="tooltiptext truncate ${activeElm.id.split('_')[0]}_pintip"></span>
-                    <div class="relative">
-                        <img alt="ecommerce" class="avt-img w-16 object-cover object-center w-full rounded-full h-full block  _${activeElm.id.split('_')[0]}_dp"
-                            src="${dp}" type="image/jpeg">
+                <a class="tooltip block h-24 w-24 overflow-hidden pin-img">
+                    <span style="visibility:hidden;" class="tooltiptext truncate _${activeElm.id.split('_')[0]}_pintip shadow-lg"></span>
+                    <div class="absolute pin_main_cont">
+                        <img alt="" class="avt-img w-full rounded-full  _${activeElm.id.split('_')[0]}_dp"
+                            src="${dp}" type="image/jpeg" loading="lazy">
                         <div class='pinstatus-circle text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood'>${mood}</div>
                     </div>
                     <span class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name opacity-0"></span>
@@ -571,7 +586,7 @@
                     <div class="relative">
                         <img alt="team"
                         class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 _${activeElm.id.split('_')[0]}_dp"
-                        src="${dp}" type="image/jpeg">
+                        src="${dp}" type="image/jpeg" loading="lazy">
                         <div class='status-circle text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood'>${mood}</div>
                     </div>
                     <div class="flex-grow border-b pb-3">
@@ -619,11 +634,11 @@ function deletePin(of){
 
 async function loadPin(){
     var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
+      xhttp.onreadystatechange = async function () {
         if(this.readyState == 4 && this.status == 200){
             var pins = JSON.parse(this.responseText)
             for(i = 0; i < pins.length; i++){
-                activeElm = document.getElementById(`${pins[i].pinOf}_message`)
+                activeElm = await document.getElementById(`${pins[i].pinOf}_message`)
                 addPin(false)
             }
         }
@@ -633,6 +648,7 @@ async function loadPin(){
 }
 
     function deleteChat() {
+      alert(activeElm.id.split('_')[0])
       $(activeElm).hide('slow')
       $(activeElm).remove()
       taken = false;
@@ -695,7 +711,7 @@ async function loadPin(){
                                     <div class="relative">
                                         <img alt="team"
                                              class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 _${message}_dp"
-                                        src="" type="image/jpeg">
+                                        src="" type="image/jpeg" loading="lazy">
                                         <div class='status-circle text-sm animate__animated animate__tada ${message}_mood' style="display:block"></div>
                                         </div>
                                         <div class="flex-grow border-b pb-3">
@@ -744,8 +760,8 @@ async function loadPin(){
         bringToTop(num)
       } else {
         if ($(`#${num}_message`).hasClass('pin-chat')) {
-          $(`.${num}_pintip`).html(msg)
-          $(`.${num}_pintip`).show('fast')
+          $(`._${num}_pintip`).html(msg)
+          document.querySelector(`._${num}_pintip`).style.visibility = "visible"
         } else {
           $(`.${num}_nm`).html("New message")
           bringToTop(num)
@@ -903,10 +919,10 @@ function getDetails(){
     }
 
     function handleBackPressed(){
-         if (activeSetting != "" || typeof activeSetting != "undefined") {
+         /*if (activeSetting != "" || typeof activeSetting != "undefined") {
             activeSetting.style.display = "none";
             $(".main-settings").show()
-         }
+         }*/
     }
 
   </script>
