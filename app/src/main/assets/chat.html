@@ -940,6 +940,7 @@
                 likeelm.querySelector(".msgReaction").innerHTML = ""
                 react.onMessage(likeelm.id, "", `${tonum}`, `${phoneNumber}`)
             } else {
+                animateEmojis(item.innerHTML)
                 likeelm.querySelector(".msgReaction").innerHTML = item.innerHTML
                 react.onMessage(likeelm.id, item.innerHTML, `${tonum}`, `${phoneNumber}`)
                 device.vibrate()
