@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
-    <link rel="stylesheet" href="icons.css">
-    <link rel="stylesheet" href="tailwind.css">
-    <script src="jquery.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+  <link rel="stylesheet" href="icons.css">
+  <link rel="stylesheet" href="tailwind.css">
+  <script src="jquery.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+  <style>
     body {
       -webkit-touch-callout: none;
       /* iOS Safari */
@@ -88,26 +88,34 @@
     }
 
     .tooltip .tooltiptext {
-      width: 80px;
+      width: auto;
+      max-width: 200px;
       background-color: rgb(255 255 255 / 96%);
       color: #000;
-      text-align: center;
-      border-radius: 16px 14px;
+      text-align: left;
+      border-radius: 12px 12px;
       padding-left: 6px;
-
+      height: auto;
+      max-height: 150px;
       /* Position the tooltip */
       position: absolute;
       z-index: 10;
+      top: 1%;
+      left: 50%;
+      margin-left: -60px;
+      text-overflow: ellipsis;
+
     }
 
     .tooltip .tooltiptext::before {
       content: "";
       position: absolute;
       top: 100%;
-      left: 50%;
+      right: 20%;
       margin-left: -5px;
       border-width: 5px;
       border-style: solid;
+      border-bottom-left-radius: 8px;
       border-color: rgb(255 255 255 / 96%) transparent transparent transparent;
     }
 
@@ -136,8 +144,8 @@
       height: 25px;
       border-radius: 50%;
       border: 2px solid white;
-      bottom: 0;
-      right: 5px;
+      bottom: 45px;
+      right: 25px;
       padding: 0px;
       background-color: #f0f0f0;
       position: absolute;
@@ -154,435 +162,453 @@
     }
 
     .avt-img {
-      width:100%;
-      max-width:6rem;
-      height:auto;
-      max-height:6rem;
+      width: 100%;
+      max-width: 6rem;
+      height: auto;
+      max-height: 6rem;
     }
 
-    .squezeedPinSec{
-        max-height:36px !important;
-        overflow-x:auto;
+    .squezeedPinSec {
+      max-height: 36px !important;
+      overflow-x: auto;
     }
 
-    .UnViewedStory{
-          background-image: linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%);
-          padding:3px !important;
-        }
+    .UnViewedStory {
+      background-image: linear-gradient(to bottom, #3acfd5 0%, #3a4ed5 100%);
+      padding: 3px !important;
+    }
   </style>
 </head>
 
 <body onbeforeunload="handleBackPressed()">
-<header class="text-gray-700 body-font bg-white fixed inset-x-0 top-0 z-10" style="height:56px;">
+  <header class="text-gray-700 body-font bg-white fixed inset-x-0 top-0 z-10" style="height:56px;">
     <div class="container mx-auto flex p-5 flex-col items-center">
-        <nav class="flex items-center text-base fixed left-0 top-0 ml-6 mt-5">
-            <a id="settings" class="mr-5 rounded-full text-sm theme-shade-text">Options</a>
-        </nav>
-        <a
-                class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
-            <span class="ml-2 text-xl -mt-2" onclick="window.location.reload()">Babble</span>
-        </a>
-        <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5 mt-2 ">
-            <button onclick="newChat.add()"
-                    class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base md:mt-0 theme-shade-text ">
-                <i class="material-icons">launch</i>
-            </button>
-        </div>
+      <nav class="flex items-center text-base fixed left-0 top-0 ml-6 mt-5">
+        <a id="settings" class="mr-5 rounded-full text-sm theme-shade-text">Options</a>
+      </nav>
+      <a
+        class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0">
+        <span class="ml-2 text-xl -mt-2" onclick="window.location.reload()">Babble</span>
+      </a>
+      <div class="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0 fixed right-0 top-0 mr-5 mt-2 ">
+        <button onclick="newChat.add()"
+          class="inline-flex items-center bg-transparent border-0 py-1 px-3 focus:outline-none  rounded-full text-base md:mt-0 theme-shade-text ">
+          <i class="material-icons">launch</i>
+        </button>
+      </div>
     </div>
-</header>
-<section class="text-gray-700 body-font mt-20 bg-white inset-x-0 pinSec" style="top:-24px !important;z-index-99;">
+  </header>
+  <section class="text-gray-700 body-font mt-20 bg-white inset-x-0 pinSec" style="top:-24px !important;z-index:99;">
     <div class="container px-5 mx-auto">
-        <div class="flex flex-wrap -m-4 overflow-y-auto pinsCont">
+      <div class="flex flex-wrap -m-4 overflow-y-auto pinsCont">
 
-        </div>
+      </div>
     </div>
-</section>
-<section class="text-gray-700 body-font mt-4 bg-white">
+  </section>
+  <section class="text-gray-700 body-font mt-4 bg-white">
     <div class="container px-5 py-2 mx-auto">
-        <div class="flex flex-wrap -m-2 chats-cont">
+      <div class="flex flex-wrap -m-2 chats-cont overflow-x-hidden">
 
-        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<div id="myModal" class="modal">
+  <div id="myModal" class="modal">
 
-    <!-- Modal content -->
-    <div class="modal-content px-5 animate__animated animate__slideInUp animate__faster" onclick="return;"
-         style="margin:0;border-top-left-radius: 30px;border-top-right-radius: 30px;">
-        <div class="py-5 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+        <!-- Modal content -->
+        <div class="modal-content px-5 animate__animated animate__slideInUp animate__faster" onclick="return;"
+          style="margin:0;border-top-left-radius: 30px;border-top-right-radius: 30px;">
+          <div class="py-5 mx-auto flex flex-wrap flex-col md:flex-row items-center">
             <a
-                    class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center md:mb-0">
-                <span class="ml-3 text-xl">Options</span>
+              class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center md:mb-0">
+              <span class="ml-3 text-xl">Options</span>
             </a>
+          </div>
+
+          <hr class="mb-2">
+
+          <section class="text-gray-700 body-font overflow-auto main-settings">
+            <div class="container mx-auto">
+              <div class="flex flex-wrap -m-2">
+                <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">group</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium">Create Group <i
+                          class="material-icons float-right">chevron_right</i> </h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-2 lg:w-1/3 md:w-1/2 w-full" onclick="changeMood()">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">whatshot</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium"> Change Mood <i
+                          class="material-icons float-right">chevron_right</i> </h2>
+                    </div>
+                  </div>
+                </div>
+                <div onclick="activeSetting = document.querySelector('.profile-sec');profile.load()"
+                  class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">account_circle</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium"> My Profile <i
+                          class="material-icons float-right">chevron_right</i> </h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">face</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium">Floating Reactions <i
+                          class="material-icons float-right">chevron_right</i> </h2>
+                    </div>
+                  </div>
+                </div>
+                <div onclick="logout()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">exit_to_app</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium">Logout <i
+                          class="material-icons float-right">chevron_right</i> </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section style="display:none;"
+            class="text-gray-700 body-font overflow-hidden mood-sec animate__animated animate__fadeIn animate__faster">
+            <div class="container mx-auto">
+              <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+                <div class="p-4 md:w-1/3 md:mb-0 mb-3 flex flex-col text-center items-center">
+                  <div
+                    class="w-20 h-20 inline-flex items-center justify-center rounded-full text-indigo-500 mb-4 flex-shrink-0">
+                    <div class="relative">
+                      <img alt="team"
+                        class="w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 ourdp"
+                        src="1.png">
+                      <div class='mood-circle status-circle text-sm animate__animated animate__tada our_mood'>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex-grow">
+                    <h2 class="text-gray-900 text-lg title-font font-medium suname"></h2>
+                    <p class="leading-relaxed text-sm text-gray-400 -mt-1 mood-title"></p>
+                    <div class="flex flex-wrap -m-4 pt-2 overflow-y-auto px-5 mb-6">
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Cheerful">😊</div>
+                        </a>
+                        <span>Cheerful</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Sad">😶</div>
+                        </a>
+                        <span>Sad</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Busy">🚫</div>
+                        </a>
+                        <span>Busy</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Bored"> 🙃</div>
+                        </a>
+                        <span>Bored</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Watching">🍿</div>
+                        </a>
+                        <span>Watching</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Eating">🍕</div>
+                        </a>
+                        <span>Eating</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Studying">📚</div>
+                        </a>
+                        <span>Studying</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Gaming">🎮</div>
+                        </a>
+                        <span>Gaming</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Away">💼</div>
+                        </a>
+                        <span>Away</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Workout">🏋</div>
+                        </a>
+                        <span>Workout</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Sick">🤧</div>
+                        </a>
+                        <span>Sick</span>
+                      </div>
+                      <div style="display:block;" class="w-1/4 p-4">
+                        <a
+                          class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
+                          <div class="relative text-lg mt-4 mood" title="Dizzy">🥴</div>
+                        </a>
+                        <span>Dizzy</span>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
 
-        <hr class="mb-2">
+      </div>
 
-        <section class="text-gray-700 body-font overflow-auto main-settings">
+      <div class="modal px-3" id="chat-settings">
+        <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__slideInUp animate__faster"
+          style="bottom:20px !important; max-width:92% !important;">
+          <section class="text-gray-700 body-font overflow-auto">
             <div class="container mx-auto">
-                <div class="flex flex-wrap -m-2">
-                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">group</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">Create Group <i
-                                        class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
+              <div class="flex flex-wrap -m-2">
+                <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">group</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium">Add to Group <i
+                          class="material-icons float-right">chevron_right</i> </h2>
                     </div>
-                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full" onclick="changeMood()">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">whatshot</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium"> Change Mood <i
-                                        class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="activeSetting = document.querySelector('.profile-sec');profile.load()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">account_circle</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium"> My Profile <i
-                                        class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">face</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">Floating Reactions <i
-                                        class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="logout()" class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">exit_to_app</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">Logout <i
-                                        class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
-            </div>
-        </section>
-        <section style="display:none;"
-                 class="text-gray-700 body-font overflow-hidden mood-sec animate__animated animate__fadeIn animate__faster">
-            <div class="container mx-auto">
-                <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
-                    <div class="p-4 md:w-1/3 md:mb-0 mb-3 flex flex-col text-center items-center">
-                        <div
-                                class="w-20 h-20 inline-flex items-center justify-center rounded-full text-indigo-500 mb-4 flex-shrink-0">
-                            <div class="relative">
-                                <img alt="team"
-                                     class="w-20 h-20 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 ourdp"
-                                     src="1.png">
-                                <div class='mood-circle status-circle text-sm animate__animated animate__tada our_mood'>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-grow">
-                            <h2 class="text-gray-900 text-lg title-font font-medium suname"></h2>
-                            <p class="leading-relaxed text-sm text-gray-400 -mt-1 mood-title"></p>
-                            <div class="flex flex-wrap -m-4 pt-2 overflow-y-auto px-5 mb-6">
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Cheerful">😊</div>
-                                    </a>
-                                    <span>Cheerful</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Sad">😶</div>
-                                    </a>
-                                    <span>Sad</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Busy">🚫</div>
-                                    </a>
-                                    <span>Busy</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Bored"> 🙃</div>
-                                    </a>
-                                    <span>Bored</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Watching">🍿</div>
-                                    </a>
-                                    <span>Watching</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Eating">🍕</div>
-                                    </a>
-                                    <span>Eating</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Studying">📚</div>
-                                    </a>
-                                    <span>Studying</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Gaming">🎮</div>
-                                    </a>
-                                    <span>Gaming</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Away">💼</div>
-                                    </a>
-                                    <span>Away</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Workout">🏋</div>
-                                    </a>
-                                    <span>Workout</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Sick">🤧</div>
-                                    </a>
-                                    <span>Sick</span>
-                                </div>
-                                <div style="display:block;" class="w-1/4 p-4">
-                                    <a
-                                            class="tooltip block relative h-16 w-16 overflow-hidden rounded-full items-center text-center border-2 border-gray-200">
-                                        <div class="relative text-lg mt-4 mood" title="Dizzy">🥴</div>
-                                    </a>
-                                    <span>Dizzy</span>
-                                </div>
-
-                            </div>
-                        </div>
+                <div onclick="addPin(true)" class="p-2 lg:w-1/3 md:w-1/2 w-full mpin">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">pin_drop</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium">Pin</h2>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </section>
-    </div>
-
-</div>
-
-<div class="modal px-3" id="chat-settings">
-    <div class="modal-content p-5 ml-1 rounded-lg animate__animated animate__slideInUp animate__faster"
-         style="bottom:20px !important; max-width:92% !important;">
-        <section class="text-gray-700 body-font overflow-auto">
-            <div class="container mx-auto">
-                <div class="flex flex-wrap -m-2">
-                    <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">group</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">Add to Group <i
-                                        class="material-icons float-right">chevron_right</i> </h2>
-                            </div>
-                        </div>
+                <div onclick="removePin()" class="p-2 lg:w-1/3 md:w-1/2 w-full munpin" style="display:none;">
+                  <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">pin_drop</i>
+                    <div class="flex-grow">
+                      <h2 class="text-gray-900 title-font font-medium">Unpin</h2>
                     </div>
-                    <div onclick="addPin(true)" class="p-2 lg:w-1/3 md:w-1/2 w-full mpin">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">pin_drop</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">Pin</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="removePin()" class="p-2 lg:w-1/3 md:w-1/2 w-full munpin" style="display:none;">
-                        <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-black object-cover object-center flex-shrink-0 rounded-full mr-4">pin_drop</i>
-                            <div class="flex-grow">
-                                <h2 class="text-gray-900 title-font font-medium">Unpin</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div onclick="deleteChat()" class="p-2 lg:w-1/3 md:w-1/2 w-full border-t border-gray-300">
-                        <div class="h-full flex items-center border-gray-200 p-4 text-red-500 rounded-lg">
-                            <i alt="team"
-                               class="material-icons w-8 h-8 text-red-500 object-cover object-center flex-shrink-0 rounded-full mr-4">delete</i>
-                            <div class="flex-grow">
-                                <h2 class="title-font font-medium">Delete Chat </h2>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
+                <div onclick="deleteChat()" class="p-2 lg:w-1/3 md:w-1/2 w-full border-t border-gray-300">
+                  <div class="h-full flex items-center border-gray-200 p-4 text-red-500 rounded-lg">
+                    <i alt="team"
+                      class="material-icons w-8 h-8 text-red-500 object-cover object-center flex-shrink-0 rounded-full mr-4">delete</i>
+                    <div class="flex-grow">
+                      <h2 class="title-font font-medium">Delete Chat </h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-        </section>
-    </div>
-</div>
-<p class="profile-sec"></p>
-<script>
-    var phoneNumber;
-    var activeSetting;
-    var totalPins = 0;
+          </section>
+        </div>
+      </div>
+      <p class="profile-sec"></p>
+      <script>
+        var phoneNumber;
+        var activeSetting;
+        var totalPins = 0;
 
-    function logout() {
-      if (phoneNumber == "") return;
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          app.logout();
-        } else {
-          return
+        function logout() {
+          if (phoneNumber == "") return;
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              app.logout();
+            } else {
+              return
+            }
+          };
+          xhttp.open("GET", "https://iotine.zapto.org:4600/logout/" + phoneNumber, true);
+          xhttp.send();
         }
-      };
-      xhttp.open("GET", "https://iotine.zapto.org:4600/logout/" + phoneNumber, true);
-      xhttp.send();
-    }
-    var activeElm;
-    var times = 0;
+        var activeElm;
+        var times = 0;
 
-    function openChat(item) {
-      if (times > 0) return
-      times = 1
-      var num = item.id.split("_")[0]
-      taken = false;
-      chat.load(num, $(`.${num}_name`).html())
-      window.location.reload()
-    }
+        function openChat(item) {
+          if (times > 0) return
+          times = 1
+          var num = item.id.split("_")[0]
+          taken = false;
+          chat.load(num, $(`.${num}_name`).html())
+          window.location.reload()
+        }
 
-    // Get the modal
-    var modal = document.getElementById("myModal");
-    var setModal = document.querySelector("#chat-settings")
+        // Get the modal
+        var modal = document.getElementById("myModal");
+        var setModal = document.querySelector("#chat-settings")
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("settings");
+        // Get the button that opens the modal
+        var btn = document.getElementById("settings");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks on the button, open the modal
-    btn.onclick = function () {
-      $("#myModal").show('fast')
-    }
+        // When the user clicks on the button, open the modal
+        btn.onclick = function () {
+          modal.style.display = "block"
+        }
 
-    // When the user clicks on <span> (x), close the modal
-    modal.onclick = function () {
-      //modal.style.display = "none";
-    }
-    setModal.onclick = function () {
-      setModal.style.display = "none";
-      $(activeElm).css("z-index", "0")
-      taken = false;
-    }
+        // When the user clicks on <span> (x), close the modal
+        modal.onclick = function () {
+          //modal.style.display = "none";
+        }
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function (event) {
-      if (event.target == modal) {
+        setModal.onclick = function () {
+          setModal.style.display = "none";
+          $(activeElm).css("z-index", "0")
+          taken = false;
+        }
+
         modal.style.display = "none";
-        if (activeSetting != "" || typeof activeSetting != "undefined") activeSetting.style.display =
-          "none";
-        $(".main-settings").show()
-      }
-    }
 
-    var longpress = 600;
-    var inter;
-    // holds the start time
-    var start;
-    var disableHold = false;
-    var taken = false;
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+            if (activeSetting != "" || typeof activeSetting != "undefined") activeSetting.style.display =
+              "none";
+            $(".main-settings").show()
+          }
+        }
 
-    addListeners()
+        var longpress = 1000;
+        var inter;
+        // holds the start time
+        var start;
+        var disableHold = false;
+        var slideDisabled = false;
+        var taken = false;
 
-    window.onscroll = function () {
-      //disableHold = true
-      scrollFunction()
-    };
+        addListeners()
 
-    function scrollFunction() {
-      if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-        $(".pinSec").addClass("fixed h-12 shadow-sm z-10")
-        $(".pinsCont").removeClass("flex-wrap")
-        $(".pin-chat").removeClass("w-1/3 chat-item").addClass("w-1/9")
-        $(".pin-img").removeClass("h-24 w-24")
-        $(".pin-img").css("height", "2.5rem")
-        $(".pin-img").css("width", "2.5rem")
-        $(".avt-img").css("max-height", "2.5rem !important")
-      } else {
-        $(".pinSec").removeClass("fixed h-12 shadow-sm z-10")
-        $(".pinsCont").addClass("flex-wrap")
-        $(".pin-chat").removeClass("w-1/9").addClass("w-1/3 chat-item")
-        $(".pin-img").addClass("h-24 w-24")
-        $(".pin-img").css("height", "6rem")
-        $(".pin-img").css("width", "6rem")
-        $(".avt-img").css("max-height", "6rem")
-        disableHold = false
-      }
-    }
+        /*window.addEventListener('touchend', e => {
+          disableHold = false
+          slideDisabled = false
+        })*/
 
-    async function updateNumber(pno) {
-      phoneNumber = pno;
-      getDetails()
-      await getChatList()
-      await loadPin()
-    }
+        window.onscroll = function () {
+          disableHold = true
+          slideDisabled = true
+          scrollFunction()
+        };
 
-    function addPin(vibration) {
-      if(totalPins >= 9) return
-      totalPins += 1
-      var ID = '_' + Math.random().toString(36).substr(2, 9);
-      if(activeElm == null) return
-      var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
-      var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
-      if(vibration) savePin(activeElm.id.split('_')[0])
-      var templ = `<div style="display:none;" id="${activeElm.id}" class="${ID} w-1/3 p-4 chat-item pin-chat animate__animated animate__rubberBand">
-                <a class="tooltip block h-24 w-24 overflow-hidden pin-img">
-                    <span style="visibility:hidden;" class="tooltiptext truncate _${activeElm.id.split('_')[0]}_pintip shadow-lg"></span>
+        function scrollFunction() {
+          if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+            $(".pinSec").addClass("fixed h-12 shadow-sm z-10")
+            $(".pinsCont").removeClass("flex-wrap")
+            $(".pin-chat").removeClass("w-1/3 chat-item").addClass("w-1/9")
+            $(".pin-img").removeClass("h-24 w-24 shadow-xl")
+            $(".pin-img").css("height", "2.5rem")
+            $(".pin-img").css("width", "2.5rem")
+            $(".avt-img").css("max-height", "2.5rem !important")
+            $(".pin_names").hide()
+            $(".pinstatus-circle").css("marginLeft", "6px")
+          } else {
+            $(".pinSec").removeClass("fixed h-12 shadow-sm z-10")
+            $(".pinsCont").addClass("flex-wrap")
+            $(".pin-chat").removeClass("w-1/9").addClass("w-1/3 chat-item")
+            $(".pin-img").addClass("h-24 w-24 shadow-xl")
+            $(".pin-img").css("height", "6rem")
+            $(".pin-img").css("width", "6rem")
+            $(".avt-img").css("max-height", "6rem")
+            $(".pin_names").show()
+            $(".pinstatus-circle").css("marginLeft", "0px")
+            disableHold = false
+          }
+        }
+
+        async function updateNumber(pno) {
+          phoneNumber = pno;
+          getDetails()
+          await loadPin()
+        }
+
+        function addPin(vibration) {
+          if (totalPins >= 9) return
+          totalPins += 1
+          var ID = '_' + Math.random().toString(36).substr(2, 9);
+          if (activeElm == null) return
+          var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
+          var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
+          if (vibration) savePin(activeElm.id.split('_')[0])
+          var templ = `<div style="display:none;" id="${activeElm.id}"
+            class="${ID} tooltip w-1/3 p-4 chat-item pin-chat animate__animated animate__rubberBand text-center">
+            <span style="visibility:hidden;" class="tooltiptext _${activeElm.id.split('_')[0]}_pintip shadow-lg text-sm"></span>
+                <a class="tooltip block h-24 w-24 rounded-full overflow-hidden pin-img shadow-xl ">
                     <div class="absolute pin_main_cont">
                         <img alt="" class="avt-img w-full rounded-full  _${activeElm.id.split('_')[0]}_dp"
                             src="${dp}" type="image/jpeg" loading="lazy">
-                        <div class='pinstatus-circle text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood'>${mood}</div>
                     </div>
-                    <span class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name opacity-0"></span>
                 </a>
+                <div class='pinstatus-circle text-center items-center text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood
+                  z-10'>${mood}</div>
+                <span style="color:#b3b3b3;"
+                  class="text-xs title-font text-center pin_names ${activeElm.id.split('_')[0]}_name">${activeElm.id.split('_')[0]}</span>
             </div>`
-      $(".pinsCont").append(templ)
-      $(`.${ID}`).show('fast')
-      contacts.getName(activeElm.id.split('_')[0])
-      $(activeElm).hide('slow')
-      $(activeElm).remove()
-      if(vibration) device.vibrate()
-      taken = false
-      addListeners()
-    }
+          $(".pinsCont").append(templ)
+          $(`.${ID}`).show('fast')
+          contacts.getName(activeElm.id.split('_')[0])
+          $(activeElm).hide('slow')
+          $(activeElm).remove()
+          if (vibration) device.vibrate()
+          taken = false
+          addListeners()
+          activeElm = ''
+        }
 
-    function removePin() {
-      if(totalPins <= 0) return
-      totalPins -= 1
-      var ID = '_' + Math.random().toString(36).substr(2, 9);
-      var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
-      var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
+        function removePin() {
+          if (totalPins <= 0) return
+          totalPins -= 1
+          var ID = '_' + Math.random().toString(36).substr(2, 9);
+          var mood = $(`.${activeElm.id.split('_')[0]}_mood`).html()
+          var dp = document.querySelector(`._${activeElm.id.split('_')[0]}_dp`).src
 
-      var templ = `<div id="${activeElm.id}" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__zoomInDown custom__delay" style="display:none;">
-                <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+          var templ = `<div id="${activeElm.id}" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-yellow-400 rounded-lg animate__animated animate__zoomInDown custom__delay" style="display:none;">
+                <div class="h-full flex items-center bg-white border-gray-200 p-4 rounded-lg">
                     <div class="relative">
                         <img alt="team"
                         class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 _${activeElm.id.split('_')[0]}_dp"
@@ -590,7 +616,7 @@
                         <div class='status-circle text-sm animate__animated animate__tada ${activeElm.id.split('_')[0]}_mood'>${mood}</div>
                     </div>
                     <div class="flex-grow border-b pb-3">
-                        <h2 class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name"></h2>
+                        <h2 class="text-gray-900 title-font font-bold ${activeElm.id.split('_')[0]}_name">${activeElm.id.split('_')[0]}</h2>
                         <div class="flex w-full">
                          <p class="theme-shade-text text-sm ${activeElm.id.split('_')[0]}_nm font-bold float-left truncate"></p>
                          </div>
@@ -599,115 +625,184 @@
                 </div>
             </div>`
 
-      deletePin(activeElm.id.split('_')[0])
-      $(".chats-cont").prepend(templ)
-      $(`.${ID}`).show('fast')
-      contacts.getName(activeElm.id.split('_')[0])
-      getMoodOf(activeElm.id.split('_')[0])
-      $(activeElm).hide('slow')
-      $(activeElm).remove()
-      taken = false;
-      addListeners()
-    }
-
-function savePin(of){
-    var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if(this.readyState == 4 && this.status == 200){
-
+          deletePin(activeElm.id.split('_')[0])
+          $(".chats-cont").prepend(templ)
+          $(`.${ID}`).show('fast')
+          contacts.getName(activeElm.id.split('_')[0])
+          getMoodOf(activeElm.id.split('_')[0])
+          $(activeElm).hide('slow')
+          $(activeElm).remove()
+          taken = false;
+          addListeners()
         }
-      }
-      xhttp.open("GET", "https://iotine.zapto.org:4600/pin/" + phoneNumber + "/" + of, true);
-      xhttp.send();
-}
 
-function deletePin(of){
-    var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if(this.readyState == 4 && this.status == 200){
+        function savePin( of ) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
 
+            }
+          }
+          xhttp.open("GET", "https://iotine.zapto.org:4600/pin/" + phoneNumber + "/" + of , true);
+          xhttp.send();
         }
-      }
-      xhttp.open("GET", "https://iotine.zapto.org:4600/unpin/" + phoneNumber + "/" + of, true);
-      xhttp.send();
-}
 
-async function loadPin(){
-    var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = async function () {
-        if(this.readyState == 4 && this.status == 200){
-            var pins = JSON.parse(this.responseText)
-            for(i = 0; i < pins.length; i++){
+        function deletePin( of ) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+            }
+          }
+          xhttp.open("GET", "https://iotine.zapto.org:4600/unpin/" + phoneNumber + "/" + of , true);
+          xhttp.send();
+        }
+
+        async function loadPin() {
+          await getChatList()
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = async function () {
+            if (this.readyState == 4 && this.status == 200) {
+              var pins = JSON.parse(this.responseText)
+              for (i = 0; i < pins.length; i++) {
                 activeElm = await document.getElementById(`${pins[i].pinOf}_message`)
                 addPin(false)
+              }
             }
-        }
-      }
-      xhttp.open("GET", "https://iotine.zapto.org:4600/pins/" + phoneNumber, true);
-      await xhttp.send();
-}
-
-    function deleteChat() {
-      alert(activeElm.id.split('_')[0])
-      $(activeElm).hide('slow')
-      $(activeElm).remove()
-      taken = false;
-    }
-
-    function addListeners() {
-      taken = false
-      document.querySelectorAll('.chat-item').forEach(item => {
-        item.addEventListener('touchstart', event => {
-          if (!taken) {
-            taken = true
-            start = new Date().getTime();
-            inter = setInterval(function () {
-              if (new Date().getTime() >= (start + longpress)) {
-                start = 0
-                clearInterval(inter)
-                $(item).css("z-index", "101")
-                $("#chat-settings").show()
-
-                if ($(item).hasClass("pin-chat")) {
-                  $(".mpin").hide()
-                  $(".munpin").show()
-                } else {
-                  $(".mpin").show()
-                  $(".munpin").hide()
-                }
-                device.vibrate()
-                activeElm = item
-              } else {}
-            }, 100);
-          } else {
-            return
           }
-        })
-        item.addEventListener("touchend", event => {
-          clearInterval(inter)
-          start = 0
-        })
-        item.addEventListener("click", function () {
-          var nm = item.id.split("_")[0] + "_nm"
-          $(`.${nm}`).html("")
-          openChat(item)
-        })
-      })
-    }
+          xhttp.open("GET", "https://iotine.zapto.org:4600/pins/" + phoneNumber, true);
+          await xhttp.send();
+        }
 
-    async function getChatList() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          $(".chats-cont").html("")
-          var messages = JSON.parse(this.responseText);
+        function deleteChat() {
+          alert(activeElm.id.split('_')[0])
+          $(activeElm).hide('slow')
+          $(activeElm).remove()
+          taken = false;
+        }
 
-          messages.forEach(message => {
-            contacts.getName(message)
 
-            var ID = '_' + Math.random().toString(36).substr(2, 9);
-            var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__bounceInUp animate__faster">
-                                    <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
+        var pinAdded = false
+        var pinner;
+        var touchEnded = false
+
+        function addListeners() {
+          taken = false
+          var startX;
+          var movingDirection;
+          var wasDragged = false;
+
+          document.querySelectorAll('.chat-item').forEach(item => {
+
+            item.addEventListener('touchstart', event => {
+              touchEnded = false
+              startX = event.touches[0].clientX
+
+              item.addEventListener('touchmove', e => {
+                if (slideDisabled) return
+                if ($(item).hasClass('pin-chat')) return
+
+                var x = e.touches[0].clientX;
+
+                if (x > startX) {
+                  var maxPull = "500px"
+
+                  var maxX = item.offsetWidth;
+
+                  if (x >= maxX) return
+
+                  $(item).css("position", "relative")
+
+                  if (item.style.paddingLeft >= maxPull) return
+                  movingDirection = "paddingLeft"
+                  $(item).css(movingDirection, x - startX + "px")
+                  wasDragged = true
+                }
+
+                pinner = setTimeout(() => {
+                  if (touchEnded) return
+                  if (pinAdded) return
+
+                  $(item).css(movingDirection, "0px")
+                  $(item).css("position", "")
+                  activeElm = item
+                  addPin(true)
+                  pinAdded = true
+                  wasDragged = false
+
+                  clearTimeout(pinner)
+                  touchEnded = true
+                  return
+                }, 600)
+                taken = false
+
+              })
+
+              if (!taken) {
+                pinAdded = false
+                taken = true
+                start = new Date().getTime();
+                inter = setInterval(function () {
+                  if (new Date().getTime() >= (start + longpress)) {
+                    start = 0
+                    clearInterval(inter)
+                    $(item).css("z-index", "101")
+                    $("#chat-settings").show()
+
+                    if ($(item).hasClass("pin-chat")) {
+                      $(".mpin").hide()
+                      $(".munpin").show()
+                    } else {
+                      $(".mpin").show()
+                      $(".munpin").hide()
+                    }
+                    device.vibrate()
+                    activeElm = item
+                  } else {}
+                }, 100);
+              } else {
+                return
+              }
+            })
+
+            item.addEventListener("touchend", event => {
+              touchEnded = true
+              clearInterval(inter)
+              start = 0
+              clearTimeout(pinner)
+              if (wasDragged) {
+                wasDragged = false
+                $(item).css(movingDirection, "0px")
+                $(item).css("position", "")
+                activeElm = item
+                clearTimeout(pinner)
+              }
+
+              pinAdded = false
+              return
+            })
+
+            item.addEventListener("click", function () {
+              var nm = item.id.split("_")[0] + "_nm"
+              $(`.${nm}`).html("")
+              openChat(item)
+            })
+          })
+        }
+
+        async function getChatList() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              $(".chats-cont").html("")
+              var messages = JSON.parse(this.responseText);
+
+              messages.forEach(message => {
+                contacts.getName(message)
+
+                var ID = '_' + Math.random().toString(36).substr(2, 9);
+                var templ = `<div id="${message}_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-yellow-400 rounded-lg animate__animated animate__bounceInUp animate__faster">
+                                    <div class="h-full flex bg-white items-center border-gray-200 p-4 rounded-lg">
                                     <div class="relative">
                                         <img alt="team"
                                              class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4 _${message}_dp"
@@ -725,17 +820,17 @@ async function loadPin(){
                                  </div>`
 
 
-            $('.chats-cont').append(templ)
-            loadDp(message)
-            getMoodOf(message)
-            taken = false;
-            addListeners()
-            //getLastSeen(message)
-          })
+                $('.chats-cont').append(templ)
+                loadDp(message)
+                getMoodOf(message)
+                taken = false;
+                addListeners()
+                //getLastSeen(message)
+              })
 
-        } else if (this.status == 404) {
-          $(".chats-cont").html("")
-          var templ = `<div id="add_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
+            } else if (this.status == 404) {
+              $(".chats-cont").html("")
+              var templ = `<div id="add_message" class="${ID} lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg" style="display:none;">
                                     <div class="h-full flex items-center border-gray-200 p-4 rounded-lg">
                                         <div class="flex-grow border-b pb-2">
                                             <h2 class="text-gray-900 title-font font-bold add_name">Start a new chat</h2>
@@ -743,189 +838,189 @@ async function loadPin(){
                                     </div>
                                  </div>`
 
-          $(".chats-cont").append(templ)
-          return
+              $(".chats-cont").append(templ)
+              return
+            }
+          };
+          xhttp.open("GET", "https://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
+          await xhttp.send();
         }
-      };
-      xhttp.open("GET", "https://iotine.zapto.org:4600/chatListOF/" + phoneNumber, true);
-      await xhttp.send();
-    }
 
-    function updateChatList(num, name, msg, mid) {
-      if (mid.split("_")[0] == "img") {
-        $(`.${num}_nm`).html("Sent you a photo")
-        bringToTop(num)
-      } else if (mid.split("_")[0] == "audio") {
-        $(`.${num}_nm`).html("Sent you a voicenote")
-        bringToTop(num)
-      } else {
-        if ($(`#${num}_message`).hasClass('pin-chat')) {
-          $(`._${num}_pintip`).html(msg)
-          document.querySelector(`._${num}_pintip`).style.visibility = "visible"
-        } else {
-          $(`.${num}_nm`).html("New message")
-          bringToTop(num)
+        function updateChatList(num, name, msg, mid) {
+          if (mid.split("_")[0] == "img") {
+            $(`.${num}_nm`).html("Sent you a photo")
+            bringToTop(num)
+          } else if (mid.split("_")[0] == "audio") {
+            $(`.${num}_nm`).html("Sent you a voicenote")
+            bringToTop(num)
+          } else {
+            if ($(`#${num}_message`).hasClass('pin-chat')) {
+              $(`._${num}_pintip`).html(msg)
+              document.querySelector(`._${num}_pintip`).style.visibility = "visible"
+            } else {
+              $(`.${num}_nm`).html("New message")
+              bringToTop(num)
+            }
+          }
         }
-      }
-    }
 
-    function bringToTop(num){
-        var inner = $(`#${num}_message`).html()
-        $(`#${num}_message`).hide().remove()
-        var newTempl = `<div id="${num}_message" class="lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__fadeIn animate__faster"> ${inner} </div>`
-        $('.chats-cont').prepend(newTempl)
-        addListeners()
-    }
-
-    function updateName(name, num) {
-      $(`.${num}_name`).html(name)
-    }
-
-    async function getLastSeen( of ) {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var LS = JSON.parse(this.responseText);
-          $(`.${of}_LS`).html(`Last seen ${LS.lastOnline}`)
+        function bringToTop(num) {
+          var inner = $(`#${num}_message`).html()
+          $(`#${num}_message`).hide().remove()
+          var newTempl =
+            `<div id="${num}_message" class="lg:w-1/3 md:w-1/2 w-full chat-item bg-white rounded-lg animate__animated animate__fadeIn animate__faster"> ${inner} </div>`
+          $('.chats-cont').prepend(newTempl)
+          addListeners()
         }
-      }
-      xhttp.open("GET", "https://iotine.zapto.org:4600/lastSeenOf/" + of , true);
-      await xhttp.send();
-    }
 
-    function changeMood() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          $('.main-settings').hide();
-          $('.mood-sec').show()
-          activeSetting = document.querySelector(".mood-sec")
-          loadOurDp()
-          var m = JSON.parse(this.responseText)
-          if (m.mood != '' || typeof m.lastMoodUpdate != "undefined") {
-            if(!moodValidity(m.lastMoodUpdate)){
-                $(`.our_mood`).hide()
+        function updateName(name, num) {
+          $(`.${num}_name`).html(name)
+        }
+
+        async function getLastSeen( of ) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              var LS = JSON.parse(this.responseText);
+              $(`.${of}_LS`).html(`Last seen ${LS.lastOnline}`)
+            }
+          }
+          xhttp.open("GET", "https://iotine.zapto.org:4600/lastSeenOf/" + of , true);
+          await xhttp.send();
+        }
+
+        function changeMood() {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              $('.main-settings').hide();
+              $('.mood-sec').show()
+              activeSetting = document.querySelector(".mood-sec")
+              loadOurDp()
+              var m = JSON.parse(this.responseText)
+              if (m.mood != '' || typeof m.lastMoodUpdate != "undefined") {
+                if (!moodValidity(m.lastMoodUpdate)) {
+                  $(`.our_mood`).hide()
+                  $(".mood-title").html("")
+                  return
+                } else {
+                  $(".our_mood").html(m.mood)
+                  $(".mood-title").html(m.mtitle)
+                }
+              } else {
+                $(".our_mood").hide()
                 $(".mood-title").html("")
-                return
-            }else{
-                $(".our_mood").html(m.mood)
-                $(".mood-title").html(m.mtitle)
+              }
             }
-          } else {
-            $(".our_mood").hide()
-            $(".mood-title").html("")
           }
+          xhttp.open("GET", "https://iotine.zapto.org:4600/moodOf/" + phoneNumber, true);
+          xhttp.send()
         }
-      }
-      xhttp.open("GET", "https://iotine.zapto.org:4600/moodOf/" + phoneNumber, true);
-      xhttp.send()
-    }
 
-    document.querySelectorAll(".mood").forEach(mood => {
-      mood.addEventListener('click', () => {
-        if (mood.classList.contains("mood-none")) {
-          updateMood("", "")
-          $(".mood-circle").hide()
-          $(`.mood-title`).html("")
-        } else {
-          updateMood(mood.innerHTML, mood.title)
-        }
-      })
-    })
+        document.querySelectorAll(".mood").forEach(mood => {
+          mood.addEventListener('click', () => {
+            if (mood.classList.contains("mood-none")) {
+              updateMood("", "")
+              $(".mood-circle").hide()
+              $(`.mood-title`).html("")
+            } else {
+              updateMood(mood.innerHTML, mood.title)
+            }
+          })
+        })
 
-    function updateMood(mood, title) {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          if (this.responseText != '') {
-            device.vibrate()
-            $(".mood-circle").hide().html(mood).show('fast')
-            $(`.mood-title`).html(title)
+        function updateMood(mood, title) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              if (this.responseText != '') {
+                device.vibrate()
+                $(".mood-circle").hide().html(mood).show('fast')
+                $(`.mood-title`).html(title)
+              }
+            }
           }
+          xhttp.open("GET", "https://iotine.zapto.org:4600/updateMoodOf/" + phoneNumber + "/" + mood + "/" + title,
+            true);
+          xhttp.send();
         }
-      }
-      xhttp.open("GET", "https://iotine.zapto.org:4600/updateMoodOf/" + phoneNumber + "/" + mood + "/" + title,
-        true);
-      xhttp.send();
-    }
 
-    function getMoodOf(num) {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var m = JSON.parse(this.responseText)
-          if (m.mood != '' || typeof m.lastMoodUpdate != "undefined") {
-            if(!moodValidity(m.lastMoodUpdate)){
+        function getMoodOf(num) {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              var m = JSON.parse(this.responseText)
+              if (m.mood != '' || typeof m.lastMoodUpdate != "undefined") {
+                if (!moodValidity(m.lastMoodUpdate)) {
+                  $(`.${num}_mood`).hide()
+                  return
+                } else {
+                  $(`.${num}_mood`).show().html(`${m.mood}`)
+                  $(`.${num}_mtitle`).html(`${m.mtitle}`)
+                }
+              } else {
                 $(`.${num}_mood`).hide()
-                return
-            }else{
-                $(`.${num}_mood`).show().html(`${m.mood}`)
-                $(`.${num}_mtitle`).html(`${m.mtitle}`)
+              }
             }
+          }
+          xhttp.open("GET", "https://iotine.zapto.org:4600/moodOf/" + num, true);
+          xhttp.send();
+        }
+
+        function loadDp(num) {
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function (e) {
+            if (this.readyState === 4) {
+              $(`._${num}_dp`).attr('src', `https://iotine.zapto.org:4600/files/${this.responseText}`)
+            }
+          };
+          xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + num, true);
+          xhr.send();
+        }
+
+        function getDetails() {
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function (e) {
+            if (this.readyState === 4) {
+              var details = JSON.parse(this.responseText)
+              $('.suname').html(details.username)
+            }
+          };
+          xhr.open("GET", "https://iotine.zapto.org:4600/acDetails/" + phoneNumber, true);
+          xhr.send();
+        }
+
+        function loadOurDp() {
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function (e) {
+            if (this.readyState === 4) {
+              $(`.ourdp`).attr('src', `https://iotine.zapto.org:4600/files/${this.responseText}`)
+            }
+          };
+          xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
+          xhr.send();
+        }
+
+        function moodValidity(lastUpdateTime) {
+          var resolution;
+          resolution = Date.now() - parseInt(lastUpdateTime)
+          var resolutionTime = (((resolution / 1000) / 60) / 60)
+          if (parseInt(resolutionTime) > 6) {
+            return false
+          } else if (parseInt(resolutionTime) < 6) {
+            return true
           } else {
-            $(`.${num}_mood`).hide()
+            return false
           }
         }
-      }
-      xhttp.open("GET", "https://iotine.zapto.org:4600/moodOf/" + num, true);
-      xhttp.send();
-    }
 
-    function loadDp(num) {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function (e) {
-        if (this.readyState === 4) {
-          $(`._${num}_dp`).attr('src', `https://iotine.zapto.org:4600/files/${this.responseText}`)
+        function handleBackPressed() {
+          /*if (activeSetting != "" || typeof activeSetting != "undefined") {
+             activeSetting.style.display = "none";
+             $(".main-settings").show()
+          }*/
         }
-      };
-      xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + num, true);
-      xhr.send();
-    }
-
-function getDetails(){
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function (e) {
-            if (this.readyState === 4) {
-                var details = JSON.parse(this.responseText)
-                $('.suname').html(details.username)
-            }
-        };
-        xhr.open("GET", "https://iotine.zapto.org:4600/acDetails/" + phoneNumber, true);
-        xhr.send();
-    }
-
-    function loadOurDp() {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function (e) {
-        if (this.readyState === 4) {
-          $(`.ourdp`).attr('src', `https://iotine.zapto.org:4600/files/${this.responseText}`)
-        }
-      };
-      xhr.open("GET", "https://iotine.zapto.org:4600/dpOf/" + phoneNumber, true);
-      xhr.send();
-    }
-
-    function moodValidity(lastUpdateTime){
-        var resolution;
-        resolution = Date.now() - parseInt(lastUpdateTime)
-        var resolutionTime = (((resolution / 1000) / 60)/ 60)
-        if(parseInt(resolutionTime) > 6){
-            return false
-        }else if(parseInt(resolutionTime) < 6){
-            return true
-        }else{
-            return false
-        }
-    }
-
-    function handleBackPressed(){
-         /*if (activeSetting != "" || typeof activeSetting != "undefined") {
-            activeSetting.style.display = "none";
-            $(".main-settings").show()
-         }*/
-    }
-
-  </script>
+      </script>
 </body>
 
 </html>
