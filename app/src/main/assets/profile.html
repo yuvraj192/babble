@@ -10,252 +10,296 @@
     <script src="jquery.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <style>
-        .fullpage{
+        .fullpage {
             height: 100%;
-            width:100%;
-            background-color:#fff;
-            padding:10px;
-            padding-top:2.2% !important;
+            width: 100%;
+            background-color: #fff;
+            padding: 10px;
+            padding-top: 2.2% !important;
         }
-        .prepage{
+
+        .prepage {
             height: 99%;
-            width:90%;
-            background-color:#dedede;
-            padding-top:3% !important;
-            padding:2.5% !important;
-            transition:0.5s ease all;
+            width: 90%;
+            background-color: #dedede;
+            padding-top: 3% !important;
+            padding: 2.5% !important;
+            transition: 0.5s ease all;
         }
-        .subpage{
+
+        .subpage {
             height: 97.9%;
-            width:95%;
-            background-color:#fff;
-            padding:2.9% !important;
-            transition:0.5s ease all;
+            width: 95%;
+            background-color: #fff;
+            padding: 2.9% !important;
+            transition: 0.5s ease all;
         }
-        .theme-shade-text{
+
+        .theme-shade-text {
             color: #7d4df9 !important;
         }
-        .theme-shade-bg{
+
+        .theme-shade-bg {
             background-color: #7d4df9 !important;
         }
-        button:focus{ outline:none !important; }
-        .pic{
-            height:auto;
-            max-height:215px;
-            min-width:115px;
-            max-width:115px;
-            margin:5px;
-            border-radius:10px;
+
+        button:focus {
+            outline: none !important;
         }
-        .selectedImage{
-            border:5px solid #7d4df9 !important;
-            padding:5px !important;
+
+        .pic {
+            height: auto;
+            max-height: 215px;
+            min-width: 115px;
+            max-width: 115px;
+            margin: 5px;
+            border-radius: 10px;
         }
+
+        .selectedImage {
+            border: 5px solid #7d4df9 !important;
+            padding: 5px !important;
+        }
+
         .switch {
-          position: relative;
-          display: inline-block;
-          width: 60px;
-          height: 34px;
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
         }
 
         .switch input {
-          opacity: 0;
-          width: 0;
-          height: 0;
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
         .slider {
-          position: absolute;
-          cursor: pointer;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-color: #ccc;
-          -webkit-transition: .4s;
-          transition: .4s;
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
         }
 
         .slider:before {
-          position: absolute;
-          content: "";
-          height: 26px;
-          width: 26px;
-          left: 4px;
-          bottom: 4px;
-          background-color: white;
-          -webkit-transition: .4s;
-          transition: .4s;
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
         }
 
-        input:checked + .slider {
-          background-color: #7d4df9;
+        input:checked+.slider {
+            background-color: #7d4df9;
         }
 
-        input:focus + .slider {
-          outline:none;
-          box-shadow: 0 0 1px #7d4df9;
+        input:focus+.slider {
+            outline: none;
+            box-shadow: 0 0 1px #7d4df9;
         }
 
-        input:checked + .slider:before {
-          -webkit-transform: translateX(26px);
-          -ms-transform: translateX(26px);
-          transform: translateX(26px);
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
         }
 
         /* Rounded sliders */
         .slider.round {
-          border-radius: 34px;
+            border-radius: 34px;
         }
 
         .slider.round:before {
-          border-radius: 50%;
+            border-radius: 50%;
         }
     </style>
 </head>
 
 <body style="background-color:#000;overflow:none !important;" class="px-3">
 
-<div class="fixed inset-x-0 bottom-0 rounded-t-lg mx-auto fullpage">
-    <header class="text-gray-700 body-font fixed inset-x-0 top-0 z-10 py-3" style="height:56px;">
-        <button class="right-0 float-right theme-shade-text mr-5 mt-2" onclick="profile.close()">Done</button>
-    </header>
+    <div class="fixed inset-x-0 bottom-0 rounded-t-lg mx-auto fullpage">
+        <header class="text-gray-700 body-font fixed inset-x-0 top-0 z-10 py-3" style="height:56px;">
+            <button class="right-0 float-right theme-shade-text mr-5 mt-2" onclick="profile.close()">Done</button>
+        </header>
 
-    <section class="text-gray-700 body-font">
-        <div class="container px-5 py-12 mx-auto">
-            <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
-                <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex flex-col text-center items-center">
-                    <div class="inline-flex items-center justify-center rounded-full text-indigo-500 flex-shrink-0">
-                        <img alt="team"
-                             class="w-32 h-32 bg-white object-cover object-center flex-shrink-0 rounded-full ml-2 dpimg"
-                             src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" type="image/jpeg" onclick="loadDp();switcher('.profilepicture')" />
-                    </div>
-                    <a class="mt-3 text-indigo-500 inline-flex items-center" onclick="loadDp();switcher('.profilepicture')">Edit</a>
-                    <div class="flex-grow w-full mx-auto">
-                        <h2 class="text-gray-900 text-lg title-font font-medium"> <span class="uname" onclick="switcher('.changeName')">  </span> </h2>
-                        <p class="leading-relaxed text sm text-gray-400 bdt" onclick="switcher('.birthday')"></p>
-                        <p class="leading-relaxed text-sm opacity-0">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy</p>
+        <section class="text-gray-700 body-font">
+            <div class="container px-5 py-12 mx-auto">
+                <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+                    <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex flex-col text-center items-center">
+                        <div class="inline-flex items-center justify-center rounded-full text-indigo-500 flex-shrink-0">
+                            <img alt="team"
+                                class="w-32 h-32 bg-white object-cover object-center flex-shrink-0 rounded-full ml-2 dpimg"
+                                src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" type="image/jpeg"
+                                onclick="loadDp();switcher('.profilepicture')" />
+                        </div>
+                        <a class="mt-3 text-indigo-500 inline-flex items-center"
+                            onclick="loadDp();switcher('.profilepicture')">Edit</a>
+                        <div class="flex-grow w-full mx-auto">
+                            <h2 class="text-gray-900 text-lg title-font font-medium"> <span class="uname"
+                                    onclick="switcher('.changeName')"> </span> </h2>
+                            <p class="leading-relaxed text sm text-gray-400 bdt" onclick="switcher('.birthday')"></p>
+                            <p class="leading-relaxed text-sm opacity-0">Blue bottle crucifix vinyl post-ironic four
+                                dollar toast vegan taxidermy</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="container px-5 py-2 mx-auto -mt-16 border-t border-gray-200 pt-5 overflow-auto">
-            <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
-                <div class="p-4 md:w-1/3 md:mb-0 mb-2 flex" onclick="switcher('.moodnotif')">
-                    <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 theme-shade-text mb-4 flex-shrink-0">
-                        <i class="material-icons">whatshot</i>
+            <div class="container px-5 py-2 mx-auto -mt-16 border-t border-gray-200 pt-5 overflow-auto">
+                <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+                    <div class="p-4 md:w-1/3 md:mb-0 mb-2 flex" onclick="switcher('.moodnotif')">
+                        <div
+                            class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 theme-shade-text mb-4 flex-shrink-0">
+                            <i class="material-icons">whatshot</i>
+                        </div>
+                        <div class="flex-grow pl-6">
+                            <h2 class="text-gray-900 text-lg title-font font-medium">Moods</h2>
+                            <a class="theme-shade-text inline-flex items-center text-sm">Customize mood settings</a>
+                        </div>
                     </div>
-                    <div class="flex-grow pl-6">
-                        <h2 class="text-gray-900 text-lg title-font font-medium">Moods</h2>
-                        <a class="theme-shade-text inline-flex items-center text-sm">Customize mood settings</a>
-                    </div>
-                </div>
-                <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex">
-                    <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
-                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                            <circle cx="6" cy="6" r="3"></circle>
-                            <circle cx="6" cy="18" r="3"></circle>
-                            <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
-                        </svg>
-                    </div>
-                    <div class="flex-grow pl-6">
-                        <h2 class="text-gray-900 text-lg title-font font-medium mb-2">The Catalyzer</h2>
-                        <a class="mt-3 text-indigo-500 inline-flex items-center">Learn More
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                                <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex">
+                        <div
+                            class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                                <circle cx="6" cy="6" r="3"></circle>
+                                <circle cx="6" cy="18" r="3"></circle>
+                                <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
                             </svg>
-                        </a>
+                        </div>
+                        <div class="flex-grow pl-6">
+                            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">The Catalyzer</h2>
+                            <a class="mt-3 text-indigo-500 inline-flex items-center">Learn More
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex">
-                    <div class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
-                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
-                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
-                    <div class="flex-grow pl-6">
-                        <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Neptune</h2>
-                        <a class="mt-3 text-indigo-500 inline-flex items-center">Learn More
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
-                                <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex">
+                        <div
+                            class="w-12 h-12 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4 flex-shrink-0">
+                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" class="w-6 h-6" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
                             </svg>
-                        </a>
+                        </div>
+                        <div class="flex-grow pl-6">
+                            <h2 class="text-gray-900 text-lg title-font font-medium mb-2">Neptune</h2>
+                            <a class="mt-3 text-indigo-500 inline-flex items-center">Learn More
+                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
+                                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
-<div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto changeName" style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
-    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
-        <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
-            <h2 align="center" class="text-black text-2xl font-medium title-font mb-12"><b>What's your name?</b></h2>
-            <input class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 fname placeholder-gray-600" placeholder="First name" type="text">
-            <input class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 lname placeholder-gray-600" placeholder="last name" type="text">
-            <button onclick="changeName(this);" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Save</button>
+        </section>
+    </div>
+    <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto changeName"
+        style="display:none;">
+        <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
+        <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+            <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+                <h2 align="center" class="text-black text-2xl font-medium title-font mb-12"><b>What's your name?</b>
+                </h2>
+                <input
+                    class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 fname placeholder-gray-600"
+                    placeholder="First name" type="text">
+                <input
+                    class="bg-white rounded focus:outline-none text-base px-4 border-b py-3 mb-4 lname placeholder-gray-600"
+                    placeholder="last name" type="text">
+                <button onclick="changeName(this);"
+                    class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Save</button>
+            </div>
         </div>
     </div>
-</div>
-<div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto profilepicture " style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700" onclick="deswitch();$('.upload-btn').hide()">Cancel</button>
-    <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;" onclick="this.innerHTML = 'Updating...';uploadImage();">Done</button>
-    <section class="text-gray-700 body-font">
-        <div class="container px-5 py-12 mx-auto">
-            <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
-                <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex flex-col text-center items-center">
-                    <div class="inline-flex items-center justify-center rounded-full text-indigo-500 flex-shrink-0">
-                        <img alt="team"
-                             class="w-40 h-40 bg-white object-cover object-center flex-shrink-0 rounded-full ml-2 subdpimg"
-                             src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" type="image/jpeg" onclick="switcher('.profilepicture')" />
-                    </div>
-                    <div class="flex-grow w-full mx-auto opacity-0">
-                        <h2 class="text-gray-900 text-lg title-font font-medium"></h2>
-                        <p class="leading-relaxed text-sm">Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy</p>
+    <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto profilepicture "
+        style="display:none;">
+        <button class="left-0 top-0 float-left text-red-700"
+            onclick="deswitch();$('.upload-btn').hide()">Cancel</button>
+        <button class="left-0 top-0 float-right text-blue-600 upload-btn" style="display:none;"
+            onclick="this.innerHTML = 'Updating...';uploadImage();">Done</button>
+        <section class="text-gray-700 body-font">
+            <div class="container px-5 py-12 mx-auto">
+                <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+                    <div class="p-4 md:w-1/3 md:mb-0 mb-6 flex flex-col text-center items-center">
+                        <div class="inline-flex items-center justify-center rounded-full text-indigo-500 flex-shrink-0">
+                            <img alt="team"
+                                class="w-40 h-40 bg-white object-cover object-center flex-shrink-0 rounded-full ml-2 subdpimg"
+                                src="https://contacts.zoho.com/file?ID=3031352&t=user&fs=thumb" type="image/jpeg"
+                                onclick="switcher('.profilepicture')" />
+                        </div>
+                        <div class="flex-grow w-full mx-auto opacity-0">
+                            <h2 class="text-gray-900 text-lg title-font font-medium"></h2>
+                            <p class="leading-relaxed text-sm">Blue bottle crucifix vinyl post-ironic four dollar toast
+                                vegan taxidermy</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="flex -mt-10 border-t border-gray-200 pt-3" style="width:100% !important;">
-            <h2 class="text-gray-900 title-font font-medium float-left mr-5">Suggestions</h2>
-            <p class="theme-shade-text text-sm float-right" onclick="masterswitch('.allpics');showImages()">All Photos</p>
+            <div class="flex -mt-10 border-t border-gray-200 pt-3" style="width:100% !important;">
+                <h2 class="text-gray-900 title-font font-medium float-left mr-5">Suggestions</h2>
+                <p class="theme-shade-text text-sm float-right" onclick="masterswitch('.allpics');showImages()">All
+                    Photos</p>
+            </div>
+        </section>
+    </div>
+    <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto moodnotif"
+        style="display:none;">
+        <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
+        <div class="w-full h-24 bg-gray-200 rounded-lg border border-gray-300 p-5 mt-12 text-center">
+            <p>Mood is removed automatically after 6 hours.</p>
         </div>
-    </section>
-</div>
-<div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto moodnotif" style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
-    <div class="w-full h-24 bg-gray-200 rounded-lg border border-gray-300 p-5 mt-12 text-center">
-        <p>Mood is removed automatically after 6 hours.</p>
-    </div>
-    <div class="w-full h-20 items-center bg-gray-200 rounded-lg border border-gray-300 p-5 mt-5">
-        <p class="float-left">Auto moods</p>
-        <label class="switch float-right">
-            <input type="checkbox">
-            <span class="slider round"></span>
-        </label>
-    </div>
-</div>
-<div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto birthday" style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
-    <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
-        <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
-            <h2 align="center" class="text-black text-2xl font-medium title-font mb-12"><b>When's your birthday?</b></h2>
-            <input class="bg-white rounded focus:outline-none text-base px-4 pl-24 border-b py-3 mb-4 bdate placeholder-gray-600 w-full" type="date" value="2002-09-21">
-            <button onclick="deswitch()" class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Save </button>
+        <div class="w-full h-20 items-center bg-gray-200 rounded-lg border border-gray-300 p-5 mt-5">
+            <p class="float-left">Auto moods</p>
+            <label class="switch float-right">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
         </div>
     </div>
-</div>
-
-<div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto allpics" style="display:none;">
-    <button class="left-0 top-0 float-left text-red-700 cancel-btn" onclick="$('.selectedImage').toggleClass('selectedImage');loadDp();mdeswitch('.allpics');$('.final-btn').hide()">Cancel</button>
-    <button class="left-0 top-0 float-right text-blue-700 final-btn animate__animated animate__fadeIn" style="display:none;" onclick="mdeswitch('.allpics')">Done</button>
-    <br>
-    <div class="picsContainer overflow-x-hidden h-full">
-
+    <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto birthday"
+        style="display:none;">
+        <button class="left-0 top-0 float-left text-red-700" onclick="deswitch()">Cancel</button>
+        <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
+            <div p class="lg:w-2/6 md:w-1/2 bg-blue rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
+                <h2 align="center" class="text-black text-2xl font-medium title-font mb-12"><b>When's your birthday?</b>
+                </h2>
+                <input
+                    class="bg-white rounded focus:outline-none text-base px-4 pl-24 border-b py-3 mb-4 bdate placeholder-gray-600 w-full"
+                    type="date" value="2002-09-21">
+                <button onclick="deswitch()"
+                    class="theme-shade-bg text-white  border-0 py-2 px-8 focus:outline-none rounded text-center mt-4">Save
+                </button>
+            </div>
+        </div>
     </div>
-</div>
+
+    <div class="fixed inset-x-0 bottom-0 animate__animated animate__slideInUp animate__faster rounded-t-lg mx-auto allpics"
+        style="display:none;">
+        <button class="left-0 top-0 float-left text-red-700 cancel-btn"
+            onclick="$('.selectedImage').toggleClass('selectedImage');loadDp();mdeswitch('.allpics');$('.final-btn').hide()">Cancel</button>
+        <button class="left-0 top-0 float-right text-blue-700 final-btn animate__animated animate__fadeIn"
+            style="display:none;" onclick="mdeswitch('.allpics')">Done</button>
+        <br>
+        <div class="picsContainer overflow-x-hidden h-full">
+
+        </div>
+    </div>
 
 </body>
 
@@ -266,7 +310,7 @@
 <script>
     var phoneNumber;
 
-    function getDetails(){
+    function getDetails() {
         var xhr = new XMLHttpRequest();
         xhr.onload = function (e) {
             if (this.readyState === 4) {
@@ -291,7 +335,7 @@
         xhr.send();
     }
 
-   async function setPno(num){
+    async function setPno(num) {
         phoneNumber = num
         getDetails()
         loadDp()
@@ -303,21 +347,21 @@
     var lastIndex = 0
 
     async function prevImage(image, num, totalImages) {
-        if(images.length >= parseInt(totalImages)-5) return
+        if (images.length >= parseInt(totalImages) - 5) return
         images.push(image)
         phoneNumber = num
     }
 
-    async function showImages(){
-        for(i = lastIndex; i < lastIndex + 20; i++){
-            if(lastRowCount == 0){
+    async function showImages() {
+        for (i = lastIndex; i < lastIndex + 20; i++) {
+            if (lastRowCount == 0) {
                 await generateImagePreview(createNewRow(), images[i])
                 lastRowCount += 1
-            }else if(lastRowCount >= 3){
+            } else if (lastRowCount >= 3) {
                 lastRowCount = 0
                 await generateImagePreview(createNewRow(), images[i])
                 lastRowCount += 1
-            }else{
+            } else {
                 await generateImagePreview(document.querySelector(`#${lastRow}`), images[i])
                 lastRowCount += 1
             }
@@ -329,11 +373,12 @@
         //uploadImage(url);
     }
 
-    function generateImagePreview(row, image){
+    function generateImagePreview(row, image) {
         var imageTag = `<img src="${image}" class="pic">`
         row.innerHTML += imageTag
     }
-    function createNewRow(){
+
+    function createNewRow() {
         var row = document.createElement('div')
         row.className += 'row w-full flex'
         row.id = '_' + Math.random().toString(36).substr(2, 9);
@@ -342,7 +387,7 @@
         return row;
     }
 
-    function addListenersToImages(){
+    function addListenersToImages() {
         var allImages = document.querySelectorAll('.pic')
         allImages.forEach(item => {
             item.addEventListener('click', event => {
@@ -355,7 +400,7 @@
         $('.pic').loadScroll(500);
     }
 
-    function selectImage(img){
+    function selectImage(img) {
         $(".selectedImage").toggleClass("selectedImage")
         $(img).addClass("selectedImage")
     }
@@ -389,47 +434,46 @@
         img.src = $('.subdpimg').attr('src');
     }
 
-function changeName(elm){
-      elm.classList.add('cursor-not-allowed')
+    function changeName(elm) {
+        elm.classList.add('cursor-not-allowed')
 
-      $('.uname').html($('.fname').val() + ' ' + $('.lname').val())
+        $('.uname').html($('.fname').val() + ' ' + $('.lname').val())
 
-      setTimeout(() => {
-        deswitch();
-        elm.classList.remove('cursor-not-allowed')
-       }, 100)
-    //masterswitch(elm)
-}
+        setTimeout(() => {
+            deswitch();
+            elm.classList.remove('cursor-not-allowed')
+        }, 100)
+        //masterswitch(elm)
+    }
 
-function switcher(elm){
-    setTimeout(() => $('.fullpage').addClass('prepage').removeClass('fullpage'), 150)
-    $(elm).addClass('subpage').show()
-}
+    function switcher(elm) {
+        setTimeout(() => $('.fullpage').addClass('prepage').removeClass('fullpage'), 150)
+        $(elm).addClass('subpage').show()
+    }
 
-function deswitch(){
-    $('.prepage').addClass('fullpage').removeClass('prepage')
-    $('.subpage').hide().removeClass('subpage')
-}
+    function deswitch() {
+        $('.prepage').addClass('fullpage').removeClass('prepage')
+        $('.subpage').hide().removeClass('subpage')
+    }
 
-function masterswitch(elm){
-    $('.prepage').removeClass('prepage').addClass('fullpage').hide()
-    $('.subpage').addClass('prepage').slideDown().removeClass('subpage')
-    $(elm).addClass('subpage').show()
-}
+    function masterswitch(elm) {
+        $('.prepage').removeClass('prepage').addClass('fullpage').hide()
+        $('.subpage').addClass('prepage').slideDown().removeClass('subpage')
+        $(elm).addClass('subpage').show()
+    }
 
-function mdeswitch(elm){
-    $(elm).hide().removeClass('subpage')
-    $('.prepage').addClass('subpage').removeClass('prepage')
-    $('.fullpage').addClass('prepage').removeClass('fullpage').show()
-}
+    function mdeswitch(elm) {
+        $(elm).hide().removeClass('subpage')
+        $('.prepage').addClass('subpage').removeClass('prepage')
+        $('.fullpage').addClass('prepage').removeClass('fullpage').show()
+    }
 
-$(document).ready(function() {
-    $('.picsContainer').scroll(function() {
-        showImages()
+    $(document).ready(function () {
+        $('.picsContainer').scroll(function () {
+            showImages()
+        });
+        photo.Gallery()
     });
-    photo.Gallery()
-});
-
 </script>
 
 </html>
