@@ -561,8 +561,9 @@
       }
     }
 
-    async function updateNumber(pno) {
+    async function updateNumber(pno, tok) {
       phoneNumber = pno;
+      updateToken(tok)
       getDetails()
       await getChatList()
     }
@@ -1022,6 +1023,17 @@
       } else {
         return false
       }
+    }
+
+    function updateToken(tok){
+      var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                return
+            }
+        };
+        xhttp.open("GET", "https://iotine.zapto.org:4600/registerToken/"+tok+"/"+phoneNumber, true);
+        xhttp.send();
     }
 
     function handleBackPressed() {

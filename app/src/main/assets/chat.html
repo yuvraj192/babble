@@ -873,7 +873,6 @@
                         if (item.style.paddingLeft >= maxPull) return
                         movingDirection = "left"
                         $(item).css(movingDirection, x - startX + "px")
-                        alert($("#_kc3yphd0l").html())
                         wasDragged = true
                     }
 
@@ -911,7 +910,7 @@
                 touchEnded = false
                 startX = event.touches[0].clientX
 
-                item.addEventListener('touchmove', e => {
+                /*item.addEventListener('touchmove', e => {
                     if (slideDisabled) return
 
                     var x = e.touches[0].clientX;
@@ -930,7 +929,7 @@
 
                     taken = false
 
-                })
+                })*/
                 if (!taken) {
                     taken = true
                     start = new Date().getTime();
@@ -953,7 +952,7 @@
                 touchEnded = true
                 clearInterval(inter)
                 start = 0
-                if (wasDragged) {
+                /*if (wasDragged) {
                     wasDragged = false
                     if (!touchEnded) return
 
@@ -964,7 +963,7 @@
                     wasDragged = false
                     touchEnded = true
                     return
-                }
+                }*/
             })
 
         })
@@ -1316,7 +1315,7 @@
                 var chat =
                     `<p id="${ID}" class="from-me audio-msg chat-bubble animate__animated animate__bounceInUp animate__faster w-1/2"> <span class="animate__animated animate__bounce msgReaction text-base" style="display:none"></span> <button onclick="toggleAudio('#audioTag_${ID}', this)">  <i class="material-icons">play_arrow</i> </button> <div class="from-me-progressContainer"><div class="from-me-progress" id="audioTag_${ID}_progress"></div></div> <audio id="audioTag_${ID}" src="https://iotine.zapto.org/Babble/uploads/${this.responseText}" controls="true" controlsList="nodownload" type="audio/wav" style="display:none;"></audio>  </p>`
 
-                msg.send(`${this.responseText}`, `${tonum}`, `${phoneNumber}`, `${timestamp}`, `audio${ID}`)
+                msg.send(`${this.responseText}`, `${tonum}`, `${phoneNumber}`, `${timestamp}`, `audio${ID}`, '')
                 $(".chat-body").append(chat)
 
                 $('html, body').animate({

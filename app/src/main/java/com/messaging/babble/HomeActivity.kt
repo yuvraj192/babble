@@ -19,7 +19,7 @@ import com.github.nkzawa.emitter.Emitter
 import com.github.nkzawa.socketio.client.IO
 import com.github.nkzawa.socketio.client.Socket
 import kotlinx.android.synthetic.main.activity_home.*
-
+//fIzmxOY_Q8ye7hKMDvqiLA:APA91bFo_Eb9kK0cqiy0iaa2xTHUrN8uKh3km2sca3QfSFFWI4_-gHChL99PIa3cihZzSk4zS2GaiEev2j-kfiYAsx7zRhc-MGEvmEwctaDk6edpZZ0_JKYbbk7IwZpcCS1i31mqVqoH
 class HomeActivity : AppCompatActivity() {
     private val socket: Socket = IO.socket("https://iotine.zapto.org:4600/")
     //lateinit var notificationManager : NotificationManager
@@ -28,7 +28,6 @@ class HomeActivity : AppCompatActivity() {
     //private val CHANNEL_ID = "com.messaging.babble"
 
     var phoneNumber: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,7 +119,14 @@ class HomeActivity : AppCompatActivity() {
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    homeView.loadUrl("javascript:updateNumber($phoneNumber)")
+
+                    val settings = getSharedPreferences("btor56ungh", 0)
+
+                    if(settings.getString("ughn8dh", "").toString() != "") {
+                        var token: String = settings.getString("buir4554", "").toString()
+                        homeView.loadUrl("javascript:updateNumber($phoneNumber, '$token')")
+                    }
+
                 }
             }
 

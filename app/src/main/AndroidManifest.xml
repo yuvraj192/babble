@@ -42,17 +42,13 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".notifreciever">
+        <service
+            android:name=".MyFirebaseInstanceIDService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.REBOOT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-        </receiver>
-
-        <service android:name=".notificationservice" />
+        </service>
     </application>
 
 </manifest>
